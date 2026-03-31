@@ -61,7 +61,7 @@
     "slug": "techlink",
     "short_description": "Connect with like-minded innovators, build meaningful friendships, and collaborate on tech projects.",
     "description": "TechLink is where people who love tech come together. Meet like-minded innovators, make real friends, talk about ideas, and build projects together. Whether you’re just starting out or already experienced, it’s a place to share, learn, and create with others who get it.",
-    "logo": "/public/images/projects/techLink/logo.png",
+    "logo": "/images/projects/techLink/logo.png",
     "github_url": "https://github.com/TechLinkApp/TechLink",
     "live_url": "https://github.com/TechLinkApp/TechLink",
     "type": "mobile",
@@ -73,15 +73,15 @@
     "images": [
       {
         "id": 4,
-        "path": "/public/images/projects/techLink/techLink-Login.jpeg"
+        "path": "/images/projects/techLink/techLink-Login.jpeg"
       },
       {
         "id": 5,
-        "path": "/public/images/projects/techLink/home.jpg"
+        "path": "/images/projects/techLink/home.jpg"
       },
       {
         "id": 6,
-        "path": "/public/images/projects/techLink/profile.jpg"
+        "path": "/images/projects/techLink/profile.jpg"
       }
     ],
     "technologies": [
@@ -111,7 +111,7 @@
   "slug": "bills",
   "short_description": "Easily manage clients, invoices, payments, and returns with simplicity and efficiency.",
   "description": "Easily manage your clients, invoices, payments, and returns in one centralized platform designed for simplicity and efficiency. Stay organized, track transactions with accuracy.",
-  "logo": "/public/images/projects/bills/logo.png",
+  "logo": "/images/projects/bills/logo.png",
   "github_url": "https://github.com/cyto0plasm/Bills_Application_v3",
   "live_url": "https://github.com/cyto0plasm/Bills_Application_v3",
   "type": "desktop",
@@ -123,15 +123,15 @@
     "images": [
       {
         "id": 4,
-        "path": "/public/images/projects/bills/client.png"
+        "path": "/images/projects/bills/client.png"
       },
       {
         "id": 5,
-        "path": "/public/images/projects/bills/inv.png"
+        "path": "/images/projects/bills/inv.png"
       },
       {
         "id": 6,
-        "path": "/public/images/projects/bills/inv-header.png"
+        "path": "/images/projects/bills/inv-header.png"
       }
     ],
   "technologies": [

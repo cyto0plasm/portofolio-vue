@@ -243,10 +243,13 @@ watch(chatOpen, v => {
     </div>
 
     <!-- Project cards — outside bubble, same loop iteration -->
-    <div
-      v-if="m.role === 'bot' && /project|built|app/i.test(m.text) && robo.projects.length"
-      class="self-start w-full flex flex-col gap-1.5"
-    >
+   <div
+  v-if="m.role === 'bot' 
+    && /project|built|app/i.test(m.text) 
+    && robo.projects.length
+    && messages.slice(0, i).some(m => m.role === 'user')"
+  class="self-start w-full flex flex-col gap-1.5"
+>
       <a
         v-for="p in robo.projects" :key="p.name"
         :href="p.url"
