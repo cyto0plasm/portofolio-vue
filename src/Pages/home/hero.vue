@@ -12,7 +12,7 @@ const props = defineProps({
     role: { type: String, default: 'Full-Stack Developer' },
     tags: { type: Array, default: () => ['Structuring', 'Building', 'Maintaining'] },
     available: { type: Boolean, default: true },
-    photoSrc: { type: String, default: '/images/me.webp' },
+    photoSrc: { type: String, default: '@/assets/me.webp' },
 })
 
 const layout = useLayoutStore()
