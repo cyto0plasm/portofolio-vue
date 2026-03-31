@@ -1,0 +1,92 @@
+/*
+ * useScrollReveal.css — import once in main.js
+ * ─────────────────────────────────────────────────────────────
+ *
+ * ELEMENT LEVEL — fade children in/out:
+ *   <p :class="['fade', isVisible && 'in']" style="--d:.05s">
+ *   --d    stagger delay   (0s, .05s, .1s …)
+ *   --dur  duration        (default .4s)
+ *
+ * SECTION LEVEL — bind on the wrapper:
+ *   :class="[isVisible ? 'is-visible' : 'is-hidden', exitDir && `exit-${exitDir}`]"
+ *
+ * EDGE GLOW — opt-in:
+ *   class="section-wrap has-edge-glow"
+ *   :style="{ '--glow-color': '#54debd' }"
+ * ─────────────────────────────────────────────────────────────
+ */
+
+/* ── Element fade ────────────────────────────────────────────── */
+
+.fade {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+/* Entering */
+.fade.in {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity   var(--dur, 0.4s) var(--d, 0s) cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--dur, 0.4s) var(--d, 0s) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Exiting — faster, no stagger delay */
+.is-hidden .fade {
+  transition:
+    opacity   0.2s 0s ease-in,
+    transform 0.2s 0s ease-in;
+}
+
+/* Ghost variant — dims to 0.15 instead of 1 */
+.fade-ghost.fade.in { opacity: 0.15; }
+
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+
+.section-wrap {
+  position: relative; /* anchor for ::before / ::after glows */
+}
+
+
+/* ── Edge glow ───────────────────────────────────────────────── */
+
+.has-edge-glow::before,
+.has-edge-glow::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 140px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 10;
+}
+
+/* top edge glow — shows when section exits upward */
+.has-edge-glow::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--glow-color, #54debd) 30%, transparent),
+    transparent
+  );
+}
+
+/* bottom edge glow — shows when section exits downward */
+.has-edge-glow::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--glow-color, #54debd) 30%, transparent),
+    transparent
+  );
+}
+
+.has-edge-glow.exit-top::before    { opacity: 1; }
+.has-edge-glow.exit-bottom::after  { opacity: 1; }
+
+/* Kill glow immediately when back in view */
+.has-edge-glow.is-visible::before,
+.has-edge-glow.is-visible::after   { opacity: 0; transition: opacity 0.15s; }
