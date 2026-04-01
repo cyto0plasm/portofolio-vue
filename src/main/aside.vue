@@ -151,6 +151,22 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
             >
               {{ item.label }}
             </RouterLink>
+            <a href="/resume.pdf"
+   download="Youssef-Zaki_CV.pdf"
+   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md 
+          text-xs font-medium transition-all duration-200 ease-out
+          bg-gray-100 dark:bg-white/10 
+          text-gray-700 dark:text-gray-200
+          hover:bg-gray-200 dark:hover:bg-white/20 hover:-translate-y-0.5 
+          active:translate-y-0 active:scale-[0.98]
+          focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    CV
+</a>
           </section>
 
         </div>

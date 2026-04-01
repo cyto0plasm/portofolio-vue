@@ -8,3 +8,16 @@ img {
   user-drag: none;
   pointer-events: none; /* optional (see note below) */
 }
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #e8e5e5; }
+::-webkit-scrollbar-thumb { background: var(--primary-color, #6ee7b7); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--primary-color, #6ee7b7) 75%, black); }
+
+html.dark ::-webkit-scrollbar-track { background: #1a1a1a; }
+html.dark ::-webkit-scrollbar-thumb { background: var(--primary-color, #6ee7b7); }
+html.dark ::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--primary-color, #6ee7b7) 75%, white); }
+
+/* firefox */
+html { scrollbar-width: thin; scrollbar-color: var(--primary-color, #6ee7b7) #e8e5e5; }
+html.dark { scrollbar-color: var(--primary-color, #6ee7b7) #1a1a1a; }

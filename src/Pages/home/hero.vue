@@ -4,13 +4,20 @@ import { useScroll } from '../../composables/useScrollReveal.js'
 import { useLayoutStore } from '../../Stores/layout-store'
 // import FloatingWords from '@/Components/floating-words.vue'
 import Badges from '@/svg/badges.vue'
+import MainButton from '@/Components/main-button.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goToContact = () => {
+  router.push('/contact')
+}
 
 const props = defineProps({
     preferedColor: { type: String, default: '#6ee7b7' },
     name: { type: String, default: 'Youssef' },
     lastName: { type: String, default: 'Zaki' },
     role: { type: String, default: 'Full-Stack Developer' },
-    tags: { type: Array, default: () => ['Structuring', 'Building', 'Maintaining'] },
+    tags: { type: Array, default: () => ['Structure', 'Build', 'Maintain'] },
     available: { type: Boolean, default: true },
     photoSrc: { type: String, default: '/images/me.webp' },
 })
@@ -173,36 +180,57 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
 
 
 
-                <!-- tags -->
-                <div class="reveal-item flex flex-col gap-1.5" style="--i:5">
-                    <span class="text-sm text-gray-500">specialized in</span>
-                    <ul class="flex flex-wrap gap-2 list-none p-0 m-0">
-                        <li v-for="(tag, i) in tags" :key="tag"
-                            class="reveal-item px-3 py-1 rounded border font-mono text-sm
-                                   border-gray-200 dark:border-gray-500
-                                   bg-gray-50 dark:bg-[#302f2f]
-                                   text-gray-700 dark:text-gray-100
-                                   hover:bg-gray-100 dark:hover:bg-[#4d4c4c]
-                                   hover:-translate-y-px transition-all"
-                            :style="`--i:${6 + i}`">
-                            <span class="opacity-40 text-xs">&lt;</span>{{ tag }}<span class="opacity-40 text-xs">/&gt;</span>
-                        </li>
-                    </ul>
-                    <div class="flex flex-col mt-1">
-                        <span class="text-lg text-gray-700 dark:text-gray-300">Modern web, mobile &amp; desktop systems,</span>
-                        <span class="text-lg text-gray-700 dark:text-gray-300"> Give me a problem to solve!</span>
-                    </div>
-                </div>
+            <!-- tags -->
+<div class="reveal-item flex flex-col gap-4" style="--i:5">
+  <div class="flex flex-col">
+    <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100">
+      Building cross-platform digital experiences.
+    </h2>
+    <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-full sm:max-w-lg">
+      web, mobile, and desktop systems. 
+      Turning complex problems into elegant software.
+    </p>
+  </div>
 
-                <!-- CTA -->
-                <div class="reveal-item flex flex-wrap gap-3 mt-1" style="--i:8">
-                    <a href="#projects"
-                        class="px-5 py-2.5 rounded-md text-sm font-medium text-black no-underline hover:brightness-110 hover:-translate-y-px transition-all"
-                        :style="{ background: layout.preferedColor }">View My Work</a>
-                    <a href="#contact"
-                        class="px-2 py-2 rounded-md text-sm font-medium no-underline border hover:-translate-y-px transition-all"
-                        :style="{ borderColor: layout.preferedColor, color: layout.preferedColor }">Get in Touch</a>
-                </div>
+  <div class="flex flex-col gap-2">
+    <span class="text-[9px] sm:text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 font-bold">
+      Core Stack
+    </span>
+    <ul class="flex flex-wrap gap-2 list-none p-0 m-0">
+      <li v-for="(tag, i) in tags" :key="tag"
+          class="reveal-item px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-md border font-mono text-[10px] sm:text-xs
+                 border-gray-200 dark:border-white/10
+                 bg-white dark:bg-white/5
+                 text-gray-600 dark:text-gray-300
+                 hover:border-blue-400 dark:hover:border-blue-500
+                 hover:text-blue-600 dark:hover:text-blue-400
+                 hover:-translate-y-0.5 transition-all duration-300"
+          :style="`--i:${6 + i}`">
+        <span class="opacity-40">&lt;</span>{{ tag }}<span class="opacity-40">/&gt;</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+             <!-- CTA -->
+<div class="reveal-item flex flex-wrap items-center gap-3 mt-2" style="--i:8">
+    <!-- Primary Button -->
+    <a href="/projects"
+   class="group relative text-white no-underline font-medium rounded-lg
+          text-sm sm:text-base lg:text-lg
+          px-4 py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3
+          transition-all duration-200 ease-out
+          hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
+   :style="{ background: layout.preferedColor, boxShadow: `0 1px 2px 0 rgb(0 0 0 / 0.05)`, '--focus-ring': layout.preferedColor }">
+    View My Work
+</a>
+    <MainButton @click="goToContact"  ></MainButton>
+
+   
+
+
+</div>
             </div>
 
             <!-- PHOTO (md+) -->

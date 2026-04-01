@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/Pages/Home.vue";
 import Projects from "@/Pages/Projects.vue";
 import AppLayout from "@/main/app-layout.vue";
+import Contact from "@/Pages/Contact.vue";
 
 // import About from '@/Pages/About.vue'
 // import Contact from '@/Pages/Contact.vue'
@@ -16,6 +17,7 @@ const routes = [
     children: [
       { path: '',         name: 'home',     component: Home },
       { path: 'projects', name: 'projects', component: Projects },
+      { path: 'contact', name: 'contact', component: Contact },
 
       
       // dev only — stripped from production bundle
