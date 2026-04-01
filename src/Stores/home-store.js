@@ -5,13 +5,16 @@ import projectsData from '../data/projects.json'
 export const useHomeStore = defineStore('home', () => {
   // flatten all technologies from all projects, deduplicate by id
  const allTechs = projectsData.flatMap(p => p.technologies ?? [])
-const seen = new Set()
-const uniqueTechs = allTechs.filter(t => {
-  if (!t || !t.id) return false        // ← guard against missing id
-  if (seen.has(t.id)) return false
-  seen.add(t.id)
-  return true
+const techMap = new Map()
+
+allTechs.forEach(t => {
+  if (!t || !t.name) return
+
+  const key = t.name.toLowerCase()
+  techMap.set(key, t) // last one wins
 })
+
+const uniqueTechs = Array.from(techMap.values())
 
   const projects      = ref(projectsData)
   const technologies  = ref(uniqueTechs)

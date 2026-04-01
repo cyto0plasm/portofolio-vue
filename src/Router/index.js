@@ -16,7 +16,19 @@ const routes = [
     children: [
       { path: '',         name: 'home',     component: Home },
       { path: 'projects', name: 'projects', component: Projects },
+
+      
+      // dev only — stripped from production bundle
+      ...(import.meta.env.DEV ? [
+        {
+          path: 'admin/projects',
+          name: 'admin-projects',
+          component: () => import('@/Pages/ProjectsCrud.vue'),
+        }
+      ] : [])
+    
     ]
+    
   }
 ]
 const router = createRouter({

@@ -66,7 +66,8 @@ const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
         <div class="w-9 h-9 flex items-center justify-center">
           <img
             v-if="tech.icon && !iconErrors[tech.id]"
-            :src="`/storage/${tech.icon}`"
+            :src="tech.icon"
+
             :alt="tech.name"
             class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200 mix-blend-screen"
             loading="lazy"

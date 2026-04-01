@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRoboStore } from '@/Stores/ai-store'
 
+
 const robo     = useRoboStore()
 const messages = computed(() => robo.messages)   // ✅ from store
 const streaming = computed(() => robo.streaming) // ✅ from store
@@ -9,6 +10,11 @@ const streaming = computed(() => robo.streaming) // ✅ from store
 const props = defineProps({ role: { type: String, default: 'user' } })
 const isAdmin = computed(() => props.role === 'admin')
 const emit = defineEmits(['create-project', 'create-technology', 'create-category'])
+
+const isProjectIntent = (text) => {
+  if (!text) return false
+  return /project|portfolio|work|apps|مشاريع|شغل/i.test(text)
+}
 
 // ── Theme ──────────────────────────────────────────────────────
 const dark = ref(true)
@@ -245,7 +251,7 @@ watch(chatOpen, v => {
     <!-- Project cards — outside bubble, same loop iteration -->
    <div
   v-if="m.role === 'bot' 
-    && /project|built|app/i.test(m.text) 
+   && isProjectIntent(messages[i - 1]?.text)
     && robo.projects.length
     && messages.slice(0, i).some(m => m.role === 'user')"
   class="self-start w-full flex flex-col gap-1.5"

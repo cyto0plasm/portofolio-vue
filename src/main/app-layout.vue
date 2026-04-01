@@ -13,6 +13,7 @@ import { useRouter } from 'vue-router'
 import '../app.css'
 import { useHead } from '@unhead/vue'
 
+const isDev = import.meta.env.DEV
 
 useHead({
   link: [
@@ -96,5 +97,12 @@ onMounted(() => {
     <Terminal v-if="layout.terminalOpen"
       :projects="projects"
   :role="user.is_admin ? 'admin' : 'user'" />
+ <!-- <RouterLink
+  v-if="isDev"
+  to="/admin/projects"
+  class="fixed bottom-5 left-5 z-[9999] bg-violet-600 hover:bg-violet-500 text-white font-mono text-[11px] px-3 py-1.5 rounded-md opacity-80 hover:opacity-100 transition-all"
+>
+  ⚙ admin
+</RouterLink> -->
   </div>
 </template>

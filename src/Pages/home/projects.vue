@@ -4,8 +4,10 @@ import { useHomeStore } from '../../Stores/home-store'
 import Devider from '../../Components/devider.vue'
 import ProjectCard from '@/Components/project-card.vue'
 import ProjectComments from '@/Components/project-comments.vue'
+import { ref } from 'vue'
 
 const { projects } = storeToRefs(useHomeStore())
+const openCommentSlug = ref(null) 
 
 const typeLabel = {
   web:     'Web Site',

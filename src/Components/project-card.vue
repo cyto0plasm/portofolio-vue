@@ -19,9 +19,9 @@ const { views, likes, liked, toggleLike } = useProjectStats(props.project.slug)
 const { comments } = useComments(props.project.slug)
 const emit = defineEmits(['open-comments'])
 
-onMounted(function(){
-    console.log(props.project)
-})
+// onMounted(function(){
+//     console.log(props.project)
+// })
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 
@@ -166,7 +166,7 @@ function formatDate(date) {
           v-for="tech in project.technologies" :key="tech.id"
           class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium tracking-wide dark:bg-zinc-800/70 bg-zinc-100 dark:text-zinc-300 text-zinc-500 border dark:border-zinc-700/60 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 dark:hover:text-white hover:text-zinc-600 transition-colors duration-200 whitespace-nowrap"
         >
-          <img v-if="tech.icon" :src="`/storage/${tech.icon}`" :alt="tech.name" class="w-3.5 h-3.5 object-contain" loading="lazy" width="14" height="14" />
+          <img v-if="tech.icon" :src="tech.icon" :alt="tech.name" class="w-3.5 h-3.5 object-contain" loading="lazy" width="14" height="14" />
           {{ tech.name }}
         </span>
       </div>

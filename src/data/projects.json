@@ -4,10 +4,9 @@
     "name": "Taskly - task & project manager",
     "slug": "taskly",
     "short_description": "Modern SPA web application for managing tasks, projects, and deadlines efficiently, helping users stay organized and productive.",
-    "description": "Taskly is a full-stack task management application built with a decoupled architecture — a Laravel RESTful API backend and a reactive Vue.js frontend. It features list and calendar views, project-based organization, status assignment, and advanced sorting and filtering. Global state is managed with Pinia, enabling seamless, real-time UI updates across the app.",
     "logo": "/images/projects/taskly/taskly_logo.svg",
     "github_url": "https://github.com/cyto0plasm/Taskly-Vue",
-    "live_url": "https://illustrious-gentleness-production-8b3f.up.railway.app/",
+    "live_url": null,
     "type": "web",
     "status": "done",
     "featured": true,
@@ -15,44 +14,22 @@
     "start_date": "2025-10-01T00:00:00.000000Z",
     "end_date": "2026-03-01T00:00:00.000000Z",
     "images": [
-      {
-        "id": 1,
-        "path": "/images/projects/taskly/main.png"
-      },
-      {
-        "id": 2,
-        "path": "/images/projects/taskly/projects-white.png"
-      },
-      {
-        "id": 3,
-        "path": "/images/projects/taskly/Canvas.png"
-      }
+      { "id": 1, "path": "/images/projects/taskly/main.png" },
+      { "id": 2, "path": "/images/projects/taskly/projects-white.png" },
+      { "id": 3, "path": "/images/projects/taskly/Canvas.png" }
     ],
     "technologies": [
-      {
-        "id": 101,
-        "name": "C++/CLI",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 102,
-        "name": "WinForms",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 103,
-        "name": "SQLite",
-        "icon": null,
-        "category": {
-          "name": "Database"
-        }
-      }
+      { "id": 101, "name": "Laravel", "icon": "/technologies/laravel.svg", "category": { "name": "Frameworks" } },
+      { "id": 101, "name": "PHP", "icon": "/technologies/php.svg", "category": { "name": "Backend" } },
+      { "id": 103, "name": "Mysql",   "icon": "/technologies/mysql.svg", "category": { "name": "Database" } },
+      { "id": 105, "name": "Vue", "icon": "/technologies/vuejs.svg", "category": { "name": "Frameworks" } },
+      { "id": 106, "name": "Tailwind CSS", "icon": "/technologies/tailwindcss.svg", "category": { "name": "Frontend" } },
+      { "id": 107, "name": "HTML", "icon": "/technologies/html5.svg", "category": { "name": "Frontend" } },
+      { "id": 108, "name": "CSS", "icon": "/technologies/css.svg", "category": { "name": "Frontend" } },
+      { "id": 109, "name": "JS", "icon": "/technologies/javascript.svg", "category": { "name": "Frontend" } },
+      { "id": 104, "name": "Vite", "icon": "/technologies/vitejs.svg", "category": { "name": "Tools" } },
+       { "id": 16, "name": "GitHub",   "icon": "/technologies/github.svg",    "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",      "icon": "/technologies/git.svg",       "category": { "name": "Tools" } }
     ]
   },
   {
@@ -60,10 +37,9 @@
     "name": "TechLink - Social Media",
     "slug": "techlink",
     "short_description": "Connect with like-minded innovators, build meaningful friendships, and collaborate on tech projects.",
-    "description": "TechLink is where people who love tech come together. Meet like-minded innovators, make real friends, talk about ideas, and build projects together. Whether you’re just starting out or already experienced, it’s a place to share, learn, and create with others who get it.",
     "logo": "/images/projects/techLink/logo.png",
     "github_url": "https://github.com/TechLinkApp/TechLink",
-    "live_url": "https://github.com/TechLinkApp/TechLink",
+    "live_url": null,
     "type": "mobile",
     "status": "done",
     "featured": true,
@@ -71,103 +47,49 @@
     "start_date": "2025-09-18T00:00:00.000000Z",
     "end_date": "2025-12-23T00:00:00.000000Z",
     "images": [
-      {
-        "id": 4,
-        "path": "/images/projects/techLink/techLink-Login.jpeg"
-      },
-      {
-        "id": 5,
-        "path": "/images/projects/techLink/home.jpg"
-      },
-      {
-        "id": 6,
-        "path": "/images/projects/techLink/profile.jpg"
-      }
+      { "id": 4, "path": "/images/projects/techLink/techLink-Login.jpeg" },
+      { "id": 5, "path": "/images/projects/techLink/home.jpg" },
+      { "id": 6, "path": "/images/projects/techLink/profile.jpg" }
     ],
     "technologies": [
-      {
-        "id": 13,
-        "name": "Firebase",
-        "icon": "technologies/oZ4JDGVHKE7sPkd5USxrS2FgCo7OuhjjkPH7odH9.svg",
-        "category": null
-      },
-      {
-        "id": 16,
-        "name": "GitHub",
-        "icon": "technologies/9pmHKzMkLDqZ6vktjGMSOiNZWQZ9qla7yRCYgKKL.svg",
-        "category": null
-      },
-      {
-        "id": 17,
-        "name": "Git",
-        "icon": "technologies/nVaJEWgxPs09GgEFnNwSqA3kRkBgWqiEP8vcZnuf.svg",
-        "category": null
-      }
+      { "id": 13, "name": "flutter", "icon": "/technologies/flutter.svg",  "category": { "name": "Mobile" } },
+      { "id": 14, "name": "Firebase", "icon": "/technologies/firebase.svg",  "category": { "name": "Backend" } },
+      { "id": 16, "name": "GitHub",   "icon": "/technologies/github.svg",    "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",      "icon": "/technologies/git.svg",       "category": { "name": "Tools" } }
     ]
   },
   {
-  "id": 3,
-  "name": "Bills – Smart Invoicing App",
-  "slug": "bills",
-  "short_description": "Easily manage clients, invoices, payments, and returns with simplicity and efficiency.",
-  "description": "Easily manage your clients, invoices, payments, and returns in one centralized platform designed for simplicity and efficiency. Stay organized, track transactions with accuracy.",
-  "logo": "/images/projects/bills/logo.png",
-  "github_url": "https://github.com/cyto0plasm/Bills_Application_v3",
-  "live_url": "https://github.com/cyto0plasm/Bills_Application_v3",
-  "type": "desktop",
-  "status": "done",
-  "featured": true,
-  "position": 0,
-  "start_date": "2025-02-08T00:00:00.000000Z",
-  "end_date": "2025-05-19T00:00:00.000000Z",
+    "id": 3,
+    "name": "Bills – Smart Invoicing App",
+    "slug": "bills",
+    "short_description": "Easily manage clients, invoices, payments, and returns with simplicity and efficiency.",
+    "logo": "/images/projects/bills/logo.png",
+    "github_url": "https://github.com/cyto0plasm/Bills_Application_v3",
+    "live_url": null,
+    "type": "desktop",
+    "status": "done",
+    "featured": true,
+    "position": 0,
+    "start_date": "2025-02-08T00:00:00.000000Z",
+    "end_date": "2025-05-19T00:00:00.000000Z",
     "images": [
-      {
-        "id": 4,
-        "path": "/images/projects/bills/client.png"
-      },
-      {
-        "id": 5,
-        "path": "/images/projects/bills/inv.png"
-      },
-      {
-        "id": 6,
-        "path": "/images/projects/bills/inv-header.png"
-      }
+      { "id": 4, "path": "/images/projects/bills/client.png" },
+      { "id": 5, "path": "/images/projects/bills/inv.png" },
+      { "id": 6, "path": "/images/projects/bills/inv-header.png" }
     ],
-  "technologies": [
-    {
-      "id": 3,
-      "name": "Java",
-      "icon": "technologies/EkAFA9yZqmlaTGMXKZi6KiIul2lCmZ5c7L2Q5s6v.svg",
-      "category": null
-    },
-    {
-      "id": 12,
-      "name": "SQlite",
-      "icon": "technologies/4yFy5MlFZn1FIZT6INSwAMuJkhm69TRymuxUrqeX.svg",
-      "category": null
-    },
-    {
-      "id": 16,
-      "name": "GitHub",
-      "icon": "technologies/9pmHKzMkLDqZ6vktjGMSOiNZWQZ9qla7yRCYgKKL.svg",
-      "category": null
-    },
-    {
-      "id": 17,
-      "name": "Git",
-      "icon": "technologies/nVaJEWgxPs09GgEFnNwSqA3kRkBgWqiEP8vcZnuf.svg",
-      "category": null
-    }
-  ]
-},
+    "technologies": [
+      { "id": 3,  "name": "Java",   "icon": "/technologies/java.svg",   "category": { "name": "Desktop" } },
+      { "id": 12, "name": "SQLite", "icon": "/technologies/sqlite.svg", "category": { "name": "Database" } },
+      { "id": 16, "name": "GitHub", "icon": "/technologies/github.svg", "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",    "icon": "/technologies/git.svg",    "category": { "name": "Tools" } }
+    ]
+  },
   {
     "id": 4,
     "name": "PMS",
     "slug": "pms",
-    "short_description": "Project Management System built with C++/CLI and WinForms",
-    "description": "A desktop project management system with full CRUD, reporting, and SQLite persistence. My biggest and most complex desktop application.",
-    "logo": null,
+    "short_description": "a Pharmacy management system designed to streamline pharmacy operations including inventory control, sales, and supplier management.",
+    "logo": "/images/projects/pms/logo.png" ,
     "github_url": "https://github.com/cyto0plasm/PMST-C-",
     "live_url": null,
     "type": "desktop",
@@ -177,39 +99,24 @@
     "start_date": "2023-06-01",
     "end_date": "2023-12-01",
     "highlight": "biggest project",
+    "images": [
+      { "id": 6, "path": "/images/projects/pms/PMS.jpg" },
+      { "id": 4, "path": "/images/projects/pms/dashboard.png" },
+      { "id": 5, "path": "/images/projects/pms/invoice.png" }
+    ],
     "technologies": [
-      {
-        "id": 201,
-        "name": "C++/CLI",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 202,
-        "name": "WinForms",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 203,
-        "name": "SQLite",
-        "icon": null,
-        "category": {
-          "name": "Database"
-        }
-      }
+      { "id": 201, "name": "C++/CLI",  "icon": "/technologies/c++.svg", "category": { "name": "Desktop" } },
+      { "id": 202, "name": ".NET", "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
+      { "id": 203, "name": "SQLite",   "icon": "/technologies/sqlite.svg", "category": { "name": "Database" } },
+       { "id": 16, "name": "GitHub", "icon": "/technologies/github.svg", "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",    "icon": "/technologies/git.svg",    "category": { "name": "Tools" } }
     ]
   },
   {
     "id": 5,
     "name": "LMS",
     "slug": "lms",
-    "short_description": "Library Management System desktop app",
-    "description": "A library manager for tracking books, members, and borrowing history with a clean C++/CLI interface.",
+    "short_description": "designed to manage library operations including book inventory, student records, and loan tracking.",
     "logo": null,
     "github_url": "https://github.com/cyto0plasm/Library_Project_Desktop",
     "live_url": null,
@@ -221,30 +128,11 @@
     "end_date": "2022-12-01",
     "highlight": null,
     "technologies": [
-      {
-        "id": 201,
-        "name": "C++/CLI",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 202,
-        "name": "WinForms",
-        "icon": null,
-        "category": {
-          "name": "Desktop"
-        }
-      },
-      {
-        "id": 203,
-        "name": "SQLite",
-        "icon": null,
-        "category": {
-          "name": "Database"
-        }
-      }
+      { "id": 201, "name": "C++/CLI",  "icon": "/technologies/c++.svg", "category": { "name": "Desktop" } },
+      { "id": 202, "name": ".NET", "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
+      { "id": 203, "name": "SQLite",   "icon": "/technologies/sqlite.svg", "category": { "name": "Database" } },
+       { "id": 16, "name": "GitHub", "icon": "/technologies/github.svg", "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",    "icon": "/technologies/git.svg",    "category": { "name": "Tools" } }
     ]
   }
 ]
