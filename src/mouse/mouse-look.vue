@@ -39,6 +39,8 @@ function frame() {
 }
 
 onMounted(() => {
+   if (window.matchMedia('(pointer: coarse)').matches) return  // ← add this
+
   dark.value = document.documentElement.classList.contains('dark')
   mo = new MutationObserver(() => { dark.value = document.documentElement.classList.contains('dark') })
   mo.observe(document.documentElement, { attributeFilter: ['class'] })

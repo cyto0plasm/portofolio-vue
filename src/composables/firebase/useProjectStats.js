@@ -11,25 +11,29 @@ export function useProjectStats(projectId) {
   let unsub = null
 
   onMounted(async () => {
-    // Start listener only after mount
-    unsub = onSnapshot(doc(db, 'projects', projectId), (snap) => {
-      if (snap.exists()) {
-        views.value = snap.data().views ?? 0
-        likes.value = snap.data().likes ?? 0
-      }
-    })
-
-    // Guard against dev HMR double-increments
-    const sessionKey = `viewed_${projectId}`
-    if (!sessionStorage.getItem(sessionKey)) {
-      try {
-        await updateDoc(doc(db, 'projects', projectId), { views: increment(1) })
-        sessionStorage.setItem(sessionKey, '1')
-      } catch (err) {
-        console.error('Failed to increment views:', err)
-      }
+  // Start listener
+  unsub = onSnapshot(doc(db, 'projects', projectId), (snap) => {
+    if (snap.exists()) {
+      views.value = snap.data().views ?? 0
+      likes.value = snap.data().likes ?? 0
     }
   })
+
+  // Increment views only once per session
+  const sessionKey = `viewed_${projectId}`
+  if (!sessionStorage.getItem(sessionKey)) {
+    try {
+      // Make sure user is authenticated
+      if (!auth.currentUser) {
+        await signInAnonymously(auth)
+      }
+      await updateDoc(doc(db, 'projects', projectId), { views: increment(1) })
+      sessionStorage.setItem(sessionKey, '1')
+    } catch (err) {
+      console.error('Failed to increment views:', err)
+    }
+  }
+})
 
   onUnmounted(() => unsub?.())
 

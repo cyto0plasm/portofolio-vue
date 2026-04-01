@@ -5,6 +5,14 @@ import { useHomeStore }   from '@/Stores/home-store'
 import { useLayoutStore } from '@/Stores/layout-store'
 import { useReadmeStore } from '@/Stores/readme-store'
 import { useScroll }      from '@/composables/useScrollReveal.js'
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: "Zaki's Projects",
+  meta: [
+    { name: 'description', content: "Youssef Zaki's Projects Page" },
+  ]
+})
 
 const { projects }  = storeToRefs(useHomeStore())
 const mainColor     = computed(() => useLayoutStore().preferedColor)
