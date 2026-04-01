@@ -19,46 +19,41 @@ async function toggle(project) {
   if (openId.value) await readme.fetch(project)
 }
 
-function md(raw) {
+function md(raw, project) {
   if (!raw || raw === '_none_') return '<p>No README available.</p>'
   if (raw === '_error_')        return '<p>Failed to load README.</p>'
 
+  const base = project?.github_url
+    ? project.github_url
+        .replace('github.com', 'raw.githubusercontent.com')
+        .replace(/\/?$/, '/') + 'main/'
+    : ''
+
   return raw.slice(0, 5000)
-    // code blocks (must come first)
     .replace(/```[\w]*\n?([\s\S]*?)```/g, (_, c) =>
       `<pre><code>${c.replace(/</g,'&lt;').replace(/>/g,'&gt;').trim()}</code></pre>`)
-    // inline code
     .replace(/`([^`]+)`/g, '<code>$1</code>')
-    // headings
     .replace(/^#{4} (.+)$/gm, '<h4>$1</h4>')
     .replace(/^### (.+)$/gm,  '<h3>$1</h3>')
     .replace(/^## (.+)$/gm,   '<h2>$1</h2>')
     .replace(/^# (.+)$/gm,    '<h1>$1</h1>')
-    // bold + italic
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
     .replace(/\*\*(.+?)\*\*/g,     '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,         '<em>$1</em>')
-    // strikethrough
     .replace(/~~(.+?)~~/g, '<del>$1</del>')
-    // images (before links so ![...](...) doesn't get caught by link regex)
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g,
-      '<img src="$2" alt="$1" style="display:inline;vertical-align:middle;margin:2px 3px;max-width:100%;" />')
-    // links
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+      const resolved = src.startsWith('http') ? src : base + src
+      return `<img src="${resolved}" alt="${alt}" style="display:inline;vertical-align:middle;margin:2px 3px;max-width:100%;" />`
+    })
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">$1</a>')
-    // blockquotes
     .replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>')
     .replace(/^> (.+)$/gm,    '<blockquote>$1</blockquote>')
-    // unordered lists
     .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
-    // ordered lists
     .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-    // checkboxes
     .replace(/\[x\]/gi, '✅')
     .replace(/\[ \]/g,  '☐')
-    // horizontal rule
     .replace(/^---$/gm, '<hr>')
-    // line breaks / paragraphs
     .replace(/\n\n/g, '</p><p>')
 }
 </script>
@@ -157,7 +152,7 @@ function md(raw) {
               <span class="readme-dot" style="--d:.3s" />
               <span class="text-[0.72rem] text-gray-500 ml-1">Loading…</span>
             </div>
-            <div v-else class="readme-content" v-html="md(readme.cache[p.id])" />
+            <div v-else class="readme-content" v-html="md(readme.cache[p.id],p)" />
           </div>
         </div>
       </Transition>
