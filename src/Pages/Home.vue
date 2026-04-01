@@ -11,6 +11,13 @@ useHead({
   title: "Zaki's Home",
   meta: [
     { name: 'description', content: "Youssef Zaki's Home Page" },
+  ],
+    link: [
+    {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/images/favIconProtofolio2.ico'
+    }
   ]
 })
 </script>
