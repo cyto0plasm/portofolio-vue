@@ -4,6 +4,16 @@ import '@fontsource/ubuntu/500.css'
 import '@fontsource/ubuntu/700.css'
 import './app.css'
 
+//firebase migrate
+// import { db } from './firebase'
+// import { doc, setDoc } from 'firebase/firestore'
+
+// const slugs = ['taskly', 'techlink', 'bills', 'pms', 'lms']
+
+// for (const slug of slugs) {
+//   await setDoc(doc(db, 'projects', slug), { views: 0, likes: 0 })
+// }
+
 import { createApp }      from 'vue'
 import { createPinia }    from 'pinia'
 import { createHead  } from '@unhead/vue/client'

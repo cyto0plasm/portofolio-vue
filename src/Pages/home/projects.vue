@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useHomeStore } from '../../Stores/home-store'
 import Devider from '../../Components/devider.vue'
 import ProjectCard from '@/Components/project-card.vue'
+import ProjectComments from '@/Components/project-comments.vue'
 
 const { projects } = storeToRefs(useHomeStore())
 
@@ -18,7 +19,12 @@ const typeLabel = {
     <div v-if="projects.length" class="min-h-[60vh]" id="projects">
       <template v-for="(project, i) in projects" :key="project.id">
         <Devider />
-        <ProjectCard :project="project" :type-label="typeLabel" :index="i" />
+         <ProjectCard
+    :project="project" :type-label="typeLabel" :index="i"
+    @open-comments="openCommentSlug = project.slug"
+  />
+  <ProjectComments :slug="project.slug" :force-open="openCommentSlug === project.slug" />
+
       </template>
       <Devider />
     </div>

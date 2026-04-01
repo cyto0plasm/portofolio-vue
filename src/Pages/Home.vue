@@ -1,11 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
 import Hero from './home/hero.vue'
 import Devider from '@/Components/devider.vue'
 import Projects from './home/projects.vue'
 import Skills from './home/skills.vue'
-import { useLayoutStore } from '@/Stores/layout-store'
-import { useHomeStore } from '@/Stores/home-store'
 import { useHead } from '@unhead/vue'
 
 

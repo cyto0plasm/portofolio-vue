@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "@unhead/vue": "^2.1.12",
     "@vueuse/core": "^14.2.1",
+    "firebase": "^12.11.0",
     "groq-sdk": "^1.1.2",
     "lenis": "^1.3.21",
     "pinia": "^3.0.4",

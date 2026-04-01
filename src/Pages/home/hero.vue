@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 import { useLayoutStore } from '../../Stores/layout-store'
-import FloatingWords from '@/Components/floating-words.vue'
+// import FloatingWords from '@/Components/floating-words.vue'
 import Badges from '@/svg/badges.vue'
 
 const props = defineProps({
@@ -117,7 +117,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
         :style="{ '--glow-color': preferedColor }"
         aria-label="Hero introduction"
     >
- <FloatingWords :color="layout.preferedColor"></FloatingWords>
+ <!-- <FloatingWords :color="layout.preferedColor"></FloatingWords> -->
 
 
 

@@ -4,12 +4,20 @@ import ImageLightbox  from '@/images/Image-lightbox.vue'
 import { useScroll } from '@/composables/useScrollReveal.js'
 import MultiImage from '@/images/multi-image.vue'
 import Badges from '@/svg/badges.vue'
+import { useProjectStats } from '@/composables/firebase/useProjectStats'
+import { useComments } from '@/composables/firebase/useProjectStats'
+
+
 
 const props = defineProps({
   project:   { type: Object, required: true },
   typeLabel: { type: Object, required: true },
   index:     { type: Number, default: 0 },
 })
+const { views, likes, liked, toggleLike } = useProjectStats(props.project.slug)
+
+const { comments } = useComments(props.project.slug)
+const emit = defineEmits(['open-comments'])
 
 onMounted(function(){
     console.log(props.project)
@@ -196,31 +204,39 @@ function formatDate(date) {
 />
         <!-- Social bar -->
         <div class="flex flex-row gap-1 justify-center py-2.5 px-3 mt-1 mx-2 mb-2 rounded-xl bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-200/50 dark:border-zinc-700/40">
-          <button type="button" aria-label="Views"
-            class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono transition-all">
-            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-            </svg>
-            {{ project.views ?? 0 }}
-          </button>
+  
+  <!-- Views -->
+  <button type="button" aria-label="Views"
+    class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 text-xs font-mono">
+    <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+    </svg>
+    {{ views }}
+  </button>
 
-          <button type="button" aria-label="Comments"
-            class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono transition-all">
-            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-            </svg>
-            0
-          </button>
+  <!-- Comments (static for now) -->
+ <button type="button" aria-label="Comments"
+  @click="emit('open-comments')"
+  class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono transition-all">
+  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+  </svg>
+  {{ comments.length }}
+</button>
 
-          <button type="button" aria-label="Like"
-            class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono transition-all group">
-            <svg class="w-3.5 h-3.5 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-            0
-          </button>
-        </div>
+  <!-- Likes -->
+  <button type="button" aria-label="Like" @click="toggleLike"
+    class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono transition-all group hover:bg-zinc-100 dark:hover:bg-zinc-700"
+    :class="liked ? 'text-rose-500 dark:text-rose-400' : 'text-zinc-500 dark:text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400'">
+    <svg class="w-3.5 h-3.5 shrink-0 group-hover:scale-110 transition-transform"
+      :fill="liked ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+    </svg>
+    {{ likes }}
+  </button>
+
+</div>
       </div>
 
     </div>
