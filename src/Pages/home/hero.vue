@@ -215,7 +215,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
              <!-- CTA -->
 <div class="reveal-item flex flex-wrap items-center gap-3 mt-2" style="--i:8">
     <!-- Primary Button -->
-    <a href="/projects"
+    <RouterLink to="/projects"
    class="group relative text-white no-underline font-medium rounded-lg
           text-sm sm:text-base lg:text-lg
           px-4 py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3
@@ -224,7 +224,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
    :style="{ background: layout.preferedColor, boxShadow: `0 1px 2px 0 rgb(0 0 0 / 0.05)`, '--focus-ring': layout.preferedColor }">
     View My Work
-</a>
+</RouterLink>
     <MainButton @click="goToContact"  ></MainButton>
 
    
