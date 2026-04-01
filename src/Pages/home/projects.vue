@@ -14,20 +14,34 @@ const typeLabel = {
   desktop: 'Desktop Application',
   mobile:  'Mobile Application',
 }
+
+
 </script>
 
 <template>
-  <section data-section>
-    <div v-if="projects.length" class="min-h-[60vh]" id="projects">
-      <template v-for="(project, i) in projects" :key="project.id">
-        <Devider />
-         <ProjectCard
-    :project="project" :type-label="typeLabel" :index="i"
-    @open-comments="openCommentSlug = project.slug"
-  />
-  <ProjectComments :slug="project.slug" :force-open="openCommentSlug === project.slug" />
+  <section id="projects" >
+    <div  v-if="projects.length" class="min-h-[60vh]" id="projects">
+     <template v-for="(project, i) in projects" :key="project.id">
+  <Devider />
 
-      </template>
+  <div
+    :id="`project-${project.slug}`"
+    data-section
+    class="min-h-[60vh]" <!-- or min-h-screen for full page scrolling -->
+  >
+    <ProjectCard
+      :project="project"
+      :type-label="typeLabel"
+      :index="i"
+      @open-comments="openCommentSlug = project.slug"
+    />
+
+    <ProjectComments
+      :slug="project.slug"
+      :force-open="openCommentSlug === project.slug"
+    />
+  </div>
+</template>
       <Devider />
     </div>
 

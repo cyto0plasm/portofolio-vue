@@ -1,58 +1,23 @@
-/**
- * terminal-commands.js
- */
 
 const push = (output, type, text) => output.value.push({ type, text });
 
 // ─── Section navigation (goto) ────────────────────────────────
 export const NAV_COMMANDS = {
-  hero: {
-    description: 'Scroll to hero',
-    selector: '#hero',
-    page: 'home',
-  },
-  skills: {
-    description: 'Scroll to skills',
-    selector: '#skills',
-    page: 'home',
-  },
-  projects: {
-    description: 'Scroll to projects highlight',
-    selector: '#projects',
-    page: 'home',
-  },
-  contact: {
-    description: 'Scroll to contact',
-    selector: '#contact',
-    page: 'home',
-  },
-  current: {
-    description: 'Scroll to currently working on',
-    selector: '#current-project',
-    page: 'projects',
-  },
-  projectList: {
-    description: 'Scroll to all projects list',
-    selector: '#projects-list',
-    page: 'projects',
-  },
+  hero:        { description: 'Scroll to hero',                  selector: '#hero',             page: 'home'     },
+  skills:      { description: 'Scroll to skills',                selector: '#skills',           page: 'home'     },
+  projects:    { description: 'Scroll to projects highlight',    selector: '#projects',         page: 'home'     },
+  contact:     { description: 'Scroll to contact',               selector: '#contact',          page: 'home'     },
+
 };
 
 // ─── Page navigation (cd) ─────────────────────────────────────
 export const PAGE_COMMANDS = {
-  home:     { description: 'Open homepage',         route: 'home',                     role: 'any'   },
-  projects: { description: 'Open projects page',    route: 'admin.projects.index',     role: 'admin' },
-  tech:     { description: 'Open technologies page', route: 'admin.technologies.index', role: 'admin' },
-  category: { description: 'Open categories page',  route: 'admin.categories.index',   role: 'admin' },
-  login:    { description: 'Open login page',        route: 'login',                    role: 'any'   },
-  register: { description: 'Open register page',     route: 'register',                 role: 'any'   },
-  'projects-public': { description: 'Open public projects page', route: 'projects', role: 'any' },
+  home:     { description: 'Open homepage',          path: '/',          role: 'any'   },
+  projects: { description: 'Open projects page',     path: '/projects',  role: 'any'   },
 };
 
-// Public overrides for regular users
 export const PAGE_COMMANDS_USER = {
   ...PAGE_COMMANDS,
-  projects: { description: 'Open projects page', route: 'projects', role: 'any' },
 };
 
 // ─── Dynamic per-project goto commands ────────────────────────
@@ -69,8 +34,8 @@ export function buildProjectNavCommands(projects = []) {
 }
 
 // ─── Helper: resolve which page key the current route maps to ─
-export function resolvePageKey(routeName = '') {
-  if (routeName.startsWith('project')) return 'projects';
+export function resolvePageKey(routePath = '') {
+  if (routePath.startsWith('/projects')) return 'projects';
   return 'home';
 }
 
@@ -80,7 +45,7 @@ export const UTILITY_COMMANDS = {
   help: {
     description: 'Show available commands',
     run(_, { output, projectNavCommands = {}, router, role = 'user' }) {
-      const pageKey = resolvePageKey(router?.currentRoute?.value?.name ?? '');
+      const pageKey = resolvePageKey(router?.currentRoute?.value?.path ?? '');
 
       push(output, 'info', 'Utility commands:');
       Object.entries(UTILITY_COMMANDS).forEach(([name, cmd]) => {
@@ -106,10 +71,9 @@ export const UTILITY_COMMANDS = {
       if (homeSections.length) {
         push(output, 'info', 'Home page sections (goto):');
         homeSections.forEach(([name, cmd]) => {
-          const active = pageKey === 'home';
           push(output, 'help-row',
             `<span class="cmd-name">goto ${name}</span>` +
-            `<span class="cmd-desc">${cmd.description}${!active ? ' <span class="c-dim">[cd home first]</span>' : ''}</span>`
+            `<span class="cmd-desc">${cmd.description}${pageKey !== 'home' ? ' <span class="c-dim">[cd home first]</span>' : ''}</span>`
           );
         });
       }
@@ -118,10 +82,9 @@ export const UTILITY_COMMANDS = {
       if (projectSections.length) {
         push(output, 'info', 'Projects page sections (goto):');
         projectSections.forEach(([name, cmd]) => {
-          const active = pageKey === 'projects';
           push(output, 'help-row',
             `<span class="cmd-name">goto ${name}</span>` +
-            `<span class="cmd-desc">${cmd.description}${!active ? ' <span class="c-dim">[cd projects first]</span>' : ''}</span>`
+            `<span class="cmd-desc">${cmd.description}${pageKey !== 'projects' ? ' <span class="c-dim">[cd projects first]</span>' : ''}</span>`
           );
         });
       }
@@ -141,10 +104,10 @@ export const UTILITY_COMMANDS = {
           );
         });
 
-      const pageKey = resolvePageKey(router?.currentRoute?.value?.name ?? '');
+      const pageKey = resolvePageKey(router?.currentRoute?.value?.path ?? '');
       const allNav  = { ...NAV_COMMANDS, ...projectNavCommands };
 
-      push(output, 'info', `Sections on this page (goto):`);
+      push(output, 'info', 'Sections on this page (goto):');
       Object.entries(allNav)
         .filter(([, cmd]) => cmd.page === pageKey)
         .forEach(([name, cmd]) => {
@@ -158,44 +121,31 @@ export const UTILITY_COMMANDS = {
 
   clear: {
     description: 'Clear terminal output',
-    run(_, { output }) {
-      output.value = [];
-    },
+    run(_, { output }) { output.value = []; },
   },
 
   echo: {
     description: 'Print text to terminal',
     usage: '[text]',
-    run(args, { output }) {
-      push(output, 'output', args.join(' ') || '');
-    },
+    run(args, { output }) { push(output, 'output', args.join(' ') || ''); },
   },
 
   history: {
     description: 'Show command history',
     run(_, { output, history }) {
-      if (!history.value.length) {
-        push(output, 'output', 'No history yet.');
-        return;
-      }
-      history.value.forEach((h, i) => {
-        push(output, 'output', `${String(i + 1).padStart(3)} · ${h}`);
-      });
+      if (!history.value.length) { push(output, 'output', 'No history yet.'); return; }
+      history.value.forEach((h, i) => push(output, 'output', `${String(i + 1).padStart(3)} · ${h}`));
     },
   },
 
   date: {
     description: 'Show current date & time',
-    run(_, { output }) {
-      push(output, 'output', new Date().toLocaleString());
-    },
+    run(_, { output }) { push(output, 'output', new Date().toLocaleString()); },
   },
 
   whoami: {
     description: 'Show current user',
-    run(_, { output }) {
-      push(output, 'output', 'Youssef Adel Zaki, Nice To Meet You');
-    },
+    run(_, { output }) { push(output, 'output', 'Youssef Adel Zaki, Nice To Meet You'); },
   },
 
   theme: {
@@ -203,13 +153,9 @@ export const UTILITY_COMMANDS = {
     usage: '[color]',
     run(args, { output, layout }) {
       const color = args[0];
-      if (!color) {
-        push(output, 'error', 'Usage: theme [color] — e.g. theme #ff6b6b');
-        return;
-      }
+      if (!color) { push(output, 'error', 'Usage: theme [color] — e.g. theme #ff6b6b'); return; }
       layout.preferedColor = color;
       push(output, 'success', `Accent color → ${color}`);
     },
   },
-
 };

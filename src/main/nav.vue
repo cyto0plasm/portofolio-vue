@@ -74,7 +74,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
       <!-- Right controls -->
       <div class="flex items-center gap-2.5">
-        <DarkMode class="hidden md:block" />
+        <DarkMode class="hidden md:block"  />
         <button
           @click="layout.toggleAside()"
           class="w-9 h-9 flex items-center justify-center rounded-lg

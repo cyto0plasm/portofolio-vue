@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch, nextTick } from 'vue';
 
+const emit = defineEmits(['focus-input'])
+
 const props = defineProps({
   output: { type: Array, required: true },
 });
@@ -28,18 +30,18 @@ const LINE_CLASS = {
 <template>
   <div
     ref="bodyRef"
-    class="flex-1 overflow-y-scroll px-[18px] py-2.5 z-10 overscroll-contain
+    @click="emit('focus-input')"
+    class="flex-1 overflow-y-scroll px-3 sm:px-[18px] py-2 sm:py-2.5 z-10 overscroll-contain
            [scrollbar-width:thin] [scrollbar-color:rgba(52,211,153,0.18)_transparent]"
-    @click.stop
   >
     <div
       v-for="(line, i) in output"
       :key="i"
-      class="flex items-baseline gap-1.5 leading-7 whitespace-pre-wrap break-all animate-[fadein_0.08s_ease]"
+      class="flex items-baseline gap-1 sm:gap-1.5 leading-6 sm:leading-7 text-[11px] sm:text-[13px]
+             whitespace-pre-wrap break-all animate-[fadein_0.08s_ease]"
       :class="LINE_CLASS[line.type] ?? 'text-slate-300'"
     >
       <span v-if="line.type === 'input'" class="text-emerald-400 flex-shrink-0" aria-hidden="true">❯</span>
-      <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-html="line.text" />
     </div>
   </div>
@@ -49,7 +51,10 @@ const LINE_CLASS = {
 /* Deep overrides for v-html highlights emitted by commands */
 :deep(.hl-amber) { color: #fbbf24; }
 :deep(.hl-red)   { color: #f87171; }
-:deep(.cmd-name) { color: #fbbf24; display: inline-block; min-width: 160px; }
+:deep(.cmd-name) { color: #fbbf24; display: inline-block; min-width: 100px; }
+@media (min-width: 640px) {
+  :deep(.cmd-name) { min-width: 160px; }
+}
 :deep(.cmd-desc) { color: #94a3b8; }
 
 @keyframes fadein {

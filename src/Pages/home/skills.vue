@@ -1,19 +1,29 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { onMounted, ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 import { useHomeStore } from '../../Stores/home-store'
 
 const homeStore = useHomeStore()
 const { categories, filteredTechnologies, activeCategory } = storeToRefs(homeStore)
 
-// onMounted(() => {
-//   console.log('filteredTechnologies:', filteredTechnologies.value)
-//   console.log('categories:', categories.value)
-//   console.log('activeCategory:', activeCategory.value)
-// })
 const iconErrors = ref({})
 const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
+
+const ITEMS_PER_PAGE = 8
+const currentPage = ref(1)
+
+const totalPages = computed(() =>
+  Math.ceil(filteredTechnologies.value.length / ITEMS_PER_PAGE)
+)
+
+const paginatedTechnologies = computed(() => {
+  const start = (currentPage.value - 1) * ITEMS_PER_PAGE
+  return filteredTechnologies.value.slice(start, start + ITEMS_PER_PAGE)
+})
+
+// Reset to page 1 when filter changes
+watch(activeCategory, () => { currentPage.value = 1 })
 </script>
 
 <template>
@@ -46,7 +56,6 @@ const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
           ? 'bg-zinc-800 text-white border-zinc-800 dark:bg-zinc-200 dark:text-zinc-900 dark:border-zinc-200'
           : 'border-zinc-400 text-zinc-500 hover:border-zinc-600 hover:text-zinc-700 dark:hover:text-zinc-300'"
         @click.prevent.stop="activeCategory = cat"
-
       >
         {{ cat }}
       </button>
@@ -55,9 +64,9 @@ const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
     <!-- GRID -->
     <div class="flex flex-wrap gap-3 w-full">
       <div
-        v-for="(tech, i) in filteredTechnologies"
+        v-for="(tech, i) in paginatedTechnologies"
         :key="tech.id"
-        class="tech-card anim-card group flex flex-col items-center  gap-3 p-3 w-28 shrink-0
+        class="tech-card anim-card group flex flex-col items-center gap-3 p-2 w-24 shrink-0
                rounded-xl border border-zinc-400 hover:border-zinc-500 dark:border-zinc-500 dark:bg-[#2c2c2c]
                hover:dark:bg-[#353434] transition-colors duration-200 cursor-default"
         :class="{ visible: isVisible }"
@@ -67,7 +76,6 @@ const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
           <img
             v-if="tech.icon && !iconErrors[tech.id]"
             :src="tech.icon"
-
             :alt="tech.name"
             class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200 mix-blend-screen"
             loading="lazy"
@@ -86,6 +94,48 @@ const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
           {{ tech.name }}
         </span>
       </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div
+      v-if="totalPages > 1"
+      class="anim-header flex items-center justify-center gap-3 mt-8"
+      :class="{ visible: isVisible }"
+    >
+      <!-- Prev -->
+      <button
+        :disabled="currentPage === 1"
+        class="px-3 py-1 rounded-full border font-mono text-xs font-semibold transition-all duration-200
+               border-zinc-400 text-zinc-500 hover:border-zinc-600 hover:text-zinc-700
+               dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed"
+        @click="currentPage--"
+      >
+        ← prev
+      </button>
+
+      <!-- Dots -->
+      <div class="flex items-center gap-2">
+        <button
+          v-for="page in totalPages"
+          :key="page"
+          class="w-2 h-2 rounded-full transition-all duration-200"
+          :class="page === currentPage
+            ? 'bg-zinc-800 dark:bg-zinc-200 scale-125'
+            : 'bg-zinc-400 dark:bg-zinc-600 hover:bg-zinc-600 dark:hover:bg-zinc-400'"
+          @click="currentPage = page"
+        />
+      </div>
+
+      <!-- Next -->
+      <button
+        :disabled="currentPage === totalPages"
+        class="px-3 py-1 rounded-full border font-mono text-xs font-semibold transition-all duration-200
+               border-zinc-400 text-zinc-500 hover:border-zinc-600 hover:text-zinc-700
+               dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed"
+        @click="currentPage++"
+      >
+        next →
+      </button>
     </div>
   </section>
 </template>

@@ -5,6 +5,8 @@ import TerminalResizeBar from '@/composables/terminal/terminal-resize-bar.vue';
 import TerminalHeader from '@/composables/terminal/terminal-header.vue';
 import TerminalOutput from '@/composables/terminal/terminal-output.vue';
 import TerminalInputRow from '@/composables/terminal/terminal-input-row.vue';
+import { useResize } from '@/composables/terminal/use-resize';
+import { useCommandRunner } from '@/composables/terminal/use-command-runner';
 
 const props = defineProps({
   projects: { type: Array, default: () => [] },
@@ -50,7 +52,7 @@ watch(() => layout.terminalOpen, (open) => {
 
       <TerminalResizeBar @start-resize="startResize" />
       <TerminalHeader    @clear="clear" />
-      <TerminalOutput    :output="output" />
+      <TerminalOutput    :output="output"  @focus-input="inputRowRef?.focus()"/>
       <TerminalInputRow
         ref="inputRowRef"
         v-model="command"

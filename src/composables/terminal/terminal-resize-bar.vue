@@ -9,6 +9,8 @@ defineEmits(['start-resize']);
            hover:bg-emerald-400/5 transition-colors flex-shrink-0 z-10"
     aria-hidden="true"
     @mousedown.stop="$emit('start-resize', $event)"
+   @touchstart.stop.prevent="$emit('start-resize', $event)"
+
   >
     <span class="flex gap-[3px]">
       <i

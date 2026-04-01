@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted } from 'vue'
-
+import { isResizing } from '@/composables/terminal/use-resize'
 export function useSwipeScroll(getLenis) {
   let startY = null, isDragging = false, didDrag = false
   let lastY = 0, velocity = 0
@@ -9,6 +9,7 @@ export function useSwipeScroll(getLenis) {
   const DRAG_THRESHOLD = 6   // px — must move this far before it counts as a drag
 
   function onMouseDown(e) {
+    if (isResizing) return
     if (e.button !== 0) return
     if (['INPUT','TEXTAREA','SELECT','BUTTON','A'].includes(e.target.tagName)) return
     if (e.target.closest('.term-root')) return

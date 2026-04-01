@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRoboStore } from '@/Stores/ai-store'
+import DarkMode from '@/Components/dark-mode.vue'
 
 
 const robo     = useRoboStore()
@@ -142,7 +143,7 @@ watch(chatOpen, v => {
 })
 </script>
 <template>
-  <div ref="root" class="fixed bottom-7 right-8 z-[9999] flex flex-col items-end gap-3  font-sans">
+<div ref="root" class="fixed bottom-5 right-5 sm:bottom-7 sm:right-8 z-[9999] flex flex-col items-end gap-3 font-sans">
 
     <!-- ── Admin menu ────────────────────────────────────────── -->
     <Transition name="fade-up">
@@ -202,17 +203,13 @@ watch(chatOpen, v => {
           </div>
 
           <div class="flex items-center gap-1">
-            <button
-              class="w-7 h-7 rounded-lg text-xs flex items-center justify-center transition-colors cursor-pointer"
-              :class="dark ? 'hover:bg-white/8 text-slate-400' : 'hover:bg-black/5 text-slate-500'"
-              @click="toggleTheme"
-            >{{ dark ? '☀️' : '🌙' }}</button>
-            <button
-              class="w-7 h-7 rounded-lg text-[11px] flex items-center justify-center transition-colors cursor-pointer"
-              :class="dark ? 'text-slate-500 hover:text-white hover:bg-white/8' : 'text-slate-400 hover:text-slate-700 hover:bg-black/5'"
-              @click.stop="chatOpen = false"
-            >✕</button>
-          </div>
+  <DarkMode local-key="robo-theme" v-model="dark" responsive />
+  <button
+    class="w-7 h-7 rounded-lg text-[11px] flex items-center justify-center transition-colors cursor-pointer"
+    :class="dark ? 'text-slate-500 hover:text-white hover:bg-white/8' : 'text-slate-400 hover:text-slate-700 hover:bg-black/5'"
+    @click.stop="chatOpen = false"
+  >✕</button>
+</div>
         </div>
 
         <!-- Messages -->
@@ -380,20 +377,21 @@ watch(chatOpen, v => {
       />
 
       <!-- Body -->
+     <!-- Body -->
       <div
-        class="relative w-[68px] drop-shadow-[0_6px_24px_rgba(0,0,0,.5)]"
+        class="relative w-[52px] sm:w-[68px] drop-shadow-[0_6px_24px_rgba(0,0,0,.5)]"
         :class="bounce ? 'anim-bounce' : 'anim-breathe'"
         :style="bodyStyle"
       >
         <!-- Backpack -->
         <div
-          class="absolute top-[18px] right-[-17px] w-5 h-9 rounded-[3px_10px_10px_3px] z-10"
+          class="absolute top-[14px] sm:top-[18px] right-[-13px] sm:right-[-17px] w-4 sm:w-5 h-7 sm:h-9 rounded-[3px_10px_10px_3px] z-10"
           :class="isAdmin ? 'bg-gradient-to-b from-violet-700 to-indigo-800' : 'bg-gradient-to-b from-sky-600 to-sky-900'"
         />
 
         <!-- Torso -->
         <div
-          class="relative w-[68px] h-[76px] rounded-[34px_34px_18px_18px] z-20"
+          class="relative w-[52px] sm:w-[68px] h-[58px] sm:h-[76px] rounded-[26px_26px_14px_14px] sm:rounded-[34px_34px_18px_18px] z-20"
           :class="isAdmin
             ? 'bg-gradient-to-br from-violet-400 to-indigo-600 shadow-[inset_0_2px_5px_rgba(255,255,255,.18),0_0_0_1.5px_rgba(139,92,246,.3)]'
             : 'bg-gradient-to-br from-sky-300 to-sky-700 shadow-[inset_0_2px_5px_rgba(255,255,255,.18),0_0_0_1.5px_rgba(56,189,248,.3)]'"
@@ -404,10 +402,10 @@ watch(chatOpen, v => {
           </div>
 
           <!-- Visor -->
-          <div class="absolute top-3 left-2.5 w-12 h-8 bg-gradient-to-br from-slate-700 to-slate-950 rounded-[20px_20px_12px_12px] overflow-hidden shadow-[inset_0_2px_6px_rgba(255,255,255,.08)]">
-            <div class="absolute inset-0 flex items-center justify-around px-2" :style="eyeStyle">
-              <div class="w-3.5 h-3.5 rounded-full bg-[radial-gradient(circle_at_33%_33%,#e2e8f0_55%,#94a3b8)]" />
-              <div class="w-3.5 h-3.5 rounded-full bg-[radial-gradient(circle_at_33%_33%,#e2e8f0_55%,#94a3b8)]" />
+          <div class="absolute top-2 sm:top-3 left-2 sm:left-2.5 w-9 sm:w-12 h-6 sm:h-8 bg-gradient-to-br from-slate-700 to-slate-950 rounded-[20px_20px_12px_12px] overflow-hidden shadow-[inset_0_2px_6px_rgba(255,255,255,.08)]">
+            <div class="absolute inset-0 flex items-center justify-around px-1.5 sm:px-2" :style="eyeStyle">
+              <div class="w-2.5 sm:w-3.5 h-2.5 sm:h-3.5 rounded-full bg-[radial-gradient(circle_at_33%_33%,#e2e8f0_55%,#94a3b8)]" />
+              <div class="w-2.5 sm:w-3.5 h-2.5 sm:h-3.5 rounded-full bg-[radial-gradient(circle_at_33%_33%,#e2e8f0_55%,#94a3b8)]" />
             </div>
             <div class="absolute top-1 left-1.5 w-3.5 h-1.5 rounded-full bg-white/20 -rotate-6" />
           </div>
@@ -417,12 +415,12 @@ watch(chatOpen, v => {
             v-if="streaming"
             class="absolute bottom-2 right-2.5 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_5px_#34d399] animate-pulse"
           />
-        </div>
+        </div><!-- /Torso -->
 
         <!-- Legs -->
-        <div class="relative flex justify-center gap-2 -mt-0.5 z-20 anim-waddle">
-          <div class="w-5 h-[17px] rounded-b-full" :class="isAdmin ? 'bg-gradient-to-b from-violet-700 to-indigo-800' : 'bg-gradient-to-b from-sky-600 to-sky-900'" />
-          <div class="w-5 h-[17px] rounded-b-full" :class="isAdmin ? 'bg-gradient-to-b from-violet-700 to-indigo-800' : 'bg-gradient-to-b from-sky-600 to-sky-900'" />
+        <div class="relative flex justify-center gap-1.5 sm:gap-2 -mt-0.5 z-20 anim-waddle">
+          <div class="w-4 sm:w-5 h-[13px] sm:h-[17px] rounded-b-full" :class="isAdmin ? 'bg-gradient-to-b from-violet-700 to-indigo-800' : 'bg-gradient-to-b from-sky-600 to-sky-900'" />
+          <div class="w-4 sm:w-5 h-[13px] sm:h-[17px] rounded-b-full" :class="isAdmin ? 'bg-gradient-to-b from-violet-700 to-indigo-800' : 'bg-gradient-to-b from-sky-600 to-sky-900'" />
         </div>
       </div>
     </button>

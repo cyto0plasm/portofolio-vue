@@ -1,15 +1,18 @@
 <script setup>
 import { computed, ref } from 'vue'
 import DarkMode from '../Components/dark-mode.vue'
-import ToggleSwitch from '../Components/ToggleSwitch.vue'
 import { useLayoutStore } from '../Stores/layout-store.js'
 import X from '@/svg/x.vue'
+import { useRoute, RouterLink } from 'vue-router'
 
+const route = useRoute()
+const links = [
+  { label: 'Home',     to: '/' },
+  { label: 'Projects', to: '/projects' },
+]
+const isActive = (to) => to === '/' ? route.path === '/' : route.path.startsWith(to)
 const layout = useLayoutStore()
-
-const showSolarCommandText =ref(true);
-const showModeCommandText =ref(true);
-
+const showModeCommandText = ref(true)
 const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
 </script>
 
@@ -21,11 +24,7 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
     enter-from-class="opacity-0"
     leave-to-class="opacity-0"
   >
-    <div
-      v-if="layout.asideOpen"
-      class="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
-      @click="layout.closeAside"
-    />
+    <div v-if="layout.asideOpen" class="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" @click="layout.closeAside" />
   </Transition>
 
   <!-- Panel -->
@@ -39,146 +38,126 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
       <div
         v-if="layout.asideOpen"
         class="pointer-events-auto h-full flex flex-col
-               w-[clamp(260px,80vw,300px)]
-               bg-[#f0f2f7]
-               border-l border-black/[0.08]
+               w-[240px] sm:w-[270px]
+               bg-[#f0f2f7] dark:bg-[#111318]
+               border-l border-black/[0.08] dark:border-white/[0.07]
                shadow-[-8px_0_40px_rgba(0,0,0,0.10)]"
       >
         <!-- Header -->
-        <div class="flex items-center justify-between px-5 pt-5 pb-4">
+        <div class="flex items-center justify-between px-4 pt-4 pb-3">
           <div class="flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full" :style="{ background: layout.getColor, boxShadow: `0 0 6px ${layout.getColor}80` }" />
-            <span class="text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-black/40">
+            <span class="text-[0.72rem] font-semibold tracking-[0.08em] uppercase text-black/40 dark:text-white/30">
               Preferences
             </span>
           </div>
           <button
             @click="layout.closeAside"
-            aria-label="Close"
-            class="flex items-center justify-center w-7 h-7 rounded-lg
-                   border border-black/[0.08]
-                   bg-black/[0.04]
-                   text-neutral-500
-                   hover:bg-black/[0.09]
+            class="flex items-center justify-center w-6 h-6 rounded-lg
+                   border border-black/[0.08] dark:border-white/[0.08]
+                   bg-black/[0.04] dark:bg-white/[0.04]
+                   text-neutral-500 dark:text-neutral-400
+                   hover:bg-black/[0.09] dark:hover:bg-white/[0.08]
                    hover:scale-105 transition-all duration-150"
           >
             <X />
           </button>
         </div>
 
-        <!-- Divider -->
-        <div class="mx-4 h-px bg-gradient-to-r from-transparent via-black/[0.08] to-transparent" />
+        <div class="mx-3 h-px bg-gradient-to-r from-transparent via-black/[0.08] dark:via-white/[0.07] to-transparent" />
 
         <!-- Scrollable content -->
-        <div class="relative flex-1 overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div class="flex-1 overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
           <!-- Color section -->
-          <section class="flex flex-col gap-3.5 px-5 py-[18px]">
-            <div class="flex items-start gap-2.5">
+          <section class="flex flex-col gap-3 px-4 py-4">
+            <div class="flex items-center gap-2">
               <div
-                class="w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center mt-px border"
+                class="w-6 h-6 shrink-0 rounded-md flex items-center justify-center border"
                 :style="{ background: `${layout.getColor}1a`, borderColor: `${layout.getColor}26`, color: layout.getColor }"
               >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+                <svg class="w-3 h-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
                   <circle cx="8" cy="8" r="6.5"/>
                   <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2" stroke-linecap="round"/>
                 </svg>
               </div>
               <div>
-                <h2 class="text-sm font-semibold text-neutral-900 leading-snug">Color</h2>
-                <p class="text-[0.72rem] text-neutral-400 mt-0.5 leading-snug">Accent color scheme</p>
+                <h2 class="text-[0.8rem] font-semibold text-neutral-900 dark:text-neutral-100">Color</h2>
+                <p class="text-[0.68rem] text-neutral-400 dark:text-neutral-500">Accent color scheme</p>
               </div>
             </div>
 
-            <div class="flex items-center gap-2.5 pl-10">
+            <div class="flex items-center gap-2 pl-8">
               <input
                 type="color"
                 :value="layout.getColor"
                 @input="layout.SetColor($event.target.value)"
-                class="w-8 h-8 rounded-lg border-[1.5px] border-black/[0.12]
+                class="w-7 h-7 rounded-md border-[1.5px] border-black/[0.12] dark:border-white/[0.12]
                        p-0.5 cursor-pointer bg-transparent
                        [&::-webkit-color-swatch-wrapper]:p-0
-                       [&::-webkit-color-swatch]:rounded-[5px] [&::-webkit-color-swatch]:border-none"
+                       [&::-webkit-color-swatch]:rounded-[4px] [&::-webkit-color-swatch]:border-none"
               />
               <div class="flex gap-1.5">
                 <button
-                  v-for="c in presetColors"
-                  :key="c"
-                  :style="{
-                    backgroundColor: c,
-                    borderColor: layout.getColor === c ? 'white' : 'transparent',
-                    boxShadow: layout.getColor === c ? `0 0 0 2px ${c}` : 'none'
-                  }"
-                  class="w-[18px] h-[18px] rounded-full border-2 shadow-sm hover:scale-125 transition-transform duration-150"
+                  v-for="c in presetColors" :key="c"
+                  :style="{ backgroundColor: c, borderColor: layout.getColor === c ? 'white' : 'transparent', boxShadow: layout.getColor === c ? `0 0 0 2px ${c}` : 'none' }"
+                  class="w-4 h-4 rounded-full border-2 hover:scale-125 transition-transform duration-150"
                   @click="layout.SetColor(c)"
                 />
               </div>
             </div>
           </section>
 
-          <!-- Divider -->
-          <div class="mx-4 h-px bg-gradient-to-r from-transparent via-black/[0.08] to-transparent" />
+          <div class="mx-3 h-px bg-gradient-to-r from-transparent via-black/[0.08] dark:via-white/[0.07] to-transparent" />
 
-          <!-- Cursor section -->
-          <section class="flex flex-col gap-3.5 px-5 py-[18px]">
-            <div class="flex items-start gap-2.5">
-              <div
-                class="w-[30px] h-[30px] shrink-0 rounded-lg flex items-center justify-center mt-px border"
-                :style="{ background: `${layout.getColor}1a`, borderColor: `${layout.getColor}26`, color: layout.getColor }"
-              >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
-                  <rect x="4.5" y="2" width="7" height="10" rx="3.5"/>
-                  <path d="M8 2v4.5M4.5 6.5h7" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div>
-                <h2 class="text-sm font-semibold text-neutral-900 leading-snug">Cursor</h2>
-                <p class="text-[0.72rem] text-neutral-400 mt-0.5 leading-snug">Mouse behavior & effects</p>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pl-10 pr-3 py-3 rounded-xl
-                        bg-black/[0.03]
-                        border border-black/[0.06]
-                        hover:bg-black/[0.05]
+          <!-- Dark Mode section -->
+          <section class="px-4 py-3">
+            <div class="flex items-center justify-between px-3 py-2.5 rounded-xl
+                        bg-black/[0.03] dark:bg-white/[0.04]
+                        border border-black/[0.06] dark:border-white/[0.06]
+                        hover:bg-black/[0.05] dark:hover:bg-white/[0.07]
                         transition-colors duration-150">
               <div class="flex flex-col gap-0.5">
-                <span class="text-[0.8rem] font-medium text-neutral-800">Solar System</span>
-                <span v-if="showSolarCommandText" @click="showSolarCommandText = !showSolarCommandText" class="text-[0.68rem] ">  <span class="dark:text-gray-400 text-gray-500">{{ layout.showSolarSystem?'unfollow':'follow' }}</span></span>
-                <span v-else @click="showSolarCommandText = !showSolarCommandText" class="text-[0.68rem]  text-yellow-600 font-mono ">solar   <span class="dark:text-gray-400 text-gray-500">{{ layout.showSolarSystem?'--off':'--on' }}</span></span>
+                <span class="text-[0.78rem] font-medium text-neutral-800 dark:text-neutral-200">Dark Mode</span>
+                <span
+                  v-if="showModeCommandText"
+                  @click="showModeCommandText = !showModeCommandText"
+                  class="text-[0.65rem] text-neutral-400 dark:text-neutral-500 cursor-pointer"
+                >{{ layout.isDark ? 'Switch to Light' : 'Switch to Dark' }}</span>
+                <span
+                  v-else
+                  @click="showModeCommandText = !showModeCommandText"
+                  class="text-[0.65rem] text-gray-500 font-mono cursor-pointer"
+                ><span class="dark:text-yellow-400 text-yellow-600">mode </span>{{ layout.isDark ? 'light' : 'dark' }}</span>
               </div>
-              <ToggleSwitch v-model="layout.showSolarSystem" :color="layout.getColor" size="md" />
+              <DarkMode size="sm" />
             </div>
           </section>
 
-          <!-- Divider -->
-          <div class="mx-4 h-px bg-gradient-to-r from-transparent via-black/[0.08] to-transparent" />
-          <!-- darkMode -->
-          <section class=" px-5  ">
-            <div class="flex items-center justify-between pl-10 pr-3 py-3 rounded-xl
-                        bg-black/[0.03]
-                        border border-black/[0.06]
-                        hover:bg-black/[0.05]
-                        transition-colors duration-150">
-              <div class="flex flex-col gap-0.5">
-                <span class="text-[0.8rem] font-medium text-neutral-800">Dark Mode</span>
-                <span v-if="showModeCommandText" @click="showModeCommandText = !showModeCommandText"  class="text-[0.68rem] text-neutral-400" >{{ layout.isDark ? 'Switch to Light' : 'Switch to Dark' }}</span>
-                <span v-if="!showModeCommandText" @click="showModeCommandText = !showModeCommandText" class="text-[0.68rem] text-gray-500 font-mono" ><span class="dark:text-yellow-400  text-yellow-600">mode </span>{{ layout.isDark ? 'light' : 'dark' }}</span>
-              </div>
-<DarkMode />
-            </div>
+          <div class="mx-3 h-px bg-gradient-to-r from-transparent via-black/[0.08] dark:via-white/[0.07] to-transparent" />
 
+          <!-- Nav Links section -->
+          <section class="flex flex-col gap-1.5 px-4 py-3">
+            <span class="text-[0.65rem] font-semibold tracking-[0.08em] uppercase text-black/30 dark:text-white/25 mb-1">Navigation</span>
+            <RouterLink
+              v-for="item in links" :key="item.label"
+              :to="item.to"
+              @click="layout.closeAside"
+              class="flex items-center px-3 py-2 rounded-xl text-[0.82rem] font-medium border transition-all duration-150"
+              :class="isActive(item.to)
+                ? 'border-transparent text-white'
+                : 'bg-black/[0.03] dark:bg-white/[0.04] border-black/[0.06] dark:border-white/[0.06] text-neutral-700 dark:text-neutral-300 hover:bg-black/[0.06] dark:hover:bg-white/[0.07]'"
+              :style="isActive(item.to) ? { background: layout.getColor, borderColor: layout.getColor } : {}"
+            >
+              {{ item.label }}
+            </RouterLink>
           </section>
-
-          <!-- <section class=" absolute bottom-0 left-0  ">
-             <DarkMode/>
-          </section> -->
 
         </div>
 
         <!-- Footer -->
-        <div class="px-5 py-3.5 border-t border-black/[0.06] flex justify-center">
-          <span class="text-[0.68rem] tracking-wide text-neutral-400">Changes apply instantly</span>
+        <div class="px-4 py-2.5 border-t border-black/[0.06] dark:border-white/[0.06] flex justify-center">
+          <span class="text-[0.65rem] tracking-wide text-neutral-400 dark:text-neutral-600">Changes apply instantly</span>
         </div>
       </div>
     </Transition>

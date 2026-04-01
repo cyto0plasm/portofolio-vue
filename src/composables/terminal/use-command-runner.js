@@ -8,14 +8,14 @@ import {
   buildProjectNavCommands,
   resolvePageKey,
 } from './terminal-commands.js';
-import { route } from 'ziggy-js';
-import { router } from '@inertiajs/vue3';
+import { useRouter, useRoute } from 'vue-router';
 import { useOutput } from './use-output.js';
 import { getGhost, getPrefixMatches, getClosestCommand } from './auto-complete.js';
 
 export function useCommandRunner(props) {
-  // props.role: 'admin' | 'user'
   const layout  = useLayoutStore();
+  const router  = useRouter();
+  const route   = useRoute();
   const command = ref('');
   const ghost   = ref('');
   const inputError = ref(false);
@@ -31,20 +31,18 @@ export function useCommandRunner(props) {
   const isAdmin = computed(() => props.role === 'admin');
 
   const projectNavCommands = computed(() => buildProjectNavCommands(props.projects));
-  const currentPageKey     = computed(() => resolvePageKey(router.currentRoute?.value?.name ?? ''));
+  const currentPageKey     = computed(() => resolvePageKey(route.name ?? ''));
 
-  // ─── Ghost text ────────────────────────────────────────────
   watch(command, val => {
     ghost.value = getGhost(val, projectNavCommands.value);
   });
 
-  // ─── Keyboard handler ──────────────────────────────────────
   function handleKeydown(e) {
-    if (e.key === 'ArrowUp')                { e.preventDefault(); historyUp();    }
-    else if (e.key === 'ArrowDown')         { e.preventDefault(); historyDown();  }
-    else if (e.key === 'Tab')               { e.preventDefault(); onTab();        }
-    else if (e.key === 'Escape')            { layout.terminalOpen = false;        }
-    else if (e.key === 'l' && e.ctrlKey)    { e.preventDefault(); clear();        }
+    if (e.key === 'ArrowUp')             { e.preventDefault(); historyUp();   }
+    else if (e.key === 'ArrowDown')      { e.preventDefault(); historyDown(); }
+    else if (e.key === 'Tab')            { e.preventDefault(); onTab();       }
+    else if (e.key === 'Escape')         { layout.terminalOpen = false;       }
+    else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); clear();       }
   }
 
   function onTab() {
@@ -54,7 +52,6 @@ export function useCommandRunner(props) {
     if (matches.length > 1) push('info', matches.join('   '));
   }
 
-  // ─── History navigation ────────────────────────────────────
   function historyUp() {
     if (!history.value.length) return;
     histIdx.value = Math.min(histIdx.value + 1, history.value.length - 1);
@@ -67,7 +64,6 @@ export function useCommandRunner(props) {
     command.value = history.value[history.value.length - 1 - histIdx.value];
   }
 
-  // ─── Run command ───────────────────────────────────────────
   function runCommand() {
     const raw = command.value.trim();
     command.value = '';
@@ -93,29 +89,27 @@ export function useCommandRunner(props) {
     const cmd = PAGE_COMMANDS[page];
     if (!cmd) return fail(`Unknown page: <span class="hl-red">${esc(page)}</span>`);
 
-    // Admin-only page, user is not admin
     if (cmd.role === 'admin' && !isAdmin.value) {
-      // Special case: redirect 'projects' to the public route
       if (page === 'projects') {
         const publicCmd = PAGE_COMMANDS_USER['projects'];
-        if (route().current(publicCmd.route)) {
+        if (route.path === publicCmd.path) {
           push('info', `Already on <span class="hl-amber">${page}</span>`);
           return;
         }
         push('success', `→ navigating to ${page}…`);
-        router.visit(route(publicCmd.route));
+        router.push(publicCmd.path);
         return;
       }
       return fail(`Access denied: <span class="hl-red">${esc(page)}</span> requires admin privileges.`);
     }
 
-    if (route().current(cmd.route)) {
+    if (route.path === cmd.path) {
       push('info', `Already on <span class="hl-amber">${page}</span>`);
       return;
     }
 
     push('success', `→ navigating to ${page}…`);
-    router.visit(route(cmd.route));
+    router.push(cmd.path);
   }
 
   function execGoto(args) {
@@ -164,7 +158,6 @@ export function useCommandRunner(props) {
     }
   }
 
-  // ─── Helpers ───────────────────────────────────────────────
   function fail(msg) {
     push('error', msg);
     inputError.value = true;
