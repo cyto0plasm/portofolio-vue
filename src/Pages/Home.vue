@@ -26,7 +26,6 @@ useHead({
 
     
   <Hero />
-  <Devider />
   <Projects />
   <Skills />
 </template>

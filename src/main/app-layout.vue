@@ -12,6 +12,7 @@ import ScrollButton from '@/Components/scrollButton.vue'
 import { useRoute, useRouter } from 'vue-router'
 import '../app.css'
 import { useHead } from '@unhead/vue'
+import Flash from '@/Components/flash.vue'
 
 const isDev = import.meta.env.DEV
 
@@ -81,7 +82,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen w-full bg-[#f6f4f4] dark:bg-[#272727] text-gray-600 font-sans relative overflow-x-hidden">
-
+<Flash />
     <Loader  />
     <Nav @toggle-aside="layout.toggleAside()" />
     <Aside />

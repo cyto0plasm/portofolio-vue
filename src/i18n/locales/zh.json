@@ -64,6 +64,7 @@
   "projects": {
     "h1": "我完成的",
     "h2": "项目",
+    "desc": "我最近的一些作品。点击项目以查看更多关于每个项目的细节。",
     "readme": "说明",
     "close": "关闭"
   },
@@ -73,12 +74,37 @@
     "h3": "吧。",
     "status": "开放合作机会",
     "desc": "有项目想法、职位需求，或只是打个招呼？发送消息 — 我会在24小时内回复。",
+    
+    "formTitle": "今すぐお問い合わせ",
+    "ready": "准备好发送你的消息了！",
+    "sent": "消息已发送！",
+
     "name": "你的名字",
     "email": "你的邮箱",
     "message": "你的消息",
+    "namePlaceholder": "张伟",
+    "emailPlaceholder": "you\\@example.com",
+        "messagePlaceholder": "你好 Youssef，我想联系你，关于一个工作机会...",
     "submit": "发送消息",
     "submitting": "发送中...",
     "success": "消息已发送！",
     "error": "消息发送失败。"
-  }
+  },
+  "robo": {
+  "chip1": "Youssef 是谁？",
+  "chip2": "最好的项目是什么？",
+  "chip3": "他的技术栈是什么？",
+  "chip4": "雇佣他 →",
+  "tip1": "谁建造了这个？",
+  "tip2": "开放工作机会",
+  "tip3": "问问我任何事情 →",
+  "tip4": "技术栈分解？",
+  "greeting": "嘿👋 我是**Robo**——Youssef 的数字助手。欢迎向我咨询他的项目、技术栈或档期。",
+  "placeholder": "问任何关于优素福的问题……",
+  "thinking": "思维…",
+  "about": "关于优素福",
+  "newProject": "新项目",
+  "newTechnology": "新技术",
+  "newCategory": "新类别"
+}
 }

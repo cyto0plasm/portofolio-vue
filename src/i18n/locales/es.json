@@ -64,6 +64,7 @@
   "projects": {
     "h1": "Cosas que he",
     "h2": "Construido",
+    "desc": "Una selección de mis trabajos recientes. Haz clic en Proyectos para ver más detalles sobre cada uno.",
     "readme": "Readme",
     "close": "Cerrar"
   },
@@ -73,12 +74,35 @@
     "h3": "Juntos.",
     "status": "Disponible para oportunidades",
     "desc": "¿Tienes un proyecto en mente, un puesto que cubrir, o solo quieres saludar? Envía un mensaje — respondo en 24 horas.",
+      "formTitle": "Contáctame ahora",
+      "ready": "¡Listo para enviar tu mensaje!",
+      "sent": "¡Mensaje enviado!",
     "name": "Tu nombre",
     "email": "Tu correo",
     "message": "Tu mensaje",
+    "namePlaceholder": "Juan Pérez",
+    "emailPlaceholder": "you\\@example.com",
+      "messagePlaceholder": "Hola Youssef, quiero contactarte sobre una oportunidad de trabajo...",
     "submit": "Enviar mensaje",
     "submitting": "Enviando...",
     "success": "¡Mensaje enviado!",
     "error": "Error al enviar el mensaje."
-  }
+  },
+  "robo": {
+  "chip1": "¿Quién es Youssef?",
+  "chip2": "¿Cuál es su mejor proyecto?",
+  "chip3": "¿Cuál es su pila de tecnologías?",
+  "chip4": "Contrátalo →",
+  "tip1": "¿Quién construyó esto?",
+  "tip2": "Disponible para trabajar",
+  "tip3": "Pregúntame cualquier cosa →",
+  "tip4": "¿Desglose de la pila?",
+  "greeting": "¡Hola!👋 Soy Youssef, un desarrollador full-stack con una pasión por crear software que resuelve problemas reales. Con experiencia en Laravel y Vue, he construido una variedad de proyectos, desde aplicaciones web hasta APIs robustas. Estoy siempre abierto a nuevas oportunidades y desafíos, así que no dudes en preguntar cualquier cosa o contactarme para colaborar en tu próximo proyecto.",
+  "placeholder": "Escribe tu pregunta aquí...",
+  "thinking": "Pensando...",
+  "about": "Sobre Youssef",
+  "newProject": "Nuevo Proyecto",
+  "newTechnology": "Nueva Tecnología",
+  "newCategory": "Nueva Categoría"
+}
 }

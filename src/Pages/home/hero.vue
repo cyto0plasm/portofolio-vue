@@ -136,15 +136,39 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
 </script>
 
 <template>
-    <section
-        id="hero" data-section ref="heroRef"
-        class="reveal-wrap section-wrap has-edge-glow relative min-h-svh flex items-center px-5 sm:px-8 lg:px-14 overflow-hidden"
-        :class="{ visible: isVisible }"
-        :data-dir="direction ?? 'down'"
-        :style="{ '--glow-color': preferedColor }"
-        aria-label="Hero introduction"
-    >
+
  <!-- <FloatingWords :color="layout.preferedColor"></FloatingWords> -->
+<section
+  id="hero" data-section ref="heroRef"
+  class="reveal-wrap section-wrap has-edge-glow relative min-h-svh flex items-center px-5 sm:px-8 lg:px-14 overflow-hidden"
+  :class="{ visible: isVisible }"
+  :data-dir="direction ?? 'down'"
+  :style="{ '--glow-color': preferedColor, '--c': preferedColor }"
+  aria-label="Hero introduction"
+>
+  <!-- bg grid -->
+  <!-- bg grid -->
+<!-- <div
+  class="absolute inset-0 pointer-events-none"
+  :style="{
+    backgroundImage: `
+      linear-gradient(to right,  color-mix(in srgb, ${preferedColor} 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, ${preferedColor} 4%, transparent) 1px, transparent 1px)
+    `,
+    backgroundSize: '40px 40px'
+  }"
+  aria-hidden="true"
+/> -->
+
+  <!-- glow orb -->
+ <div
+  class="absolute inset-0 pointer-events-none"
+  :style="`background: radial-gradient(ellipse 55% 40% at 40% 50%, color-mix(in srgb, ${layout.preferedColor} 12%, transparent), transparent)`"
+  aria-hidden="true"
+/>
+
+  <!-- bottom fade to plain bg -->
+ <div class="absolute bottom-0 inset-x-0 h-40 pointer-events-none hero-fade" aria-hidden="true" />
 
 
 
@@ -323,6 +347,13 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
 </template>
 
 <style scoped>
+.hero-fade {
+  background: linear-gradient(to bottom, transparent, white);
+}
+:root.dark .hero-fade,
+.dark .hero-fade {
+  background: linear-gradient(to bottom, transparent, #0d0d0d);
+}
 /* ── reveal ───────────────────────────────────────────────── */
 .reveal-wrap[data-dir="down"] { --from:  28px; }
 .reveal-wrap[data-dir="up"]   { --from: -28px; }

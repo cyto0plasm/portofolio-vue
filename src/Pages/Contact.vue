@@ -1,51 +1,30 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { useContact } from '@/composables/firebase/useContact.js'
+import { computed } from 'vue'
 import { useLayoutStore } from '@/Stores/layout-store'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
+import { useContactStore } from '@/Stores/contact-store'
+
 useHead({
   title: "Connect with Zaki",
-  meta: [
-    { name: 'description', content: "Connect with Youssef Zaki " },
-  ],
-    link: [
-    {
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/images/favIconProtofolio2.ico'
-    }
-  ]
+  meta: [{ name: 'description', content: "Connect with Youssef Zaki" }],
+  link: [{ rel: 'icon', type: 'image/x-icon', href: '/images/favIconProtofolio2.ico' }]
 })
 
-const {t}= useI18n()
+const { t } = useI18n()
 const layout = useLayoutStore()
 const preferedColor = computed(() => layout.preferedColor ?? '#6ee7b7')
 
-const name    = ref('')
-const email   = ref('')
-const message = ref('')
-const focused = ref(null)
+// pinia store
+const contact = useContactStore()
 
-const { submitting, success, error, sendMessage } = useContact()
-
-const submitForm = async () => {
-  await sendMessage({ name: name.value, email: email.value, message: message.value })
-  if (success.value) { name.value = ''; email.value = ''; message.value = '' }
-}
-
-const fields = [
-  { id: 'name',  model: name,  type: 'text',  label: 'Your Name',     placeholder: 'Youssef Zaki',     prefix: '01' },
-  { id: 'email', model: email, type: 'email', label: 'Email Address', placeholder: 'you@example.com',  prefix: '02' },
-]
-
+// links
 const links = [
-  { label: 'GitHub',   href: 'https://github.com/cyto0plasm',              icon: 'GH' },
+  { label: 'GitHub', href: 'https://github.com/cyto0plasm', icon: 'GH' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/youssef-zakiz/', icon: 'LI' },
-  { label: 'Email',    href: 'mailto:yousifzaki017@gmail.com',             icon: '@'  },
+  { label: 'Email', href: 'mailto:yousifzaki017@gmail.com', icon: '@' },
 ]
 </script>
-
 <template>
   <section
 class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg:px-14 py-20 overflow-hidden bg-white dark:bg-[#0d0d0d]"
@@ -151,7 +130,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
         <!-- mono header -->
         <div class="flex items-center justify-between mb-1">
           <span class="font-mono text-[0.65rem] text-gray-400 dark:text-gray-500 tracking-widest uppercase">
-            // Contact Me
+            // {{ t('contact.formTitle') }}
           </span>
           <span
             class="font-mono text-[0.6rem] px-2 py-0.5 rounded-full border"
@@ -161,48 +140,48 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
               background:  'color-mix(in srgb, var(--c) 8%, transparent)',
             }"
           >
-            {{ submitting ? 'sending...' : success ? 'sent ✓' : 'ready' }}
+            {{ contact.submitting ? t('contact.submitting') : contact.success ? t('contact.sent') : t('contact.ready') }}
           </span>
         </div>
 
-        <form @submit.prevent="submitForm" class="flex flex-col gap-5" novalidate>
+        <form @submit.prevent="contact.submitForm" class="flex flex-col gap-5" novalidate>
 
           <!-- text + email fields -->
-          <div v-for="field in fields" :key="field.id" class="relative flex flex-col gap-1.5">
+          <div v-for="field in contact.fields" :key="field.id" class="relative flex flex-col gap-1.5">
             <label
               :for="field.id"
               class="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest transition-colors duration-200"
-              :style="{ color: focused === field.id ? preferedColor : undefined }"
-              :class="focused === field.id ? '' : 'text-gray-400 dark:text-gray-500'"
+              :style="{ color: contact.focused === field.id ? preferedColor : undefined }"
+              :class="contact.focused === field.id ? '' : 'text-gray-400 dark:text-gray-500'"
             >
               <span class="font-mono opacity-50">{{ field.prefix }}</span>
-              {{ field.label }}
+              {{ t(field.labelKey) }}
             </label>
             <div class="relative">
               <input
                 :id="field.id"
-                v-model="field.model.value"
+                v-model="field.model"
                 :type="field.type"
-                :placeholder="field.placeholder"
+                :placeholder="t(field.placeholderKey)"
                 required
                 autocomplete="off"
                 class="w-full rounded-xl border bg-transparent px-4 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 transition-all duration-200 focus:outline-none"
                 :style="{
-                  borderColor: focused === field.id
+                  borderColor: contact.focused === field.id
                     ? 'color-mix(in srgb, var(--c) 55%, transparent)'
                     : 'color-mix(in srgb, currentColor 12%, transparent)',
-                  boxShadow: focused === field.id
+                  boxShadow: contact.focused === field.id
                     ? '0 0 0 3px color-mix(in srgb, var(--c) 10%, transparent)'
                     : 'none',
                 }"
-                @focus="focused = field.id"
-                @blur="focused = null"
+                @focus="contact.focused = field.id"
+                @blur="contact.focused = null"
               />
               <!-- active bar -->
               <span
                 class="absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 pointer-events-none"
                 :style="{
-                  width:      focused === field.id ? '100%' : '0%',
+                  width:      contact.focused === field.id ? '100%' : '0%',
                   background: preferedColor,
                 }"
               />
@@ -214,8 +193,8 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
             <label
               for="message"
               class="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest transition-colors duration-200"
-              :style="{ color: focused === 'message' ? preferedColor : undefined }"
-              :class="focused === 'message' ? '' : 'text-gray-400 dark:text-gray-500'"
+              :style="{ color: contact.focused === 'message' ? preferedColor : undefined }"
+              :class="contact.focused === 'message' ? '' : 'text-gray-400 dark:text-gray-500'"
             >
               <span class="font-mono opacity-50">03</span>
               {{ t('contact.message') }}
@@ -223,31 +202,31 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
             <div class="relative">
               <textarea
                 id="message"
-                v-model="message"
-                placeholder="Hey Youssef, I have a project idea..."
+                v-model="contact.message"
+                :placeholder="t('contact.messagePlaceholder')"
                 rows="5"
                 required
                 class="w-full rounded-xl border bg-transparent px-4 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 resize-none transition-all duration-200 focus:outline-none"
                 :style="{
-                  borderColor: focused === 'message'
+                  borderColor: contact.focused === 'message'
                     ? 'color-mix(in srgb, var(--c) 55%, transparent)'
                     : 'color-mix(in srgb, currentColor 12%, transparent)',
-                  boxShadow: focused === 'message'
+                  boxShadow: contact.focused === 'message'
                     ? '0 0 0 3px color-mix(in srgb, var(--c) 10%, transparent)'
                     : 'none',
                 }"
-                @focus="focused = 'message'"
-                @blur="focused = null"
+                @focus="contact.focused = 'message'"
+                @blur="contact.focused = null"
               />
               <!-- char count -->
               <span class="absolute bottom-3 right-3 font-mono text-[0.6rem] text-gray-400 pointer-events-none select-none">
-                {{ message.length }}
+                {{ contact.message.length }}
               </span>
               <!-- active bar -->
               <span
                 class="absolute bottom-0 left-0 h-[2px] rounded-full transition-all duration-300 pointer-events-none"
                 :style="{
-                  width:      focused === 'message' ? '100%' : '0%',
+                  width:      contact.focused === 'message' ? '100%' : '0%',
                   background: preferedColor,
                 }"
               />
@@ -257,21 +236,21 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
           <!-- submit button -->
           <button
             type="submit"
-            :disabled="submitting || success"
+            :disabled="contact.submitting || contact.success"
             class="group relative mt-1 flex items-center justify-center gap-2.5 rounded-xl font-semibold text-sm py-3 px-6 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none"
             :style="{
-              background:  success ? 'color-mix(in srgb, var(--c) 18%, transparent)' : preferedColor,
-              color:       success ? preferedColor : '#0a0a0a',
-              boxShadow:   submitting || success ? 'none' : `0 4px 24px color-mix(in srgb, var(--c) 30%, transparent)`,
-              border:      success ? `1px solid color-mix(in srgb, var(--c) 35%, transparent)` : 'none',
+              background:  contact.success ? 'color-mix(in srgb, var(--c) 18%, transparent)' : preferedColor,
+              color:       contact.success ? preferedColor : '#0a0a0a',
+              boxShadow:   contact.submitting || contact.success ? 'none' : `0 4px 24px color-mix(in srgb, var(--c) 30%, transparent)`,
+              border:      contact.success ? `1px solid color-mix(in srgb, var(--c) 35%, transparent)` : 'none',
             }"
           >
             <!-- spinner -->
-            <svg v-if="submitting" class="animate-spin w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg v-if="contact.submitting" class="animate-spin w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
             </svg>
             <!-- check -->
-            <svg v-else-if="success" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg v-else-if="contact.success" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <!-- send arrow -->
@@ -279,7 +258,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
 
-            <span>{{ submitting ? t('contact.submitting') : success ? t('contact.success')  : t('contact.submit')  }}</span>
+            <span>{{ contact.submitting ? t('contact.submitting') : contact.success ? t('contact.success')  : t('contact.submit')  }}</span>
           </button>
 
           <!-- error feedback -->
@@ -289,11 +268,11 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
             leave-active-class="transition-all duration-300 ease-in"
             leave-to-class="opacity-0 -translate-y-1"
           >
-            <p v-if="error" class="text-xs font-medium text-red-400 flex items-center gap-1.5">
+            <p v-if="contact.error" class="text-xs font-medium text-red-400 flex items-center gap-1.5">
               <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              {{ error }}
+              {{ contact.error }}
             </p>
           </Transition>
 

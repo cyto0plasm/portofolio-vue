@@ -64,6 +64,7 @@
   "projects": {
     "h1": "Ce que j'ai",
     "h2": "Construit",
+    "desc": "Une sélection de mes travaux récents. Cliquez sur les projets pour voir plus de détails sur chacun d'eux.",
     "readme": "Readme",
     "close": "Fermer"
   },
@@ -73,12 +74,35 @@
     "h3": ".",
     "status": "Ouvert aux opportunités",
     "desc": "Vous avez un projet en tête, un poste à pourvoir, ou simplement envie de dire bonjour ? Envoyez-moi un message — je réponds sous 24 heures.",
+      "formTitle": "Contactez-moi maintenant",
+      "ready": "Prêt à envoyer votre message !",
+      "sent": "Message envoyé !",
     "name": "Votre nom",
     "email": "Votre email",
     "message": "Votre message",
+    "namePlaceholder": "Jean Dupont",
+    "emailPlaceholder": "you\\@example.com",
+      "messagePlaceholder": "Bonjour Youssef, je souhaite vous contacter à propos d'une opportunité de travail...",
     "submit": "Envoyer",
     "submitting": "Envoi en cours...",
     "success": "Message envoyé !",
     "error": "Échec de l'envoi du message."
-  }
+  },
+  "robo": {
+  "chip1": "Qui est Youssef?",
+  "chip2": "Meilleur projet?",
+  "chip3": "Sa pile?",
+  "chip4": "Le recruter →",
+  "tip1": "Qui a construit cela?",
+  "tip2": "Disponible pour travailler",
+  "tip3": "Pregúntame cualquier cosa →",
+  "tip4": "¿Desglose de la pila?",
+  "greeting": "Salut 👋 Je suis **Robo**, l'assistant virtuel de Youssef. N'hésitez pas à me poser des questions sur ses projets, ses outils ou ses disponibilités.",
+  "placeholder": "Posez-moi n'importe quelle question sur Youssef…",
+  "thinking": "Réfléchissement…",
+  "about": "À propos de Youssef",
+  "newProject": "Nouveau Projet",
+  "newTechnology": "Nouvelle Technologie",
+  "newCategory": "Nouvelle Catégorie"
+}
 }

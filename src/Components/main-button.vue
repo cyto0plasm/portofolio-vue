@@ -136,15 +136,15 @@ const bgStyle = computed(() => {
 /* main heartbeat animation */
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); }
-  25%, 75% { transform: scale(1.3); }
+  25%, 75% { transform: scale(1.2); }
   50% { transform: scale(1); }
 }
-.animate-heartbeat { animation: heartbeat 1s infinite ease-in-out; }
+.animate-heartbeat { animation: heartbeat 3.5s infinite ease-in-out; }
 
 /* slower heartbeat for glow circle */
 @keyframes heartbeat-slow {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.5); }
 }
-.animate-heartbeat-slow { animation: heartbeat-slow 2s infinite ease-in-out; }
+.animate-heartbeat-slow { animation: heartbeat-slow 4s infinite ease-in-out; }
 </style>
