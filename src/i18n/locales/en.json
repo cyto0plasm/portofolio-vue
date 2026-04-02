@@ -90,6 +90,13 @@
     "success":"Message Sent!",
     "error":"Failed to send message."
 },
+"footer": {
+  "tagline": "Crafting digital experiences with care.",
+  "nav": "Navigation",
+  "contact": "Get in touch",
+  "rights": "All rights reserved.",
+  "built": "Built with Vue 3 + Tailwind CSS"
+},
 "robo": {
   "chip1": "Who is Youssef?",
   "chip2": "Best project?",

@@ -1,8 +1,7 @@
 const CACHE_PREFIX = "robo_cache_";
 const CACHE_TTL_MS = 1000 * 60 * 60 * 6; // 6 hours
 
-const CACHEABLE_INTENTS = new Set(["GREETING", "HIRING", "ABOUT", "SKILLS", "CONTACT", "SOCIAL"]);
-
+const CACHEABLE_INTENTS = new Set(["GREETING", "HIRING", "ABOUT", "SKILLS"]);
 export const responseCache = {
   canCache(intent) {
     return CACHEABLE_INTENTS.has(intent);
@@ -39,8 +38,7 @@ export const responseCache = {
   },
 
   clear() {
-    Object.keys(localStorage)
-      .filter((k) => k.startsWith(CACHE_PREFIX))
-      .forEach((k) => localStorage.removeItem(k));
+    Object.keys(localStorage).filter(k => k.startsWith('robo_cache_')).forEach(k => localStorage.removeItem(k))
+
   },
 };

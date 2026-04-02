@@ -13,6 +13,7 @@ import { useRoute, useRouter } from 'vue-router'
 import '../app.css'
 import { useHead } from '@unhead/vue'
 import Flash from '@/Components/flash.vue'
+import Footer from './footer.vue'
 
 const isDev = import.meta.env.DEV
 
@@ -113,4 +114,8 @@ onMounted(() => {
   ⚙ admin
 </RouterLink> -->
   </div>
+  <div class="pointer-events-none -mt-24 h-24 w-full relative z-10
+            bg-gradient-to-b from-transparent to-[#222222]
+            hidden dark:block" />
+  <Footer />
 </template>

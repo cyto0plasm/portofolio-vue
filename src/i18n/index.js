@@ -17,19 +17,18 @@ const countryToLang = {
 };
 
 export async function detectLanguage() {
-  // Check saved preference
-  const saved = localStorage.getItem('lang');
-  if (saved) return saved;
+  const saved = localStorage.getItem('lang')
+  if (saved) return saved
 
   try {
-    // Detect by IP geolocation
-    const res = await fetch('https://ipwho.is/');
-    const data = await res.json();
-    const lang = countryToLang[data.country_code] || 'en';
-    return lang;
-  } catch (e) {
-    // Fallback to browser language
-    return navigator.language?.slice(0, 2) || 'en';
+   const res = await fetch('https://ipapi.co/json/')
+const data = await res.json()
+const lang = countryToLang[data.country_code] || 'en'
+    localStorage.setItem('lang', lang)   // save detected lang too
+    return lang
+  } catch {
+    const lang = navigator.language?.slice(0, 2) || 'en'
+    return countryToLang[lang] ?? lang   // normalize browser lang
   }
 }
 

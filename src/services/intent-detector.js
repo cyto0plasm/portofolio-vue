@@ -6,7 +6,7 @@ export function detectIntent(q) {
   if (/(linkedin|github|portfolio|social)/.test(q)) return "SOCIAL";
   if (/(contact|email|phone|reach|تواصل|معلومات التواصل)/.test(q)) return "CONTACT";
   if (/(project|taskly|pms|bills|lms|مشروع|تطبيق)/.test(q)) return "PROJECT";
-  if (/(skill|tech|stack|laravel|vue|flutter|مهارة|تقنية)/.test(q)) return "SKILLS";
+  if (/(skill|tech|stack|laravel|vue|flutter|winForms|مهارة|تقنية)/.test(q)) return "SKILLS";
   if (/(which|compare|best|vs|أي|مقارنة)/.test(q)) return "COMPARISON";
   if (/(who|about|youssef|مين|عن يوسف)/.test(q)) return "ABOUT";
   if (/(link|repo|url)/.test(q)) return "LINKS";

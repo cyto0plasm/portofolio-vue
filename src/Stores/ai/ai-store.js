@@ -3,8 +3,9 @@ import { ref, computed } from "vue";
 import { fetchRepos, fetchReadme } from "@/services/github-api";
 import { streamGroq } from "@/services/groq-api";
 import { detectIntent, detectMode } from "@/services/intent-detector";
-import { buildSystemPrompt } from "@/prompts/systemPrompt";
+import { buildSystemPrompt } from "@/prompts/systemPromptPro";
 import { responseCache } from "@/services/response-cache";
+import projectsData from '../../data/projects.json'
 
 const RATE_LIMIT_MS = 8000;
 let lastRequest = 0;
@@ -13,33 +14,47 @@ let isProcessingQueue = false;
 
 export const useRoboStore = defineStore("robo", () => {
   const messages = ref([]);
-  const projects = ref([]);
+  const localProjects = ref([]);   // from projects.json — rich data
+  const githubRepos = ref([]);     // from GitHub API — extra repos
   const streaming = ref(false);
   const isInitialized = ref(false);
   const userState = ref({ mode: "NORMAL" });
 
+  // AI gets full context: description + stack + github link
   const projectsContext = computed(() =>
-    projects.value.length
-      ? projects.value.map((p) => `• ${p.name}: ${p.description}`).join("\n")
-      : "No projects available."
+    localProjects.value.map(p =>
+      `• ${p.name}: ${p.short_description} | Stack: ${p.technologies.map(t => t.name).join(', ')} | GitHub: ${p.github_url}`
+    ).join('\n')
   );
 
-  const projectsMap = computed(() => {
-    const map = {};
-    projects.value.forEach((p) => { map[p.name.toLowerCase()] = p.url; });
-    return map;
+  // UI: featured = local, other = github repos not already in local
+  const allProjects = computed(() => {
+    const localNames = new Set(localProjects.value.map(p => p.name.toLowerCase()))
+    const other = githubRepos.value.filter(r => !localNames.has(r.name.toLowerCase()))
+    return { featured: localProjects.value, other }
   });
+
+  // backward compat — anything using store.projects still works
+  const projects = localProjects;
+
+const projectsMap = computed(() => {
+  const map = {};
+  localProjects.value.forEach((p) => { map[p.name.toLowerCase()] = p.github_url || p.url; });
+  githubRepos.value.forEach((r) => { map[r.name.toLowerCase()] = r.url; });
+  return map;
+});
 
   async function initStore() {
     if (isInitialized.value) return;
     isInitialized.value = true;
-    const repos = await fetchRepos();
-    projects.value = await Promise.all(
-      repos.slice(0, 12).map(async (repo) => ({
-        ...repo,
-        readme: await fetchReadme(repo.name),
-      }))
-    );
+
+    // local data — instant, always available
+    localProjects.value = projectsData;
+
+    // github repos — background, non-blocking
+    fetchRepos()
+      .then(repos => { githubRepos.value = repos; })
+      .catch(() => {});
   }
 
   function getHistory(limit) {
@@ -75,8 +90,7 @@ export const useRoboStore = defineStore("robo", () => {
       streaming.value = true;
 
       try {
-        // Cache hit
-        if (responseCache.canCache(intent)) {
+        if (responseCache.canCache(intent) && intent !== "HIRING") {
           const cached = responseCache.get(intent);
           if (cached) {
             messages.value[botIdx].text = cached;
@@ -84,7 +98,6 @@ export const useRoboStore = defineStore("robo", () => {
           }
         }
 
-        // API call with retry
         let text = "";
         for (let attempt = 0; attempt <= 2; attempt++) {
           try {
@@ -127,5 +140,5 @@ export const useRoboStore = defineStore("robo", () => {
   function reset() { messages.value = []; streaming.value = false; }
 
   initStore();
-  return { messages, streaming, projects, projectsMap, ask, reset };
+  return { messages, streaming, projects, allProjects, githubRepos, projectsMap, ask, reset };
 });

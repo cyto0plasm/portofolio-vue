@@ -258,17 +258,18 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
              <!-- CTA -->
 <div class="reveal-item flex flex-wrap items-center gap-3 mt-2" style="--i:8">
     <!-- Primary Button -->
+         <MainButton @click="goToContact"  ></MainButton>
+
     <RouterLink to="/projects"
    class="group relative text-white no-underline font-medium rounded-lg
           text-sm sm:text-base lg:text-lg
-          px-4 py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3
+          px-4 py-[.3rem] sm:px-4 sm:py-2 lg:px-4 lg:py-1
           transition-all duration-200 ease-out
           hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
    :style="{ background: layout.preferedColor, boxShadow: `0 1px 2px 0 rgb(0 0 0 / 0.05)`, '--focus-ring': layout.preferedColor }">
     {{ t('hero.cta1') }}
 </RouterLink>
-    <MainButton @click="goToContact"  ></MainButton>
 
    
 

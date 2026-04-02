@@ -14,6 +14,7 @@ export const NAV_COMMANDS = {
 export const PAGE_COMMANDS = {
   home:     { description: 'Open homepage',          path: '/',          role: 'any'   },
   projects: { description: 'Open projects page',     path: '/projects',  role: 'any'   },
+  contact: { description: 'Open contact me page',     path: '/contact',  role: 'any'   },
 };
 
 export const PAGE_COMMANDS_USER = {

@@ -260,7 +260,7 @@ watch(chatOpen, v =>
                 <a
                   v-for="p in robo.projects"
                   :key="p.name"
-                  :href="p.url"
+                  :href="p.github_url || p.url" 
                   target="_blank"
                   rel="noopener noreferrer"
                   class="flex items-center justify-between px-3 py-2 rounded-xl border text-[12px] transition-all hover:-translate-y-px group"
