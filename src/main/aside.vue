@@ -18,6 +18,7 @@ const langOpen = ref(false)
 const links = computed(() => [
   { label: t('nav.home'),     to: '/' },
   { label: t('nav.projects'), to: '/projects' },
+  { label: t('nav.contact'), to: '/contact' },
 ])
 
 const langs = [
