@@ -27,7 +27,7 @@ const links = [
 </script>
 <template>
   <section
-class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg:px-14 py-20 overflow-hidden bg-white dark:bg-[#0d0d0d]"
+class="relative mt-14 min-h-svh flex  items-center justify-center px-5 sm:px-8 lg:px-14 py-20 overflow-hidden bg-white dark:bg-[#0d0d0d]"
     :style="{ '--c': preferedColor }"
     aria-label="Contact section"
   >
@@ -51,75 +51,11 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
       aria-hidden="true"
     />
 
-    <div class="relative z-10 w-full max-w-5xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-start">
+    <div class="relative z-10 w-full max-w-5xl mx-auto grid  md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-start">
 
       <!-- ── LEFT: info ── -->
-      <div class="flex flex-col gap-6 pt-2">
-
-        <!-- status badge -->
-        <p class="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400">
-          <span class="inline-flex h-[7px] w-[7px] shrink-0 relative">
-            <span
-              class="absolute inset-0 rounded-full animate-ping"
-              :style="{ background: preferedColor }"
-            />
-            <span
-              class="relative h-full w-full rounded-full block"
-              :style="{ background: preferedColor }"
-            />
-          </span>
-          {{ t('contact.status') }}
-        </p>
-
-        <!-- heading -->
-        <h1 class="m-0 font-black leading-[0.88] tracking-tighter text-[clamp(2.6rem,7vw,4.5rem)]">
-          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h1') }}</span><br>
-          <span :style="{ color: preferedColor }">{{ t('contact.h2') }}</span><br>
-          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h3') }}</span>
-        </h1>
-
-        <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xs leading-relaxed">
-         {{ t('contact.desc') }}
-        </p>
-
-        <!-- quick links -->
-        <ul class="flex flex-col gap-3 mt-2 list-none p-0 m-0">
-          <li v-for="link in links" :key="link.label">
-            <a
-              :href="link.href"
-              target="_blank"
-              rel="noopener"
-              class="group inline-flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 no-underline transition-colors duration-200 hover:text-gray-900 dark:hover:text-gray-100"
-            >
-              <span
-                class="inline-flex items-center justify-center w-8 h-8 rounded-lg border font-mono text-[0.6rem] font-bold shrink-0 transition-all duration-200"
-                :style="{
-                  borderColor: 'color-mix(in srgb, var(--c) 30%, transparent)',
-                  color: preferedColor,
-                  background: 'color-mix(in srgb, var(--c) 7%, transparent)',
-                }"
-              >
-                {{ link.icon }}
-              </span>
-              <span class="group-hover:translate-x-0.5 transition-transform duration-200">{{ link.label }}</span>
-            </a>
-          </li>
-        </ul>
-
-        <!-- decorative dots -->
-        <svg class="mt-4 opacity-20" width="52" height="110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle
-            v-for="n in 30" :key="n"
-            :cx="((n-1) % 5) * 10 + 5"
-            :cy="Math.floor((n-1) / 5) * 18 + 9"
-            r="1.6"
-            :fill="preferedColor"
-          />
-        </svg>
-      </div>
-
-      <!-- ── RIGHT: form ── -->
-      <div
+     
+<div
         class="rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 backdrop-blur-xl"
         :style="{
           borderColor: 'color-mix(in srgb, var(--c) 18%, transparent)',
@@ -129,7 +65,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
 
         <!-- mono header -->
         <div class="flex items-center justify-between mb-1">
-          <span class="font-mono text-[0.65rem] text-gray-400 dark:text-gray-500 tracking-widest uppercase">
+          <span class="font-mono text-[0.8rem] text-gray-500 dark:text-gray-400 tracking-widest uppercase">
             // {{ t('contact.formTitle') }}
           </span>
           <span
@@ -277,6 +213,70 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
           </Transition>
 
         </form>
+      </div>
+      <!-- ── RIGHT: form ── -->
+       <div class="flex flex-col gap-6 pt-2">
+
+        <!-- status badge -->
+        <p class="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400">
+          <span class="inline-flex h-[7px] w-[7px] shrink-0 relative">
+            <span
+              class="absolute inset-0 rounded-full animate-ping"
+              :style="{ background: preferedColor }"
+            />
+            <span
+              class="relative h-full w-full rounded-full block"
+              :style="{ background: preferedColor }"
+            />
+          </span>
+          {{ t('contact.status') }}
+        </p>
+
+        <!-- heading -->
+        <h1 class="m-0 font-black leading-[0.88] tracking-tighter text-[clamp(2.6rem,7vw,4.5rem)]">
+          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h1') }}</span><br>
+          <span :style="{ color: preferedColor }">{{ t('contact.h2') }}</span><br>
+          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h3') }}</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xs leading-relaxed">
+         {{ t('contact.desc') }}
+        </p>
+
+        <!-- quick links -->
+        <ul class="flex flex-col gap-3 mt-2 list-none p-0 m-0">
+          <li v-for="link in links" :key="link.label">
+            <a
+              :href="link.href"
+              target="_blank"
+              rel="noopener"
+              class="group inline-flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 no-underline transition-colors duration-200 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              <span
+                class="inline-flex items-center justify-center w-8 h-8 rounded-lg border font-mono text-[0.6rem] font-bold shrink-0 transition-all duration-200"
+                :style="{
+                  borderColor: 'color-mix(in srgb, var(--c) 30%, transparent)',
+                  color: preferedColor,
+                  background: 'color-mix(in srgb, var(--c) 7%, transparent)',
+                }"
+              >
+                {{ link.icon }}
+              </span>
+              <span class="group-hover:translate-x-0.5 transition-transform duration-200">{{ link.label }}</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- decorative dots -->
+        <svg class="mt-4 opacity-20" width="52" height="110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle
+            v-for="n in 30" :key="n"
+            :cx="((n-1) % 5) * 10 + 5"
+            :cy="Math.floor((n-1) / 5) * 18 + 9"
+            r="1.6"
+            :fill="preferedColor"
+          />
+        </svg>
       </div>
 
     </div>
