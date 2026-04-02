@@ -21,7 +21,7 @@
         <div class="slash"></div>
 
         <div class="loading-ui">
-          <div class="loading-label text-gray-700 dark:text-gray-200 ">Loading...</div>
+          <div class="loading-label text-gray-700 dark:text-gray-200 ">{{ t('loading') }}</div>
           <div class="progress-track">
             <div class="progress-fill" :key="progressKey"></div>
           </div>
@@ -35,7 +35,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useLayoutStore } from '../Stores/layout-store'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const {t} = useI18n()
 const layout = useLayoutStore()
 const router = useRouter()                    
 
