@@ -3,17 +3,40 @@ import { computed, ref } from 'vue'
 import DarkMode from '../Components/dark-mode.vue'
 import { useLayoutStore } from '../Stores/layout-store.js'
 import X from '@/svg/x.vue'
+import CountryFlag from '@/svg/country-flag.vue'
 import { useRoute, RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import LangSwitcher from '@/Components/Lang-switcher.vue'
 
 const route = useRoute()
-const links = [
-  { label: 'Home',     to: '/' },
-  { label: 'Projects', to: '/projects' },
-]
-const isActive = (to) => to === '/' ? route.path === '/' : route.path.startsWith(to)
+const { locale, t } = useI18n()
 const layout = useLayoutStore()
 const showModeCommandText = ref(true)
 const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
+const langOpen = ref(false)
+
+const links = computed(() => [
+  { label: t('nav.home'),     to: '/' },
+  { label: t('nav.projects'), to: '/projects' },
+])
+
+const langs = [
+  { code: 'en', label: 'English', country: 'uk', short: 'EN' },
+  { code: 'ar', label: 'العربية', country: 'eg', short: 'AR' },
+]
+
+const currentLang = computed(() => locale.value)
+const currentLangObj = computed(() => langs.find(l => l.code === locale.value) ?? langs[0])
+
+const isActive = (to) => to === '/' ? route.path === '/' : route.path.startsWith(to)
+
+function selectLang(code) {
+  locale.value = code
+  localStorage.setItem('lang', code)
+  document.documentElement.dir  = code === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = code
+  langOpen.value = false
+}
 </script>
 
 <template>
@@ -28,7 +51,7 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
   </Transition>
 
   <!-- Panel -->
-  <aside class="fixed top-0 right-0 z-50 h-screen pointer-events-none">
+  <aside class="fixed top-0 right-0 left-auto z-50 h-screen pointer-events-none [direction:ltr]">
     <Transition
       enter-active-class="transition-transform duration-[380ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
       leave-active-class="transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
@@ -36,19 +59,20 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
       leave-to-class="translate-x-full"
     >
       <div
-        v-if="layout.asideOpen"
-        class="pointer-events-auto h-full flex flex-col
-               w-[240px] sm:w-[270px]
-               bg-[#f0f2f7] dark:bg-[#111318]
-               border-l border-black/[0.08] dark:border-white/[0.07]
-               shadow-[-8px_0_40px_rgba(0,0,0,0.10)]"
-      >
+    v-if="layout.asideOpen"
+    :dir="locale === 'ar' ? 'rtl' : 'ltr'"
+    class="pointer-events-auto h-full flex flex-col
+           w-[240px] sm:w-[270px]
+           bg-[#f0f2f7] dark:bg-[#111318]
+           border-l border-black/[0.08] dark:border-white/[0.07]
+           shadow-[-8px_0_40px_rgba(0,0,0,0.10)]"
+  >
         <!-- Header -->
         <div class="flex items-center justify-between px-4 pt-4 pb-3">
           <div class="flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full" :style="{ background: layout.getColor, boxShadow: `0 0 6px ${layout.getColor}80` }" />
             <span class="text-[0.72rem] font-semibold tracking-[0.08em] uppercase text-black/40 dark:text-white/30">
-              Preferences
+              {{ t('aside.theme') }}
             </span>
           </div>
           <button
@@ -82,7 +106,7 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
                 </svg>
               </div>
               <div>
-                <h2 class="text-[0.8rem] font-semibold text-neutral-900 dark:text-neutral-100">Color</h2>
+                <h2 class="text-[0.8rem] font-semibold text-neutral-900 dark:text-neutral-100">{{ t('aside.theme') }}</h2>
                 <p class="text-[0.68rem] text-neutral-400 dark:text-neutral-500">Accent color scheme</p>
               </div>
             </div>
@@ -118,12 +142,14 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
                         hover:bg-black/[0.05] dark:hover:bg-white/[0.07]
                         transition-colors duration-150">
               <div class="flex flex-col gap-0.5">
-                <span class="text-[0.78rem] font-medium text-neutral-800 dark:text-neutral-200">Dark Mode</span>
+                <span class="text-[0.78rem] font-medium text-neutral-800 dark:text-neutral-200">
+                  {{ t('aside.dark') }} Mode
+                </span>
                 <span
                   v-if="showModeCommandText"
                   @click="showModeCommandText = !showModeCommandText"
                   class="text-[0.65rem] text-neutral-400 dark:text-neutral-500 cursor-pointer"
-                >{{ layout.isDark ? 'Switch to Light' : 'Switch to Dark' }}</span>
+                >{{ layout.isDark ? t('aside.light') : t('aside.dark') }}</span>
                 <span
                   v-else
                   @click="showModeCommandText = !showModeCommandText"
@@ -136,9 +162,21 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
 
           <div class="mx-3 h-px bg-gradient-to-r from-transparent via-black/[0.08] dark:via-white/[0.07] to-transparent" />
 
+          <!-- Language section -->
+          <section class="flex flex-col gap-1.5 px-4 py-3">
+        <span class="text-[0.65rem] font-semibold tracking-[0.08em] uppercase text-black/30 dark:text-white/25 mb-1">
+          {{ t('aside.language') }}
+        </span>
+        <LangSwitcher  />
+      </section>
+
+          <div class="mx-3 h-px bg-gradient-to-r from-transparent via-black/[0.08] dark:via-white/[0.07] to-transparent" />
+
           <!-- Nav Links section -->
           <section class="flex flex-col gap-1.5 px-4 py-3">
-            <span class="text-[0.65rem] font-semibold tracking-[0.08em] uppercase text-black/30 dark:text-white/25 mb-1">Navigation</span>
+            <span class="text-[0.65rem] font-semibold tracking-[0.08em] uppercase text-black/30 dark:text-white/25 mb-1">
+              {{ t('aside.nav') }}
+            </span>
             <RouterLink
               v-for="item in links" :key="item.label"
               :to="item.to"
@@ -151,29 +189,32 @@ const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
             >
               {{ item.label }}
             </RouterLink>
-            <a href="/resume.pdf"
-   download="Youssef-Zaki_CV.pdf"
-   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md 
-          text-xs font-medium transition-all duration-200 ease-out
-          bg-gray-100 dark:bg-white/10 
-          text-gray-700 dark:text-gray-200
-          hover:bg-gray-200 dark:hover:bg-white/20 hover:-translate-y-0.5 
-          active:translate-y-0 active:scale-[0.98]
-          focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-    CV
-</a>
+
+            <a
+              href="/resume.pdf"
+              download="Youssef-Zaki_CV.pdf"
+              class="flex items-center gap-2 px-3 py-2 rounded-xl text-[0.82rem] font-medium border
+                     bg-black/[0.03] dark:bg-white/[0.04] border-black/[0.06] dark:border-white/[0.06]
+                     text-neutral-700 dark:text-neutral-300
+                     hover:bg-black/[0.06] dark:hover:bg-white/[0.07] transition-all duration-150"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              {{ t('nav.cv') }}
+            </a>
           </section>
 
         </div>
 
         <!-- Footer -->
         <div class="px-4 py-2.5 border-t border-black/[0.06] dark:border-white/[0.06] flex justify-center">
-          <span class="text-[0.65rem] tracking-wide text-neutral-400 dark:text-neutral-600">Changes apply instantly</span>
+          <span class="text-[0.65rem] tracking-wide text-neutral-400 dark:text-neutral-600">
+            {{ t('aside.bmessage') }}
+          </span>
         </div>
       </div>
     </Transition>

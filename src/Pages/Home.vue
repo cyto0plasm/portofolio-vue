@@ -8,7 +8,7 @@ import { useHead } from '@unhead/vue'
 
 
 useHead({
-  title: "Zaki's Home",
+  title: "Home",
   meta: [
     { name: 'description', content: "Youssef Zaki's Home Page" },
   ],

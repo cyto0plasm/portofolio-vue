@@ -9,7 +9,7 @@ import LazyMount    from '../Components/lazy-mount.vue'
 import Aside        from './aside.vue'
 import Nav          from './nav.vue'
 import ScrollButton from '@/Components/scrollButton.vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import '../app.css'
 import { useHead } from '@unhead/vue'
 
@@ -57,6 +57,13 @@ watch(() => layout.preferedColor, c => {
   document.documentElement.style.setProperty('--primary-color', c)
 }, { immediate: true }) 
 
+const route = useRoute()
+
+watch(() => route.fullPath, async () => {
+  sections.value = []
+  await nextTick()
+  setTimeout(detectSections, 300)
+})
 // const removeStart  = router.on('start', () => { layout.loading = true; sections.value = [] })
 // const removeFinish = router.on('finish', () => {
 //   layout.loading = false

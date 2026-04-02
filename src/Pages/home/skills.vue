@@ -3,6 +3,9 @@ import { storeToRefs } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 import { useHomeStore } from '../../Stores/home-store'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const homeStore = useHomeStore()
 const { categories, filteredTechnologies, activeCategory } = storeToRefs(homeStore)
@@ -39,10 +42,10 @@ watch(activeCategory, () => { currentPage.value = 1 })
         $ stack / technologies
       </p>
       <h2 class="text-4xl font-bold tracking-tight text-gray-700 dark:text-gray-200 leading-none">
-        Skills &amp; Tools
+        {{ t('skills.title') }}
       </h2>
       <p class="mt-3 text-zinc-500 text-base max-w-md">
-        Technologies I work with across my projects.
+        {{ t('skills.desc') }}
       </p>
     </div>
 
@@ -110,7 +113,7 @@ watch(activeCategory, () => { currentPage.value = 1 })
                dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed"
         @click="currentPage--"
       >
-        ← prev
+         {{ locale.value === 'ar' ?   t('buttons.prev')+' →' : '← '+t('buttons.prev')   }}
       </button>
 
       <!-- Dots -->
@@ -134,7 +137,8 @@ watch(activeCategory, () => { currentPage.value = 1 })
                dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed"
         @click="currentPage++"
       >
-        next →
+         {{ locale.value === 'ar' ?  t('buttons.next')+' ←' : t('buttons.next') + ' →' }}
+
       </button>
     </div>
   </section>

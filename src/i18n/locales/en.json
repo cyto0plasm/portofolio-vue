@@ -1,0 +1,86 @@
+{
+    "langs":{
+        "en":"English",
+        "ar":"Arabic",
+        "fr":"Français",
+        "es":"Español",
+        "zh":"Chinese",
+        "ja":"Japanese",
+        "en-us":"English US",
+        "en-gb":"English UK"
+    },
+  "nav": {
+    "logo1": "Youssef",
+    "logo2": "Adel Zaki",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact",
+    "cv": "CV"
+  },
+  "aside": {
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "nav": "Navigation",
+    "bmessage": "Changes apply instantly"
+  },
+  "buttons": {
+    "terminal": "Terminal",
+    "next": "Next",
+    "prev": "Previous",
+    "comments": "Comments",
+    "github": "GitHub",
+    "live": "Live Demo",
+    "linkedin": "LinkedIn",
+    "email": "Email"
+  },
+  "hero": {
+    "avil": "Available for new projects",
+    "fname": "Youssef",
+    "lname": "Zaki",
+    "subtitle": "Full-Stack Developer",
+      "h1": "I build websites and apps that work everywhere",
+    "h2": "Helping businesses and people solve problems with simple, powerful software.",
+    "stack": "Current Core Stack",
+   "api": "API",
+    "laravel": "Laravel",
+    "vue": "Vue",
+    "cta1": "View my work",
+    "contact": "Contact Me"
+  },
+  "comments":{
+    "title": "Comments",
+    "submit": "Post",
+    "name": "Name (optional)",
+    "placeholder": "Write your comment here...",
+    "noComments": "No comments yet. Be the first to comment!"
+  },
+    "skills": {
+    "title": "Skills and Technologies",
+    "desc": "The technologies I use in my projects."
+  }
+,
+"projects": {
+    "h1": "Things I've",
+    "h2": "Built",
+    "readme": "Readme",
+    "close": "Close"
+}
+,
+"contact":{
+    "h1":"Let's",
+    "h2":"Work",
+    "h3":"Together.",
+    "status":"Open for Opportunities",
+    "desc":"Have a project in mind, a role to fill, or just want to say hi? Drop a message — I respond within 24 hours.",
+    "name":"Your Name",
+    "email":"Your Email",
+    "message":"Your Message",
+    "submit":"Send Message",
+    "submitting":"Sending...",
+    "success":"Message Sent!",
+    "error":"Failed to send message."
+}
+}

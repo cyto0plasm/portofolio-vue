@@ -4,19 +4,23 @@ import { useRouter, useRoute, RouterLink } from 'vue-router'
 import ButtonBounce from '../Components/button-bounce.vue'
 import DarkMode from '../Components/dark-mode.vue'
 import { useLayoutStore } from '../Stores/layout-store.js'
+import { useI18n } from 'vue-i18n'
+import LangSwitcher from '@/Components/Lang-switcher.vue'
 
 defineEmits(['toggleAside'])
 
 const layout = useLayoutStore()
 const router = useRouter()
 const route  = useRoute()
+const { t ,locale} = useI18n()
+
 
 // ── Links (no backend = no auth/admin separation) ──────────────────────────
-const links = [
-  { label: 'Home',     to: '/' },
-  { label: 'Projects', to: '/projects' },
-  { label: 'Contact',  to: '/contact' },
-]
+const links = computed(() => [
+  { label: t('nav.home'),     to: '/' },
+  { label: t('nav.projects'), to: '/projects' },
+  { label: t('nav.contact'),  to: '/contact' },
+])
 
 // ── Active state via Vue Router ────────────────────────────────────────────
 const isActive = (to) => {
@@ -55,15 +59,8 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
     >
       <!-- Logo -->
       <RouterLink to="/" class="group flex items-center gap-0 no-underline select-none">
-        <span class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90">
-          Youssef&nbsp;
-        </span>
-        <span
-          class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200"
-          :style="{ color: layout.preferedColor }"
-        >
-          Zaki
-        </span>
+        <span class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200" :style="{ color: layout.preferedColor }">{{ t('nav.logo1') }}&nbsp;</span>
+        <span class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90">{{ t('nav.logo2') }} </span>
       </RouterLink>
 
       <!-- Nav links -->
@@ -71,39 +68,36 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         <li v-for="item in links" :key="item.label">
           <ButtonBounce :label="item.label" :href="item.to" :active="isActive(item.to)" />
         </li>
-        <a href="/resume.pdf"
-   download="Youssef-Zaki_CV.pdf"
-   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md 
-          text-xs font-medium transition-all duration-200 ease-out
-          bg-gray-100 dark:bg-white/10 
-          text-gray-700 dark:text-gray-200
-          hover:bg-gray-200 dark:hover:bg-white/20 hover:-translate-y-0.5 
-          active:translate-y-0 active:scale-[0.98]
-          focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-    CV
-</a>
       </ul>
 
-      <!-- Right controls -->
-      <div class="flex items-center gap-2.5">
-        <DarkMode class="hidden md:block"  />
-        <button
-          @click="layout.toggleAside()"
-          class="w-9 h-9 flex items-center justify-center rounded-lg
-                 border border-gray-200 dark:border-white/15
-                 text-gray-600 dark:text-white/70
-                 hover:bg-gray-100 dark:hover:bg-white/10
-                 hover:scale-105 active:scale-90
-                 transition-all duration-150 text-base"
-          aria-label="Toggle menu"
-        >
-          ☰
-        </button>
+      <!-- Right actions -->
+      <div class="flex items-center gap-2">
+        <a href="/resume.pdf" download="Youssef-Zaki_CV.pdf"
+           class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
+                  text-xs font-medium transition-all duration-200
+                  border border-gray-200 dark:border-white/15
+                  text-gray-600 dark:text-gray-300
+                  hover:bg-gray-100 dark:hover:bg-white/10 hover:-translate-y-0.5 active:scale-[0.98]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          {{ t('nav.cv') }}
+        </a>
+
+        <span class="hidden md:block w-px h-4 bg-gray-200 dark:bg-white/10" />
+        <LangSwitcher class="hidden md:block" />
+        <DarkMode class="hidden md:block" />
+
+        <button @click="layout.toggleAside()"
+                class="w-9 h-9 flex items-center justify-center rounded-lg
+                       border border-gray-200 dark:border-white/15
+                       text-gray-600 dark:text-white/70
+                       hover:bg-gray-100 dark:hover:bg-white/10
+                       hover:scale-105 active:scale-90 transition-all duration-150 text-base"
+                aria-label="Toggle menu">☰</button>
       </div>
     </nav>
   </transition>

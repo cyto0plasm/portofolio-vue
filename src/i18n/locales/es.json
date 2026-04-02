@@ -1,0 +1,84 @@
+{
+  "langs": {
+    "en": "Inglés",
+    "ar": "Árabe",
+    "fr": "Francés",
+    "es": "Español",
+    "zh": "Chino",
+    "ja": "Japonés",
+    "en-us": "Inglés EE. UU.",
+    "en-gb": "Inglés Reino Unido"
+  },
+  "nav": {
+    "logo1": "Youssef",
+    "logo2": "Adel Zaki",
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "contact": "Contacto",
+    "cv": "CV"
+  },
+  "aside": {
+    "language": "Idioma",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "auto": "Automático",
+    "nav": "Navegación",
+    "bmessage": "Los cambios se aplican al instante"
+  },
+  "buttons": {
+    "terminal": "Terminal",
+    "next": "Siguiente",
+    "prev": "Anterior",
+    "comments": "Comentarios",
+    "github": "GitHub",
+    "live": "Demostración",
+    "linkedin": "LinkedIn",
+    "email": "Correo"
+  },
+  "hero": {
+    "avil": "Disponible para nuevos proyectos",
+    "fname": "Youssef",
+    "lname": "Zaki",
+    "subtitle": "Desarrollador Full-Stack",
+    "h1": "Creo sitios web y aplicaciones que funcionan en todas partes",
+    "h2": "Ayudando a empresas y personas a resolver problemas con software simple y potente.",
+    "stack": "Tecnologías principales",
+    "api": "API",
+    "laravel": "Laravel",
+    "vue": "Vue",
+    "cta1": "Ver mi trabajo",
+    "contact": "Contáctame"
+  },
+  "comments": {
+    "title": "Comentarios",
+    "submit": "Publicar",
+    "name": "Nombre (opcional)",
+    "placeholder": "Escribe tu comentario aquí...",
+    "noComments": "Todavía no hay comentarios. ¡Sé el primero en comentar!"
+  },
+  "skills": {
+    "title": "Habilidades y Tecnologías",
+    "desc": "Las tecnologías que utilizo en mis proyectos."
+  },
+  "projects": {
+    "h1": "Cosas que he",
+    "h2": "Construido",
+    "readme": "Readme",
+    "close": "Cerrar"
+  },
+  "contact": {
+    "h1": "Vamos a",
+    "h2": "Trabajar",
+    "h3": "Juntos.",
+    "status": "Disponible para oportunidades",
+    "desc": "¿Tienes un proyecto en mente, un puesto que cubrir, o solo quieres saludar? Envía un mensaje — respondo en 24 horas.",
+    "name": "Tu nombre",
+    "email": "Tu correo",
+    "message": "Tu mensaje",
+    "submit": "Enviar mensaje",
+    "submitting": "Enviando...",
+    "success": "¡Mensaje enviado!",
+    "error": "Error al enviar el mensaje."
+  }
+}

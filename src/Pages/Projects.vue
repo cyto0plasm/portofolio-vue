@@ -6,9 +6,10 @@ import { useLayoutStore } from '@/Stores/layout-store'
 import { useReadmeStore } from '@/Stores/readme-store'
 import { useScroll }      from '@/composables/useScrollReveal.js'
 import { useHead } from '@unhead/vue'
-
+import { useI18n } from 'vue-i18n'
+const {t} = useI18n()
 useHead({
-  title: "Zaki's Projects",
+  title: "Projects",
   meta: [
     { name: 'description', content: "Youssef Zaki's Projects Page" },
   ],
@@ -75,6 +76,8 @@ function md(raw, project) {
 
 <template>
   <section
+  id="projects"
+  data-section
     ref="pageRef"
     class="reveal-wrap min-h-screen px-5 sm:px-8 lg:px-14 pt-28 pb-16 max-w-4xl mx-auto visible"
     :data-dir="direction ?? 'down'"
@@ -85,8 +88,8 @@ function md(raw, project) {
         Portfolio / Projects
       </p>
       <h1 class="reveal-item font-black leading-[.9] tracking-tighter text-[clamp(2rem,6vw,3.5rem)]" style="--i:1">
-        <span class="block text-gray-700 dark:text-gray-300">Things I've</span>
-        <span class="block" :style="{ color: mainColor }">Built</span>
+        <span class="block text-gray-700 dark:text-gray-300">{{ t('projects.h1') }}</span>
+        <span class="block" :style="{ color: mainColor }">{{ t('projects.h2') }}</span>
       </h1>
     </div>
 
@@ -147,7 +150,7 @@ function md(raw, project) {
               class="transition-transform duration-300 inline-block"
               :style="openId === p.id ? 'transform:rotate(180deg)' : ''"
             >▼</span>
-            {{ openId === p.id ? 'close' : 'readme' }}
+            {{ openId === p.id ? t('projects.close') : t('projects.readme') }}
           </span>
         </div>
       </div>

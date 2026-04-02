@@ -26,12 +26,15 @@
         <div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-3 lg:h-3 rounded-full bg-green-400 animate-heartbeat"></div>
       </div>
 
-      <div>Contact Me</div>
+      <div>{{ t('hero.contact') }}</div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t ,locale} = useI18n()
+
 
 const props = defineProps({
   color: { type: String, default: '#45afed' },

@@ -1,22 +1,33 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 import { useLayoutStore } from '../../Stores/layout-store'
 // import FloatingWords from '@/Components/floating-words.vue'
 import Badges from '@/svg/badges.vue'
 import MainButton from '@/Components/main-button.vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t ,locale} = useI18n()
 
 const router = useRouter()
 const goToContact = () => {
   router.push('/contact')
 }
+const firstName = computed(() => t('hero.fname'))
+const lastName = computed(() => t('hero.lname'))
+const role = computed(() => t('hero.subtitle'))
+
+const tags = computed(() => [
+  t('hero.laravel'),
+  t('hero.vue'),
+  t('hero.api')
+])
+
 
 const props = defineProps({
     preferedColor: { type: String, default: '#6ee7b7' },
-    name: { type: String, default: 'Youssef' },
-    lastName: { type: String, default: 'Zaki' },
-    role: { type: String, default: 'Full-Stack Developer' },
+    
     tags: { type: Array, default: () => ['Structure', 'Build', 'Maintain'] },
     available: { type: Boolean, default: true },
     photoSrc: { type: String, default: '/images/me.webp' },
@@ -113,6 +124,15 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
     cx: (i % 5) * 10 + 5,
     cy: Math.floor(i / 5) * 18 + 9,
 }))
+const shiftColor = (color, darken = 10, desaturate = 10) => {
+  return `
+    color-mix(
+      in hsl,
+      ${color} ${80 - darken}%,
+      black ${darken}%
+    )
+  `
+}
 </script>
 
 <template>
@@ -142,12 +162,12 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
                    class="reveal-item m-0 flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400"
                    style="--i:0" aria-live="polite">
                     <Badges status="done" :size="28" />
-                    Available for new projects
+                    {{ t('hero.avil') }}
                 </p>
 
                 <div class="flex items-center justify-start gap-6">
                     <h1 class="m-0 flex flex-col font-black leading-[0.9] tracking-tighter text-[clamp(2.5rem,8vw,5rem)]">
-                        <span class="reveal-item text-gray-700 dark:text-gray-300" style="--i:1">{{ name }}</span>
+                        <span class="reveal-item text-gray-700 dark:text-gray-300" style="--i:1">{{ firstName }}</span>
                         <span class="reveal-item" :style="{ '--i': 2, color: preferedColor }">{{ lastName }}</span>
                     </h1>
 
@@ -158,7 +178,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
                             @mousemove="mobile.onMouseMove" @mouseenter="mobile.onMouseEnter" @mouseleave="mobile.onMouseLeave">
                             <div class="absolute inset-0 rounded-xl rotate-3 opacity-30 pointer-events-none -z-10"
                                  :style="{ background: preferedColor }" />
-                            <img :src="photoSrc" :alt="`${name} ${lastName}`"
+                            <img :src="photoSrc" :alt="`${firstName} ${lastName}`"
                                 class="w-full h-full object-cover object-top block rounded-xl ring-1 ring-gray-200 shadow-lg"
                                 :style="mobile.imgStyle.value" loading="eager" decoding="async" draggable="false" />
                             <div class="absolute inset-0 rounded-xl pointer-events-none z-10 transition-opacity duration-300"
@@ -169,12 +189,12 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
                 </div>
 
                 <!-- role + terminal -->
-                <div class="reveal-item flex flex-wrap items-center gap-3" style="--i:4">
+                <div class="reveal-item flex flex-wrap items-center gap-4 lg:gap-8 " style="--i:4">
                     <span class="font-bold tracking-wide text-[clamp(0.9rem,2vw,1.25rem)]"
                           :style="{ color: preferedColor }">{{ role }}</span>
                     <button class="terminal-btn px-3 py-1.5 rounded border font-mono text-xs font-semibold cursor-pointer transition-transform hover:-translate-y-px"
-                        :style="{ '--c': preferedColor }" @click="openTerminal" aria-label="Open terminal">
-                        <span class="blink" aria-hidden="true">_</span> Terminal
+                      :style="{ color: shiftColor(preferedColor, 10) }" @click="openTerminal" aria-label="Open terminal">
+                        <span class="blink" aria-hidden="true">_</span> {{ t('buttons.terminal') }}
                     </button>
                 </div>
 
@@ -184,17 +204,16 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
 <div class="reveal-item flex flex-col gap-4" style="--i:5">
   <div class="flex flex-col">
     <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100">
-      Building cross-platform digital experiences.
+      {{ t('hero.h1') }}
     </h2>
     <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-full sm:max-w-lg">
-      web, mobile, and desktop systems. 
-      Turning complex problems into elegant software.
+      {{ t('hero.h2') }}
     </p>
   </div>
 
   <div class="flex flex-col gap-2">
     <span class="text-[9px] sm:text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 font-bold">
-      Core Stack
+      {{ t('hero.stack') }}
     </span>
     <ul class="flex flex-wrap gap-2 list-none p-0 m-0">
       <li v-for="(tag, i) in tags" :key="tag"
@@ -202,8 +221,8 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
                  border-gray-200 dark:border-white/10
                  bg-white dark:bg-white/5
                  text-gray-600 dark:text-gray-300
-                 hover:border-blue-400 dark:hover:border-blue-500
-                 hover:text-blue-600 dark:hover:text-blue-400
+                 hover:border-[#54debd] 
+                 font-semibold  
                  hover:-translate-y-0.5 transition-all duration-300"
           :style="`--i:${6 + i}`">
         <span class="opacity-40">&lt;</span>{{ tag }}<span class="opacity-40">/&gt;</span>
@@ -223,7 +242,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
           hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
    :style="{ background: layout.preferedColor, boxShadow: `0 1px 2px 0 rgb(0 0 0 / 0.05)`, '--focus-ring': layout.preferedColor }">
-    View My Work
+    {{ t('hero.cta1') }}
 </RouterLink>
     <MainButton @click="goToContact"  ></MainButton>
 
@@ -266,7 +285,7 @@ const dots = Array.from({ length: 50 }, (_, i) => ({
                             class="photo-frame relative w-44 h-52 md:w-52 md:h-64 lg:w-80 lg:h-96 rounded-2xl overflow-hidden select-none cursor-crosshair">
                             <div class="absolute inset-0 rounded-2xl rotate-3 opacity-30 pointer-events-none -z-10"
                                  :style="{ background: preferedColor }" />
-                            <img :src="photoSrc" :alt="`${name} ${lastName}`"
+                            <img :src="photoSrc" :alt="`${firstName} ${lastName}`"
                                 class="w-full h-full object-cover object-top block rounded-2xl ring-1 ring-gray-200 shadow-xl"
                                 :style="desktop.imgStyle.value" loading="eager" decoding="async" draggable="false" />
                             <div class="absolute inset-0 rounded-2xl pointer-events-none z-10 transition-opacity duration-300"

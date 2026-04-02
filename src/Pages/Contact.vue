@@ -2,7 +2,23 @@
 import { ref, computed } from 'vue'
 import { useContact } from '@/composables/firebase/useContact.js'
 import { useLayoutStore } from '@/Stores/layout-store'
+import { useI18n } from 'vue-i18n'
+import { useHead } from '@unhead/vue'
+useHead({
+  title: "Connect with Zaki",
+  meta: [
+    { name: 'description', content: "Connect with Youssef Zaki " },
+  ],
+    link: [
+    {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/images/favIconProtofolio2.ico'
+    }
+  ]
+})
 
+const {t}= useI18n()
 const layout = useLayoutStore()
 const preferedColor = computed(() => layout.preferedColor ?? '#6ee7b7')
 
@@ -73,19 +89,18 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
               :style="{ background: preferedColor }"
             />
           </span>
-          Open to opportunities
+          {{ t('contact.status') }}
         </p>
 
         <!-- heading -->
         <h1 class="m-0 font-black leading-[0.88] tracking-tighter text-[clamp(2.6rem,7vw,4.5rem)]">
-          <span class="text-gray-700 dark:text-gray-200">Let's</span><br>
-          <span :style="{ color: preferedColor }">Work</span><br>
-          <span class="text-gray-700 dark:text-gray-200">Together.</span>
+          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h1') }}</span><br>
+          <span :style="{ color: preferedColor }">{{ t('contact.h2') }}</span><br>
+          <span class="text-gray-700 dark:text-gray-200">{{ t('contact.h3') }}</span>
         </h1>
 
         <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xs leading-relaxed">
-          Have a project in mind, a role to fill, or just want to say hi?
-          Drop a message — I respond within 24 hours.
+         {{ t('contact.desc') }}
         </p>
 
         <!-- quick links -->
@@ -136,7 +151,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
         <!-- mono header -->
         <div class="flex items-center justify-between mb-1">
           <span class="font-mono text-[0.65rem] text-gray-400 dark:text-gray-500 tracking-widest uppercase">
-            // new_message.vue
+            // Contact Me
           </span>
           <span
             class="font-mono text-[0.6rem] px-2 py-0.5 rounded-full border"
@@ -203,7 +218,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
               :class="focused === 'message' ? '' : 'text-gray-400 dark:text-gray-500'"
             >
               <span class="font-mono opacity-50">03</span>
-              Your Message
+              {{ t('contact.message') }}
             </label>
             <div class="relative">
               <textarea
@@ -264,7 +279,7 @@ class="relative mt-14 min-h-svh flex items-center justify-center px-5 sm:px-8 lg
               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
 
-            <span>{{ submitting ? 'Sending…' : success ? 'Message Sent!' : 'Send Message' }}</span>
+            <span>{{ submitting ? t('contact.submitting') : success ? t('contact.success')  : t('contact.submit')  }}</span>
           </button>
 
           <!-- error feedback -->

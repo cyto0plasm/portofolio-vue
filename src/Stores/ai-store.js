@@ -30,6 +30,10 @@ export const useRoboStore = defineStore('robo', () => {
 
   // ── GitHub Logic ─────────────────────────────────────────────
   async function fetchRepos() {
+      if (!navigator.onLine) {
+    console.warn('⚠️ Offline — skipping GitHub fetch')
+    return []
+  }
     try {
       const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`, {
         headers: import.meta.env.VITE_GITHUB_TOKEN 
@@ -116,6 +120,14 @@ export const useRoboStore = defineStore('robo', () => {
 
   // ── Core Actions ─────────────────────────────────────────────
   async function ask(question, onToken) {
+    if (!question || streaming.value) return
+
+  if (!navigator.onLine) {
+    messages.value.push({ role: 'user', text: question })
+    messages.value.push({ role: 'bot', text: "⚠️ You're offline. Please check your connection." })
+    return
+  }
+  
     if (!question || streaming.value) return
     
     // Ensure data is loaded before first question

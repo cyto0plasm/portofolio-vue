@@ -1,0 +1,84 @@
+{
+  "langs": {
+    "en": "Anglais",
+    "ar": "Arabe",
+    "fr": "Français",
+    "es": "Espagnol",
+    "zh": "Chinois",
+    "ja": "Japonais",
+    "en-us": "Anglais (US)",
+    "en-gb": "Anglais (UK)"
+  },
+  "nav": {
+    "logo1": "Youssef",
+    "logo2": "Adel Zaki",
+    "home": "Accueil",
+    "projects": "Projets",
+    "contact": "Contact",
+    "cv": "CV"
+  },
+  "aside": {
+    "language": "Langue",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "auto": "Automatique",
+    "nav": "Navigation",
+    "bmessage": "Les changements sont appliqués immédiatement"
+  },
+  "buttons": {
+    "terminal": "Terminal",
+    "next": "Suivant",
+    "prev": "Précédent",
+    "comments": "Commentaires",
+    "github": "GitHub",
+    "live": "Démo en ligne",
+    "linkedin": "LinkedIn",
+    "email": "Email"
+  },
+  "hero": {
+    "avil": "Disponible pour de nouveaux projets",
+    "fname": "Youssef",
+    "lname": "Zaki",
+    "subtitle": "Développeur Full-Stack",
+    "h1": "Je crée des sites et applications qui fonctionnent partout",
+    "h2": "J'aide les entreprises et les particuliers à résoudre des problèmes avec des logiciels simples et efficaces.",
+    "stack": "Technologies principales",
+    "api": "API",
+    "laravel": "Laravel",
+    "vue": "Vue",
+    "cta1": "Voir mes réalisations",
+    "contact": "Contactez-moi"
+  },
+  "comments": {
+    "title": "Commentaires",
+    "submit": "Publier",
+    "name": "Nom (optionnel)",
+    "placeholder": "Écrivez votre commentaire ici...",
+    "noComments": "Aucun commentaire pour le moment. Soyez le premier à commenter !"
+  },
+  "skills": {
+    "title": "Compétences et Technologies",
+    "desc": "Les technologies que j'utilise dans mes projets."
+  },
+  "projects": {
+    "h1": "Ce que j'ai",
+    "h2": "Construit",
+    "readme": "Readme",
+    "close": "Fermer"
+  },
+  "contact": {
+    "h1": "Travaillons",
+    "h2": "Ensemble",
+    "h3": ".",
+    "status": "Ouvert aux opportunités",
+    "desc": "Vous avez un projet en tête, un poste à pourvoir, ou simplement envie de dire bonjour ? Envoyez-moi un message — je réponds sous 24 heures.",
+    "name": "Votre nom",
+    "email": "Votre email",
+    "message": "Votre message",
+    "submit": "Envoyer",
+    "submitting": "Envoi en cours...",
+    "success": "Message envoyé !",
+    "error": "Échec de l'envoi du message."
+  }
+}

@@ -1,126 +1,237 @@
 import { db, auth } from '@/firebase'
-import { doc, onSnapshot, updateDoc, increment, collection, addDoc, query, where, orderBy, serverTimestamp } from 'firebase/firestore'
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp
+} from 'firebase/firestore'
 import { signInAnonymously } from 'firebase/auth'
 import { ref, onMounted, onUnmounted } from 'vue'
+
+/* -------------------- HELPERS -------------------- */
+
+async function ensureAuth() {
+  if (!auth.currentUser) {
+    await signInAnonymously(auth)
+  }
+}
+
+function safeDoc(collectionName, id) {
+  if (!id) throw new Error(`${collectionName} id is required`)
+  return doc(db, collectionName, id)
+}
+
+function safeGet(storage, key) {
+  try {
+    return storage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+function safeSet(storage, key, value) {
+  try {
+    storage.setItem(key, value)
+  } catch {}
+}
+
+function safeRemove(storage, key) {
+  try {
+    storage.removeItem(key)
+  } catch {}
+}
+
+/* -------------------- PROJECT STATS -------------------- */
 
 export function useProjectStats(projectId) {
   const views = ref(0)
   const likes = ref(0)
-  const liked = ref(!!localStorage.getItem(`liked_${projectId}`))
+  const liked = ref(!!safeGet(localStorage, `liked_${projectId}`))
 
   let unsub = null
 
   onMounted(async () => {
-  // Start listener
-  unsub = onSnapshot(doc(db, 'projects', projectId), (snap) => {
-    if (snap.exists()) {
-      views.value = snap.data().views ?? 0
-      likes.value = snap.data().likes ?? 0
+    if (!projectId) return
+
+    const projectRef = safeDoc('projects', projectId)
+
+    // Listener
+    unsub = onSnapshot(
+      projectRef,
+      (snap) => {
+        if (!snap.exists()) return
+
+        const data = snap.data()
+        views.value = data?.views ?? 0
+        likes.value = data?.likes ?? 0
+      },
+      (err) => console.error('[stats] snapshot error:', err)
+    )
+
+    // View tracking (once per session)
+    const sessionKey = `viewed_${projectId}`
+
+    if (!safeGet(sessionStorage, sessionKey)) {
+      try {
+        await ensureAuth()
+        if (navigator.onLine) {
+      await updateDoc(projectRef, { views: increment(1) })
+    } else {
+      console.warn('Offline, skipping view increment')
+    }
+        safeSet(sessionStorage, sessionKey, '1')
+      } catch (err) {
+        console.error('[stats] increment view failed:', err)
+      }
     }
   })
 
-  // Increment views only once per session
-  const sessionKey = `viewed_${projectId}`
-  if (!sessionStorage.getItem(sessionKey)) {
-    try {
-      // Make sure user is authenticated
-      if (!auth.currentUser) {
-        await signInAnonymously(auth)
-      }
-      await updateDoc(doc(db, 'projects', projectId), { views: increment(1) })
-      sessionStorage.setItem(sessionKey, '1')
-    } catch (err) {
-      console.error('Failed to increment views:', err)
-    }
-  }
-})
-
-  onUnmounted(() => unsub?.())
+  onUnmounted(() => {
+    if (typeof unsub === 'function') unsub()
+  })
 
   async function toggleLike() {
+    if (!projectId) return
+
+     if (!navigator.onLine) {
+    console.warn('⚠️ Offline — like not saved')
+    return
+  }
+  
+    const projectRef = safeDoc('projects', projectId)
+    const key = `liked_${projectId}`
+
+    const alreadyLiked = !!safeGet(localStorage, key)
+
     try {
-      if (!auth.currentUser) await signInAnonymously(auth)
-      const alreadyLiked = !!localStorage.getItem(`liked_${projectId}`)
-      await updateDoc(doc(db, 'projects', projectId), {
+      await ensureAuth()
+
+      await updateDoc(projectRef, {
         likes: increment(alreadyLiked ? -1 : 1)
       })
-      alreadyLiked
-        ? localStorage.removeItem(`liked_${projectId}`)
-        : localStorage.setItem(`liked_${projectId}`, '1')
+
+      if (alreadyLiked) {
+        safeRemove(localStorage, key)
+      } else {
+        safeSet(localStorage, key, '1')
+      }
+
       liked.value = !alreadyLiked
     } catch (err) {
-      console.error('Failed to toggle like:', err)
+      console.error('[stats] toggle like failed:', err)
     }
   }
 
   return { views, likes, liked, toggleLike }
 }
 
-export function useComments(slug) {
+/* -------------------- COMMENTS -------------------- */
+
+export function useComments(projectId) {
   const comments = ref([])
   let unsub = null
 
   onMounted(() => {
+    if (!projectId) return
+
     const q = query(
       collection(db, 'comments'),
-      where('projectId', '==', slug),
+      where('projectId', '==', projectId),
       orderBy('createdAt', 'desc')
     )
-    unsub = onSnapshot(q, snap => {
-      comments.value = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-    })
+
+    unsub = onSnapshot(
+      q,
+      (snap) => {
+        comments.value = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data()
+        }))
+      },
+      (err) => console.error('[comments] snapshot error:', err)
+    )
   })
 
-  onUnmounted(() => unsub?.())
+  onUnmounted(() => {
+    if (typeof unsub === 'function') unsub()
+  })
 
-  async function addComment(text, author) {
+  async function addComment(text, author = 'Anonymous') {
+    if (!projectId || !text?.trim()) return
+
     try {
-      if (!auth.currentUser) await signInAnonymously(auth)
+      await ensureAuth()
+
       await addDoc(collection(db, 'comments'), {
-        projectId: slug, text, author, createdAt: serverTimestamp()
+        projectId,
+        text: text.trim(),
+        author,
+        createdAt: serverTimestamp()
       })
     } catch (err) {
-      console.error('Failed to add comment:', err)
+      console.error('[comments] add failed:', err)
     }
   }
 
   return { comments, addComment }
 }
 
-// ✅ Fix: accept projectSlug as a parameter
-export function useReplies(commentId, projectSlug) {
+/* -------------------- REPLIES -------------------- */
+
+export function useReplies(commentId, projectId) {
   const replies = ref([])
   let unsub = null
 
   onMounted(() => {
+    if (!commentId) return
+
     const q = query(
       collection(db, 'comments', commentId, 'replies'),
       orderBy('createdAt', 'asc')
     )
-    // ✅ Fix: assign unsub correctly inside onMounted
-    unsub = onSnapshot(q, snap => {
-      replies.value = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-    })
+
+    unsub = onSnapshot(
+      q,
+      (snap) => {
+        replies.value = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data()
+        }))
+      },
+      (err) => console.error('[replies] snapshot error:', err)
+    )
   })
 
-  onUnmounted(() => unsub?.())
+  onUnmounted(() => {
+    if (typeof unsub === 'function') unsub()
+  })
 
-  // ✅ Fix: addReply is now properly inside the composable scope
-  async function addReply(text, author) {
+  async function addReply(text, author = 'Anonymous') {
+    if (!commentId || !text?.trim()) return
+
     try {
-      if (!auth.currentUser) await signInAnonymously(auth)
+      await ensureAuth()
+
       await addDoc(collection(db, 'comments', commentId, 'replies'), {
-        text,
-        author: author || 'Anonymous',
+        text: text.trim(),
+        author,
         createdAt: serverTimestamp()
       })
-      if (projectSlug) {
-        await updateDoc(doc(db, 'projects', projectSlug), {
+
+      // optional project counter
+      if (projectId) {
+        await updateDoc(safeDoc('projects', projectId), {
           commentCount: increment(1)
         })
       }
     } catch (err) {
-      console.error('Failed to add reply:', err)
+      console.error('[replies] add failed:', err)
     }
   }
 
