@@ -6,7 +6,7 @@ import X from '@/svg/x.vue'
 import CountryFlag from '@/svg/country-flag.vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import LangSwitcher from '@/Components/Lang-switcher.vue'
+import LangSwitcher from '@/Components/lang-switcher.vue'
 
 const route = useRoute()
 const { locale, t } = useI18n()

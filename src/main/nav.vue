@@ -5,7 +5,7 @@ import ButtonBounce from '../Components/button-bounce.vue'
 import DarkMode from '../Components/dark-mode.vue'
 import { useLayoutStore } from '../Stores/layout-store.js'
 import { useI18n } from 'vue-i18n'
-import LangSwitcher from '@/Components/Lang-switcher.vue'
+import LangSwitcher from '@/Components/lang-switcher.vue'
 
 defineEmits(['toggleAside'])
 
