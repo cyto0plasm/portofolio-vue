@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoboStore } from '@/Stores/ai-store'
+import { useRoboStore } from '@/Stores/ai/ai-store'
 import DarkMode from '@/Components/dark-mode.vue'
 
 // ── Core ──────────────────────────────────────────────────────────
