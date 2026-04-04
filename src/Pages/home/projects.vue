@@ -77,8 +77,8 @@ const typeLabel = computed(() => {
             :slug="project.slug"
             :force-open="openCommentSlug === project.slug"
           />
-          <Devider />
         </div>
+        <Devider />
       </template>
 
       <Devider />
