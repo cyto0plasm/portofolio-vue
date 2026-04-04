@@ -2,8 +2,10 @@
   {
     "id": 1,
     "name": "Taskly - task & project manager",
+    "name_ar": "Taskly - مدير المهام والمشاريع",
     "slug": "taskly",
     "short_description": "Modern SPA web application for managing tasks, projects, and deadlines efficiently, helping users stay organized and productive.",
+    "short_description_ar": "تطبيق ويب حديث لإدارة المهام والمشاريع والمواعيد النهائية بكفاءة — بيساعدك تفضل منظم ومنتج في شغلك.",
     "logo": "/images/projects/taskly/taskly_logo.svg",
     "github_url": "https://github.com/cyto0plasm/Taskly-Vue",
     "live_url": null,
@@ -14,30 +16,32 @@
     "start_date": "2025-10-01T00:00:00.000000Z",
     "end_date": "2026-03-01T00:00:00.000000Z",
     "images": [
-      { "id": 1, "path": "/images/projects/taskly/main.png" },
-      { "id": 2, "path": "/images/projects/taskly/projects-white.png" },
-      { "id": 3, "path": "/images/projects/taskly/Canvas.png" }
+      { "id": 1, "path": "/images/projects/taskly/main.webp" },
+      { "id": 2, "path": "/images/projects/taskly/projects-white.webp" },
+      { "id": 3, "path": "/images/projects/taskly/Canvas.webp" }
     ],
     "technologies": [
-      { "id": 101, "name": "Laravel", "icon": "/technologies/laravel.svg", "category": { "name": "Frameworks" } },
-      { "id": 101, "name": "PHP", "icon": "/technologies/php.svg", "category": { "name": "Backend" } },
-      { "id": 103, "name": "Mysql",   "icon": "/technologies/mysql.svg", "category": { "name": "Database" } },
-      { "id": 105, "name": "Vue", "icon": "/technologies/vuejs.svg", "category": { "name": "Frameworks" } },
+      { "id": 101, "name": "Laravel",      "icon": "/technologies/laravel.svg",     "category": { "name": "Frameworks" } },
+      { "id": 101, "name": "PHP",          "icon": "/technologies/php.svg",         "category": { "name": "Backend" } },
+      { "id": 103, "name": "Mysql",        "icon": "/technologies/mysql.svg",       "category": { "name": "Database" } },
+      { "id": 105, "name": "Vue",          "icon": "/technologies/vuejs.svg",       "category": { "name": "Frameworks" } },
       { "id": 106, "name": "Tailwind CSS", "icon": "/technologies/tailwindcss.svg", "category": { "name": "Frontend" } },
-      { "id": 107, "name": "HTML", "icon": "/technologies/html5.svg", "category": { "name": "Frontend" } },
-      { "id": 108, "name": "CSS", "icon": "/technologies/css.svg", "category": { "name": "Frontend" } },
-      { "id": 109, "name": "JS", "icon": "/technologies/javascript.svg", "category": { "name": "Frontend" } },
-      { "id": 104, "name": "Vite", "icon": "/technologies/vitejs.svg", "category": { "name": "Tools" } },
-       { "id": 16, "name": "GitHub",   "icon": "/technologies/github.svg",    "category": { "name": "Tools" } },
-      { "id": 17, "name": "Git",      "icon": "/technologies/git.svg",       "category": { "name": "Tools" } }
+      { "id": 107, "name": "HTML",         "icon": "/technologies/html5.svg",       "category": { "name": "Frontend" } },
+      { "id": 108, "name": "CSS",          "icon": "/technologies/css.svg",         "category": { "name": "Frontend" } },
+      { "id": 109, "name": "JS",           "icon": "/technologies/javascript.svg",  "category": { "name": "Frontend" } },
+      { "id": 104, "name": "Vite",         "icon": "/technologies/vitejs.svg",      "category": { "name": "Tools" } },
+      { "id": 16,  "name": "GitHub",       "icon": "/technologies/github.svg",      "category": { "name": "Tools" } },
+      { "id": 17,  "name": "Git",          "icon": "/technologies/git.svg",         "category": { "name": "Tools" } }
     ]
   },
   {
     "id": 2,
     "name": "TechLink - Social Media",
+    "name_ar": "TechLink - شبكة تواصل تقني",
     "slug": "techlink",
     "short_description": "Connect with like-minded innovators, build meaningful friendships, and collaborate on tech projects.",
-    "logo": "/images/projects/techLink/logo.png",
+    "short_description_ar": "تواصل مع مبدعين في مجال التكنولوجيا، كوّن صداقات حقيقية، وتعاون على مشاريع تقنية مميزة.",
+    "logo": "/images/projects/techLink/logo.webp",
     "github_url": "https://github.com/TechLinkApp/TechLink",
     "live_url": null,
     "type": "mobile",
@@ -47,23 +51,25 @@
     "start_date": "2025-09-18T00:00:00.000000Z",
     "end_date": "2025-12-23T00:00:00.000000Z",
     "images": [
-      { "id": 4, "path": "/images/projects/techLink/techLink-Login.jpeg" },
-      { "id": 5, "path": "/images/projects/techLink/home.jpg" },
-      { "id": 6, "path": "/images/projects/techLink/profile.jpg" }
+      { "id": 4, "path": "/images/projects/techLink/techLink-Login.webp" },
+      { "id": 5, "path": "/images/projects/techLink/home.webp" },
+      { "id": 6, "path": "/images/projects/techLink/profile.webp" }
     ],
     "technologies": [
-      { "id": 13, "name": "flutter", "icon": "/technologies/flutter.svg",  "category": { "name": "Mobile" } },
-      { "id": 14, "name": "Firebase", "icon": "/technologies/firebase.svg",  "category": { "name": "Backend" } },
-      { "id": 16, "name": "GitHub",   "icon": "/technologies/github.svg",    "category": { "name": "Tools" } },
-      { "id": 17, "name": "Git",      "icon": "/technologies/git.svg",       "category": { "name": "Tools" } }
+      { "id": 13, "name": "flutter",  "icon": "/technologies/flutter.svg",  "category": { "name": "Mobile" } },
+      { "id": 14, "name": "Firebase", "icon": "/technologies/firebase.svg", "category": { "name": "Backend" } },
+      { "id": 16, "name": "GitHub",   "icon": "/technologies/github.svg",   "category": { "name": "Tools" } },
+      { "id": 17, "name": "Git",      "icon": "/technologies/git.svg",      "category": { "name": "Tools" } }
     ]
   },
   {
     "id": 3,
     "name": "Bills – Smart Invoicing App",
+    "name_ar": "Bills - تطبيق الفواتير الذكي",
     "slug": "bills",
     "short_description": "Easily manage clients, invoices, payments, and returns with simplicity and efficiency.",
-    "logo": "/images/projects/bills/logo.png",
+    "short_description_ar": "إدارة العملاء والفواتير والمدفوعات والمرتجعات بسهولة وكفاءة — أول مشروع مدفوع ليوسف.",
+    "logo": "/images/projects/bills/logo.webp",
     "github_url": "https://github.com/cyto0plasm/Bills_Application_v3",
     "live_url": null,
     "type": "desktop",
@@ -73,9 +79,9 @@
     "start_date": "2025-02-08T00:00:00.000000Z",
     "end_date": "2025-05-19T00:00:00.000000Z",
     "images": [
-      { "id": 4, "path": "/images/projects/bills/client.png" },
-      { "id": 5, "path": "/images/projects/bills/inv.png" },
-      { "id": 6, "path": "/images/projects/bills/inv-header.png" }
+      { "id": 4, "path": "/images/projects/bills/client.webp" },
+      { "id": 5, "path": "/images/projects/bills/inv.webp" },
+      { "id": 6, "path": "/images/projects/bills/inv-header.webp" }
     ],
     "technologies": [
       { "id": 3,  "name": "Java",   "icon": "/technologies/java.svg",   "category": { "name": "Desktop" } },
@@ -87,9 +93,11 @@
   {
     "id": 4,
     "name": "PMS",
+    "name_ar": "PMS - نظام إدارة الصيدلية",
     "slug": "pms",
-    "short_description": "a Pharmacy management system designed to streamline pharmacy operations including inventory control, sales, and supplier management.",
-    "logo": "/images/projects/pms/logo.png" ,
+    "short_description": "A pharmacy management system designed to streamline pharmacy operations including inventory control, sales, and supplier management.",
+    "short_description_ar": "نظام متكامل لإدارة الصيدليات — يغطي التحكم في المخزون والمبيعات وإدارة الموردين بكفاءة عالية.",
+    "logo": "/images/projects/pms/logo.webp",
     "github_url": "https://github.com/cyto0plasm/PMST-C-",
     "live_url": null,
     "type": "desktop",
@@ -100,23 +108,25 @@
     "end_date": "2023-12-01",
     "highlight": "biggest project",
     "images": [
-      { "id": 6, "path": "/images/projects/pms/PMS.jpg" },
-      { "id": 4, "path": "/images/projects/pms/dashboard.png" },
-      { "id": 5, "path": "/images/projects/pms/invoice.png" }
+      { "id": 6, "path": "/images/projects/pms/PMS.webp" },
+      { "id": 4, "path": "/images/projects/pms/dashboard.webp" },
+      { "id": 5, "path": "/images/projects/pms/invoice.webp" }
     ],
     "technologies": [
-      { "id": 201, "name": "C++/CLI",  "icon": "/technologies/c++.svg", "category": { "name": "Desktop" } },
-      { "id": 202, "name": ".NET", "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
-      { "id": 203, "name": "SQLite",   "icon": "/technologies/sqlite.svg", "category": { "name": "Database" } },
-       { "id": 16, "name": "GitHub", "icon": "/technologies/github.svg", "category": { "name": "Tools" } },
-      { "id": 17, "name": "Git",    "icon": "/technologies/git.svg",    "category": { "name": "Tools" } }
+      { "id": 201, "name": "C++/CLI", "icon": "/technologies/c++.svg",        "category": { "name": "Desktop" } },
+      { "id": 202, "name": ".NET",    "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
+      { "id": 203, "name": "SQLite",  "icon": "/technologies/sqlite.svg",     "category": { "name": "Database" } },
+      { "id": 16,  "name": "GitHub",  "icon": "/technologies/github.svg",     "category": { "name": "Tools" } },
+      { "id": 17,  "name": "Git",     "icon": "/technologies/git.svg",        "category": { "name": "Tools" } }
     ]
   },
   {
     "id": 5,
     "name": "LMS",
+    "name_ar": "LMS - نظام إدارة المكتبة",
     "slug": "lms",
-    "short_description": "designed to manage library operations including book inventory, student records, and loan tracking.",
+    "short_description": "Designed to manage library operations including book inventory, student records, and loan tracking.",
+    "short_description_ar": "نظام لإدارة عمليات المكتبة — يشمل جرد الكتب وسجلات الطلاب وتتبع عمليات الاستعارة.",
     "logo": null,
     "github_url": "https://github.com/cyto0plasm/Library_Project_Desktop",
     "live_url": null,
@@ -128,11 +138,11 @@
     "end_date": "2022-12-01",
     "highlight": null,
     "technologies": [
-      { "id": 201, "name": "C++/CLI",  "icon": "/technologies/c++.svg", "category": { "name": "Desktop" } },
-      { "id": 202, "name": ".NET", "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
-      { "id": 203, "name": "SQLite",   "icon": "/technologies/sqlite.svg", "category": { "name": "Database" } },
-       { "id": 16, "name": "GitHub", "icon": "/technologies/github.svg", "category": { "name": "Tools" } },
-      { "id": 17, "name": "Git",    "icon": "/technologies/git.svg",    "category": { "name": "Tools" } }
+      { "id": 201, "name": "C++/CLI", "icon": "/technologies/c++.svg",        "category": { "name": "Desktop" } },
+      { "id": 202, "name": ".NET",    "icon": "/technologies/dotnetcore.svg", "category": { "name": "Desktop" } },
+      { "id": 203, "name": "SQLite",  "icon": "/technologies/sqlite.svg",     "category": { "name": "Database" } },
+      { "id": 16,  "name": "GitHub",  "icon": "/technologies/github.svg",     "category": { "name": "Tools" } },
+      { "id": 17,  "name": "Git",     "icon": "/technologies/git.svg",        "category": { "name": "Tools" } }
     ]
   }
 ]

@@ -9,12 +9,18 @@ import { useComments } from '@/composables/firebase/useProjectStats'
 import { useI18n } from 'vue-i18n'
 
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
 const props = defineProps({
   project:   { type: Object, required: true },
   typeLabel: { type: Object, required: true },
   index:     { type: Number, default: 0 },
 })
+// For localization
+const isAr      = computed(() => locale.value === 'ar')
+const localName = computed(() => isAr.value ? props.project.name_ar  : props.project.name)
+const localDesc = computed(() => isAr.value ? props.project.short_description_ar : props.project.short_description)
+
+
 const { views, likes, liked, toggleLike } = useProjectStats(props.project.slug)
 
 const { comments } = useComments(props.project.slug)
@@ -43,7 +49,10 @@ const imageSrcs = computed(() =>
 
 function formatDate(date) {
   if (!date) return null
-  return new Date(date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+  return new Date(date).toLocaleDateString(
+    locale.value === 'ar' ? 'ar-EG' : 'en-US',
+    { month: 'short', year: 'numeric' }
+  )
 }
 </script>
 
@@ -60,7 +69,7 @@ function formatDate(date) {
         class="font-mono text-[18px] tracking-widest uppercase text-zinc-600 w-fit transition-all duration-[650ms]"
         :class="isVisible ? 'opacity-100' : 'opacity-0 -translate-x-4'"
       >
-        $ projects / {{ project.slug }}
+        $ {{isAr?"مشروع":"project"}} / {{ project.slug }}
       </div>
 
       <div class="flex flex-col gap-2.5 flex-1">
@@ -72,7 +81,8 @@ function formatDate(date) {
             ? 'opacity-100 translate-x-0'
             : isOdd ? 'opacity-0 translate-x-12' : 'opacity-0 -translate-x-12'"
         >
-          {{ project.name }}
+          <!-- {{ project.name }} -->
+          {{ localName  }}
         </h1>
 
         <!-- Identity bar -->
@@ -100,7 +110,7 @@ function formatDate(date) {
 
           <span class="font-mono text-[11px] text-zinc-500">
             {{ formattedStart ?? '—' }}
-            <span class="mx-1 text-zinc-700" aria-hidden="true">→</span>
+            <span class="mx-1 text-zinc-700" aria-hidden="true" :class="isAr ? 'rotate-180 inline-block   ' : ''">→</span>
             <span :class="project.end_date ? 'text-zinc-500' : 'text-emerald-500 font-semibold'">
               {{ formattedEnd ?? 'In Progress' }}
             </span>
@@ -114,11 +124,13 @@ function formatDate(date) {
             ? 'opacity-100 translate-y-0 blur-none'
             : direction === 'up' ? 'opacity-0 -translate-y-4 blur-sm' : 'opacity-0 translate-y-4 blur-sm'"
         >
-          {{ project.short_description }}
+          <!-- {{ project.short_description }} -->
+          {{ localDesc }}
         </p>
 
         <!-- Links -->
-        <div class="flex gap-4 justify-end mt-auto">
+        <div class="flex gap-4 mt-auto" :dir="isAr ? 'rtl' : 'ltr'">
+
             <a
             v-if="project.github_url"
             :href="project.github_url"
@@ -126,7 +138,7 @@ function formatDate(date) {
             class="flex items-center gap-2 text-sm dark:text-zinc-300 text-zinc-800 hover:text-zinc-500  dark:hover:text-white border border-zinc-700 hover:border-zinc-400 px-3 py-1.5 rounded-md transition-all duration-[250ms] delay-[60ms]"
             :class="isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-2'"
           >
-            <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 shrink-0 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
            Github
@@ -204,7 +216,7 @@ function formatDate(date) {
   @close="lightboxOpen = false"
 />
         <!-- Social bar -->
-        <div class="flex flex-row gap-1 justify-center py-2.5 px-3 mt-1 mx-2 mb-2 rounded-xl bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-200/50 dark:border-zinc-700/40">
+        <div :dir="isAr ? 'ltr' : 'rtl'" class="flex   gap-1 justify-center py-2.5 px-3 mt-1 mx-2 mb-2 rounded-xl bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-200/50 dark:border-zinc-700/40">
   
   <!-- Views -->
   <button type="button" aria-label="Views"
@@ -217,14 +229,14 @@ function formatDate(date) {
   </button>
 
   <!-- Comments (static for now) -->
- <button type="button" aria-label="Comments"
-  @click="emit('open-comments')"
-  class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono transition-all">
+ <div type="button" aria-label="Comments"
+  
+  class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400    text-xs font-mono ">
   <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
   </svg>
   {{ comments.length }}
-</button>
+</div>
 
   <!-- Likes -->
   <button type="button" aria-label="Like" @click="toggleLike"

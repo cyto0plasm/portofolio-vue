@@ -6,21 +6,24 @@ import { useI18n } from 'vue-i18n'
 import Devider from '../../Components/devider.vue'
 import ProjectCard from '@/Components/project-card.vue'
 import ProjectComments from '@/Components/project-comments.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 
 const { targetRef: projectsIntroRef, isVisible: introVisible, direction: introDirection } 
   = useScroll({ threshold: 0.01 })
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { projects } = storeToRefs(useHomeStore())
 const { preferedColor } = storeToRefs(useLayoutStore())
 const openCommentSlug = ref(null)
 
-const typeLabel = {
-  web:     'Web Site',
-  desktop: 'Desktop Application',
-  mobile:  'Mobile Application',
-}
+const typeLabel = computed(() => {
+  const isAr = locale.value === 'ar'
+  return {
+    web:     isAr ? 'موقع ويب'            : 'Web Site',
+    desktop: isAr ? 'تطبيق سطح المكتب'   : 'Desktop Application',
+    mobile:  isAr ? 'تطبيق موبايل'        : 'Mobile Application',
+  }
+})
 </script>
 
 <template>
@@ -41,7 +44,7 @@ const typeLabel = {
           class="reveal-item font-mono text-[0.65rem] tracking-widest uppercase text-gray-400 dark:text-zinc-500 mb-3"
           style="--i: 0"
         >
-          $ work / projects
+          ${{ locale === 'ar' ? ' شغل / مشاريع' : ' work / projects' }} {{ projects.length ? ` (${projects.length})` : '' }}
         </p>
         <h2 
           class="reveal-item text-4xl font-bold tracking-tight leading-none mb-3"
@@ -74,6 +77,7 @@ const typeLabel = {
             :slug="project.slug"
             :force-open="openCommentSlug === project.slug"
           />
+          <Devider />
         </div>
       </template>
 

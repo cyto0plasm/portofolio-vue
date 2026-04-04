@@ -7,7 +7,10 @@ import { useReadmeStore } from '@/Stores/readme-store'
 import { useScroll }      from '@/composables/useScrollReveal.js'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
-const {t} = useI18n()
+
+const {t, locale} = useI18n()
+const isAr = computed(() => locale.value === 'ar')
+
 useHead({
   title: "Projects",
   meta: [
@@ -85,7 +88,7 @@ function md(raw, project) {
     <!-- Header -->
     <div class="mb-14">
       <p class="reveal-item text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400 mb-2" style="--i:0">
-        Portfolio / Projects
+        {{isAr ? 'البورتفيول / المشاريع' : 'Portfolio / Projects'}}  {{ projects.length ? ` (${projects.length})` : '' }}
       </p>
       <h1 class="reveal-item font-black leading-[.9] tracking-tighter text-[clamp(2rem,6vw,3.5rem)]" style="--i:1">
         <span class="block text-gray-700 dark:text-gray-300">{{ t('projects.h1') }}</span>
@@ -102,6 +105,8 @@ function md(raw, project) {
       <!-- Row -->
       <div
         class="flex items-start justify-between gap-5 py-7 cursor-pointer select-none"
+          :dir="isAr ? 'rtl' : 'ltr'"
+
         @click="toggle(p)"
         @mouseenter="hoveredId = p.id"
         @mouseleave="hoveredId = null"
@@ -125,8 +130,8 @@ function md(raw, project) {
             <p
               class="text-[1.05rem] font-bold transition-colors duration-200 text-gray-800 dark:text-gray-100"
               :style="hoveredId === p.id ? { color: mainColor } : {}"
-            >{{ p.name }}</p>
-            <p class="text-[0.82rem] text-gray-400 mt-0.5 leading-relaxed">{{ p.short_description }}</p>
+            >{{ isAr ? p.name_ar : p.name }}</p>
+            <p class="text-[0.82rem] text-gray-400 mt-0.5 leading-relaxed">{{ isAr ? p.short_description_ar : p.short_description }}</p>
             <div class="flex flex-wrap gap-1.5 mt-3">
               <span
                 v-for="t in p.technologies" :key="t.id"

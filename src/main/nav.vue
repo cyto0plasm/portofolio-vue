@@ -58,13 +58,13 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
              bg-white/80 dark:bg-[#1e1e1e]/85 backdrop-blur-md shadow-sm"
     >
       <!-- Logo -->
-      <RouterLink to="/" class="group flex items-center gap-0 no-underline select-none">
+      <RouterLink to="/" class="group flex items-center gap-0 no-underline select-none text-nowrap mx-2  ">
         <span class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200" :style="{ color: layout.preferedColor }">{{ t('nav.logo1') }}&nbsp;</span>
         <span class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90">{{ t('nav.logo2') }} </span>
       </RouterLink>
 
       <!-- Nav links -->
-      <ul class="hidden md:flex items-center gap-1 list-none m-0 p-0">
+      <ul class="hidden md:flex items-center gap-1 list-none mx-1 p-0">
         <li v-for="item in links" :key="item.label">
           <ButtonBounce :label="item.label" :href="item.to" :active="isActive(item.to)" />
         </li>
@@ -73,7 +73,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
       <!-- Right actions -->
       <div class="flex items-center gap-2">
         <a href="/resume.pdf" download="Youssef-Zaki_CV.pdf"
-           class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
+           class="text-nowrap  hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
                   text-xs font-medium transition-all duration-200
                   border border-gray-200 dark:border-white/15
                   text-gray-600 dark:text-gray-300
@@ -88,7 +88,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         </a>
 
         <span class="hidden md:block w-px h-4 bg-gray-200 dark:bg-white/10" />
-        <LangSwitcher class="hidden md:block" />
+        <LangSwitcher class="hidden lg:block" />
         <DarkMode class="hidden md:block" />
 
         <button @click="layout.toggleAside()"

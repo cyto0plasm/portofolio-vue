@@ -67,7 +67,8 @@ onUnmounted(() => {
 <template>
   <!-- Ring (delayed) -->
   <div class="fixed top-0 left-0 pointer-events-none z-[10000]"
-    :style="{ transform: `translate(${rx}px,${ry}px)` }">
+  style="direction: ltr"
+  :style="{ transform: `translate(${rx}px,${ry}px)` }">
     <div :style="{
       position: 'absolute',
       width:  `${RING_R * 2 * scale}px`,
@@ -80,7 +81,8 @@ onUnmounted(() => {
   </div>
   <!-- Dot (instant) -->
   <div class="fixed top-0 left-0 pointer-events-none z-[10000]"
-    :style="{ transform: `translate(${dx}px,${dy}px)` }">
+  style="direction: ltr"
+  :style="{ transform: `translate(${dx}px,${dy}px)` }">
     <div :style="{
       position: 'absolute',
       width:  `${Math.max(1, 5.6 * scale)}px`,

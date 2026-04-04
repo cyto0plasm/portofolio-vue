@@ -186,7 +186,7 @@ const mobile = computed(() => {
 <template v-else>
   <div
     ref="containerRef"
-    class="relative flex justify-center items-end w-full h-[360px]"
+    class="relative flex justify-center items-end w-full h-75"
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >

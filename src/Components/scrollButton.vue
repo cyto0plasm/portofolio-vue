@@ -61,7 +61,7 @@ onUnmounted(() => {
   <Transition name="fade">
     <div
       v-show="visible"
-      class="fixed right-6 bottom-1/2 translate-y-1/2 z-20 flex flex-col items-center gap-2"
+      class="fixed left-6 bottom-1/2 translate-y-1/2 z-20 flex flex-col items-center gap-2"
       @mouseenter="visible = true; cancelHide()"
       @mouseleave="showTemporarily"
     >
