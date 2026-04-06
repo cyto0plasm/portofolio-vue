@@ -52,7 +52,7 @@ const imageSrcs = computed(() =>
 
 const isMobileView = window.innerWidth < 768
 const { targetRef, isVisible, direction } = useScroll({
-  threshold: isMobileView ? 0.05 : 0.32,
+  threshold: isMobileView ? 0.04 : 0.32,
   rootMargin: isMobileView ? '0px 0px -20px 0px' : '0px 0px -80px 0px'
 })
 
@@ -328,11 +328,13 @@ function formatDate(date) {
             {{ views }}
           </button>
 
-          <!-- Comments (static for now) -->
+          <!-- Comments  -->
           <div
             type="button"
             aria-label="Comments"
-            class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 text-xs font-mono"
+             @click="$emit('open-comments', project.slug)"
+            class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-mono"
+            
           >
             <svg
               class="w-3.5 h-3.5 shrink-0"
@@ -355,6 +357,7 @@ function formatDate(date) {
             type="button"
             aria-label="Like"
             @click="toggleLike"
+            
             class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono transition-all group hover:bg-zinc-100 dark:hover:bg-zinc-700"
             :class="
               liked

@@ -72,7 +72,9 @@ const typeLabel = computed(() => {
             :project="project"
             :type-label="typeLabel"
             :index="i"
-            @open-comments="openCommentSlug = project.slug"
+            @open-comments="
+              openCommentSlug = openCommentSlug === project.slug ? null : project.slug
+            "
           />
           <ProjectComments
             :slug="project.slug"

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useComments } from '@/composables/firebase/useProjectStats'
 import { useLayoutStore } from '@/Stores/layout-store'
 import { storeToRefs } from 'pinia'
@@ -7,15 +7,23 @@ import CommentItem from './comment-item.vue'
 import { useI18n } from 'vue-i18n'
 
 const {t} = useI18n()
-const props = defineProps({ slug: { type: String, required: true } })
+const props = defineProps({ slug: { type: String, required: true },forceOpen: { type: Boolean, default: false }  })
 const { comments, addComment } = useComments(props.slug)
 const { isDark } = storeToRefs(useLayoutStore())
 
-const open = ref(false)
+
+
+const open = ref(props.forceOpen)
 const name = ref('')
 const text = ref('')
 const loading = ref(false)
 const replyingTo = ref(null)
+
+
+watch(
+  () => props.forceOpen,
+  (val) => open.value = val  // Sync open state
+)
 
 async function submit() {
   if (!text.value.trim()) return
