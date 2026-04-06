@@ -192,7 +192,7 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
                 <div class="flex items-center justify-start gap-6">
                     <h1 class="m-0 flex flex-col font-black leading-[0.9] tracking-tighter text-[clamp(2.5rem,8vw,5rem)]">
                         <span class="reveal-item text-gray-700 dark:text-gray-300" style="--i:1">{{ firstName }}</span>
-                        <span class="reveal-item" :style="{ '--i': 2, color: preferedColor }">{{ lastName }}</span>
+                        <span class="reveal-item" :style="{ '--i': 2, color: layout.preferedColor }">{{ lastName }}</span>
                     </h1>
 
                     <!-- mobile photo -->
@@ -215,9 +215,9 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
                 <!-- role + terminal -->
                 <div class="reveal-item flex flex-wrap items-center gap-4 lg:gap-8 " style="--i:4">
                     <span class="font-bold tracking-wide text-[clamp(0.9rem,2vw,1.25rem)]"
-                          :style="{ color: preferedColor }">{{ role }}</span>
+                          :style="{ color: layout.preferedColor }">{{ role }}</span>
                     <button class="terminal-btn px-3 py-1.5 rounded border font-mono text-xs font-semibold cursor-pointer transition-transform hover:-translate-y-px"
-                      :style="{ color: shiftColor(preferedColor, 10) }" @click="openTerminal" aria-label="Open terminal">
+                      :style="{ color: shiftColor(layout.preferedColor, 10),borderColor: layout.preferedColor }" @click="openTerminal" aria-label="Open terminal">
                         <span class="blink" aria-hidden="true">_</span> {{ t('buttons.terminal') }}
                     </button>
                 </div>

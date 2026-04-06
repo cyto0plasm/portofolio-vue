@@ -1,6 +1,45 @@
+<script setup>
+import { computed } from 'vue'
+import { useLayoutStore } from '../Stores/layout-store'
+
+const layout = useLayoutStore()
+
+const props = defineProps({
+  status: { type: String, required: true, validator: v => ['in_progress', 'done'].includes(v) },
+  size:   { type: Number, default: 48 },
+  color:  { type: String, default: null },
+})
+
+const c = computed(() => props.color ?? layout.preferedColor)
+
+const isDark = computed(() => layout.isDark)
+
+const vars = computed(() => {
+  const base = c.value
+  const bg   = isDark.value ? '#0a0a0a' : '#f0f0f0'
+  const bgIn = isDark.value ? '#050505' : '#e8e8e8'
+
+  if (props.status === 'in_progress') return {
+    '--si-bg-outer': `color-mix(in srgb, ${base} ${isDark.value ? 18 : 12}%, ${bg})`,
+    '--si-border':   `color-mix(in srgb, ${base} ${isDark.value ? 30 : 20}%, ${bg})`,
+    '--si-ring':     `color-mix(in srgb, ${base} 55%, transparent)`,
+    '--si-bg-inner': `color-mix(in srgb, ${base} ${isDark.value ? 12 : 8}%, ${bgIn})`,
+    '--si-track':    `color-mix(in srgb, ${base} ${isDark.value ? 15 : 10}%, ${bg})`,
+    '--si-spinner':  `color-mix(in srgb, ${base} 90%, ${isDark.value ? '#fff' : '#000'})`,
+  }
+  return {
+    '--si-bg-outer': `color-mix(in srgb, ${base} ${isDark.value ? 14 : 10}%, ${bg})`,
+    '--si-border':   `color-mix(in srgb, ${base} ${isDark.value ? 25 : 15}%, ${bg})`,
+    '--si-ring':     `color-mix(in srgb, ${base} 45%, transparent)`,
+    '--si-bg-inner': `color-mix(in srgb, ${base} ${isDark.value ? 10 : 6}%, ${bgIn})`,
+    '--si-check':    `color-mix(in srgb, ${base} 95%, ${isDark.value ? '#fff' : '#000'})`,
+  }
+})
+</script>
+
 <template>
   <!-- IN PROGRESS -->
-  <svg v-if="status === 'in_progress'" :width="size" :height="size" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="status-icon">
+  <svg v-if="status === 'in_progress'" :width="size" :height="size" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="status-icon" :style="vars">
     <circle cx="24" cy="24" r="23" fill="var(--si-bg-outer)" stroke="var(--si-border)" stroke-width="1"/>
     <circle cx="24" cy="24" r="19" fill="none" stroke="var(--si-ring)" stroke-width="0.8" opacity="0.45"/>
     <circle cx="24" cy="24" r="13" fill="var(--si-bg-inner)" stroke="var(--si-ring)" stroke-width="0.8"/>
@@ -12,7 +51,7 @@
   </svg>
 
   <!-- DONE -->
-  <svg v-else-if="status === 'done'" :width="size" :height="size" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="status-icon status-icon--done">
+  <svg v-else-if="status === 'done'" :width="size" :height="size" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="status-icon" :style="vars">
     <circle cx="24" cy="24" r="23" fill="var(--si-bg-outer)" stroke="var(--si-border)" stroke-width="1"/>
     <circle cx="24" cy="24" r="19" fill="none" stroke="var(--si-ring)" stroke-width="0.8" opacity="0.5"/>
     <circle cx="24" cy="24" r="13" fill="var(--si-bg-inner)" stroke="var(--si-ring)" stroke-width="0.8"/>
@@ -20,54 +59,6 @@
   </svg>
 </template>
 
-<script setup>
-defineProps({
-  status: {
-    type: String,
-    required: true,
-    validator: (v) => ['in_progress', 'done'].includes(v),
-  },
-  size: {
-    type: Number,
-    default: 48,
-  },
-})
-</script>
-
 <style scoped>
-.status-icon {
-  --si-bg-outer: #185FA5;
-  --si-border:   #0C447C;
-  --si-ring:     #378ADD;
-  --si-bg-inner: #0C447C;
-  --si-track:    #185FA5;
-  --si-spinner:  #85B7EB;
-}
-
-.status-icon--done {
-  --si-bg-outer: #0F6E56;
-  --si-border:   #085041;
-  --si-ring:     #1D9E75;
-  --si-bg-inner: #085041;
-  --si-check:    #5DCAA5;
-}
-
-@media (prefers-color-scheme: dark) {
-  .status-icon {
-    --si-bg-outer: #1A6FBF;
-    --si-border:   #1152A0;
-    --si-ring:     #5AA8F0;
-    --si-bg-inner: #113D72;
-    --si-track:    #1A6FBF;
-    --si-spinner:  #A8D0F5;
-  }
-
-  .status-icon--done {
-    --si-bg-outer: #1edf92;
-    --si-border:   #14aa8c;
-    --si-ring:     #2DC49A;
-    --si-bg-inner: #176957;
-    --si-check:    #7EDFC0;
-  }
-}
+.status-icon { display: inline-block; }
 </style>

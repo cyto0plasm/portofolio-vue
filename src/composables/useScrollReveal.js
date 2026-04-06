@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
 // Shared observer pool — one observer per unique threshold+margin combo
 const observers = new Map()
@@ -37,13 +37,14 @@ export function useScroll({ threshold = 0.08, once = false, rootMargin = '0px 0p
     }
   }
 
-  onMounted(() => {
-    const el = targetRef.value
-    if (!el) return
-    observer = getObserver(threshold, rootMargin, onIntersect)
-    el._scrollCb = onIntersect
-    observer.observe(el)
-  })
+onMounted(async () => {
+  await nextTick()
+  const el = targetRef.value
+  if (!el) return
+  observer = getObserver(threshold, rootMargin, onIntersect)
+  el._scrollCb = onIntersect
+  observer.observe(el)
+})
 
   onUnmounted(() => {
     const el = targetRef.value

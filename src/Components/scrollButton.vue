@@ -4,6 +4,8 @@ import { ref, watch, onMounted, onUnmounted } from 'vue'
 const props = defineProps({
   sections: { type: Array, default: () => [] },
   color:    { type: String, default: '#6ee7b7' },
+    navSelector: { type: String, default: 'nav' },
+
 })
 
 const current = ref(0)
@@ -22,7 +24,12 @@ watch(() => props.sections, () => { current.value = 0 }, { flush: 'post' })
 
 const scrollTo = (idx) => {
   current.value = idx
-  document.getElementById(props.sections[idx])?.scrollIntoView({ behavior: 'smooth' })
+  const el = document.getElementById(props.sections[idx])
+  if (el) {
+    const navHeight = document.querySelector(props.navSelector)?.offsetHeight ?? 0
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
   showTemporarily()
 }
 

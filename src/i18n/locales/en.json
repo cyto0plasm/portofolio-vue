@@ -12,7 +12,8 @@
     "loading": "Loading...",
   "nav": {
     "logo1": "Youssef",
-    "logo2": "Adel Zaki",
+    "logo2": "Adel",
+    "logo3": "Zaki",
     "home": "Home",
     "projects": "Projects",
     "contact": "Contact",
@@ -51,6 +52,17 @@
     "cta1": "View my work",
     "contact": "Contact Me"
   },
+  
+  "about": {
+    "label": "About me",
+    "bio": "I build full-stack web apps — clean backends, fast frontends, APIs that hold up. 3–5 years in, still shipping.",
+    "github_label": "Contributions",
+    "github_total": "contributions",
+    "github_error": "Couldn't load contributions.",
+    "cv_btn": "Download CV"
+  }
+
+,
   "comments":{
     "title": "Comments",
     "submit": "Post",

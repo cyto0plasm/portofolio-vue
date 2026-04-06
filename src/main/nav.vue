@@ -14,6 +14,8 @@ const router = useRouter()
 const route  = useRoute()
 const { t ,locale} = useI18n()
 
+const glitchOn = ref(true)
+
 
 // ── Links (no backend = no auth/admin separation) ──────────────────────────
 const links = computed(() => [
@@ -58,10 +60,17 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
              bg-white/80 dark:bg-[#1e1e1e]/85 backdrop-blur-md shadow-sm"
     >
       <!-- Logo -->
-      <RouterLink to="/" class="group flex items-center gap-0 no-underline select-none text-nowrap mx-2  ">
-        <span class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200" :style="{ color: layout.preferedColor }">{{ t('nav.logo1') }}&nbsp;</span>
-        <span class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90">{{ t('nav.logo2') }} </span>
-      </RouterLink>
+ <RouterLink  @click.prevent="glitchOn = !glitchOn"  to="/" class="group flex items-center gap-0 no-underline select-none text-nowrap mx-2">
+  <span class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200" :style="{ color: layout.preferedColor }">{{ t('nav.logo1') }}&nbsp;</span>
+  <span
+    class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90"
+    :class="{ 'logo-glitch': glitchOn }"
+  >{{ t('nav.logo2') }}&nbsp;</span>
+  <span
+    class="text-[1.1rem] font-semibold tracking-tight text-gray-800 dark:text-white/90 cursor-pointer"
+   
+  >{{ t('nav.logo3') }}</span>
+</RouterLink>
 
       <!-- Nav links -->
       <ul class="hidden md:flex items-center gap-1 list-none mx-1 p-0">
@@ -123,3 +132,18 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
     </button>
   </transition>
 </template>
+
+<style scoped>
+.logo-glitch {
+  position: relative;
+  animation: glitch 2.8s ease-in-out infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { text-shadow: none; transform: none; }
+  20% { text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9; transform: skewX(-3deg); }
+  40% { text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9; transform: skewX(3deg); }
+  60% { text-shadow: -2px 0 #ff00c1; transform: skewX(-1deg) scaleX(1.02); }
+  80% { text-shadow: 2px 0 #00fff9; transform: none; }
+}
+</style>

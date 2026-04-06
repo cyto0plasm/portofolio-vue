@@ -93,7 +93,12 @@ onMounted(() => {
     </main>
 
     <!-- <main class="relative z-0"><slot /></main> -->
-    <ScrollButton v-if="sections.length > 1" :sections="sections" :color="layout.preferedColor" />
+   <ScrollButton
+  v-if="sections.length > 1"
+  :sections="sections"
+  :color="layout.preferedColor"
+  nav-selector="nav"
+/>
 
     <LazyMount>
 <MouseLook></MouseLook>

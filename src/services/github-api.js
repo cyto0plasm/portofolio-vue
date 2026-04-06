@@ -1,4 +1,5 @@
 const USERNAME = "cyto0plasm";
+
 const headers = () =>
   import.meta.env.VITE_GITHUB_TOKEN
     ? { Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` }
@@ -38,4 +39,26 @@ export async function fetchReadme(repoName) {
     const data = await res.json();
     return cleanReadme(atob(data.content));
   } catch { return null; }
+}
+
+export async function fetchContributions(from, to) {
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...headers() },
+    body: JSON.stringify({
+      query: `{
+        user(login: "${USERNAME}") {
+          contributionsCollection(from: "${from}", to: "${to}") {
+            contributionCalendar {
+              totalContributions
+              weeks { contributionDays { contributionCount date } }
+            }
+          }
+        }
+      }`,
+    }),
+  });
+  if (!res.ok) throw new Error("Failed to fetch contributions");
+  const json = await res.json();
+  return json.data.user.contributionsCollection.contributionCalendar;
 }

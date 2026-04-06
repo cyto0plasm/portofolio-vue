@@ -4,6 +4,7 @@ import Devider from '@/Components/devider.vue'
 import Projects from './home/projects.vue'
 import Skills from './home/skills.vue'
 import { useHead } from '@unhead/vue'
+import About from './home/about.vue'
 
 
 
@@ -26,6 +27,7 @@ useHead({
 
     
   <Hero />
+  <About />
   <Projects />
   <Skills />
 </template>

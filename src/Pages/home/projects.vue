@@ -10,7 +10,7 @@ import { computed, ref } from 'vue'
 import { useScroll } from '../../composables/useScrollReveal.js'
 
 const { targetRef: projectsIntroRef, isVisible: introVisible, direction: introDirection } 
-  = useScroll({ threshold: 0.01 })
+  = useScroll({ threshold: 0.02 })
 const { t, locale } = useI18n()
 const { projects } = storeToRefs(useHomeStore())
 const { preferedColor } = storeToRefs(useLayoutStore())
@@ -28,6 +28,7 @@ const typeLabel = computed(() => {
 
 <template>
  <section 
+ 
     id="projects" 
     ref="projectsIntroRef"
     class="projects-section reveal-wrap relative"
@@ -39,7 +40,7 @@ const typeLabel = computed(() => {
 
     <div v-if="projects.length" class="min-h-[60vh] relative z-10">
       <!-- intro with reveal animations -->
-      <div class="mt-4 mb-4 max-w-6xl mx-auto p-6">
+      <div data-section id="projectHeader" class="mt-4 mb-4 max-w-6xl mx-auto p-6">
         <p 
           class="reveal-item font-mono text-[0.65rem] tracking-widest uppercase text-gray-400 dark:text-zinc-500 mb-3"
           style="--i: 0"
