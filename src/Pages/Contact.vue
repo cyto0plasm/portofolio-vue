@@ -55,8 +55,7 @@ class="relative mt-14 min-h-svh flex  items-center justify-center px-5 sm:px-8 l
 
       <!-- ── LEFT: info ── -->
      
-<div
-        class="rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 backdrop-blur-xl"
+      <div class="order-1 md:order-2 rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 backdrop-blur-xl"
         :style="{
           borderColor: 'color-mix(in srgb, var(--c) 18%, transparent)',
           background:  'color-mix(in srgb, var(--c) 3%, transparent)',
@@ -215,7 +214,7 @@ class="relative mt-14 min-h-svh flex  items-center justify-center px-5 sm:px-8 l
         </form>
       </div>
       <!-- ── RIGHT: form ── -->
-       <div class="flex flex-col gap-6 pt-2">
+       <div class=" order-2 md:order-1 flex flex-col gap-6 pt-2">
 
         <!-- status badge -->
         <p class="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-widest text-gray-400">

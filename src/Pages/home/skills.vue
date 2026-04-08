@@ -12,17 +12,21 @@ const { categories, filteredTechnologies, activeCategory } = storeToRefs(homeSto
 
 const iconErrors = ref({})
 const { targetRef, isVisible } = useScroll({ threshold: 0.15 })
+const isMobile = ref(window.innerWidth < 640)
 
-const ITEMS_PER_PAGE = 8
+window.addEventListener('resize', () => {
+  isMobile.value = window.innerWidth < 640
+})
+const ITEMS_PER_PAGE = computed(() => isMobile.value ? 6 : 10)
 const currentPage = ref(1)
 
 const totalPages = computed(() =>
-  Math.ceil(filteredTechnologies.value.length / ITEMS_PER_PAGE)
+  Math.ceil(filteredTechnologies.value.length / ITEMS_PER_PAGE.value)
 )
 
 const paginatedTechnologies = computed(() => {
-  const start = (currentPage.value - 1) * ITEMS_PER_PAGE
-  return filteredTechnologies.value.slice(start, start + ITEMS_PER_PAGE)
+  const start = (currentPage.value - 1) * ITEMS_PER_PAGE.value
+  return filteredTechnologies.value.slice(start, start + ITEMS_PER_PAGE.value)
 })
 
 // Reset to page 1 when filter changes

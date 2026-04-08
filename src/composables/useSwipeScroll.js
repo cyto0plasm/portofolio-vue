@@ -11,6 +11,8 @@ export function useSwipeScroll(getLenis) {
   function onMouseDown(e) {
     if (isResizing) return
     if (e.button !== 0) return
+    
+    
     if (['INPUT','TEXTAREA','SELECT','BUTTON','A'].includes(e.target.tagName)) return
     if (e.target.closest('.term-root')) return
     if (e.target.closest('.select-text')) return

@@ -133,6 +133,8 @@ onBeforeUnmount(() => {
           @touchstart.passive="carousel.touchStart"
           @touchmove.prevent="carousel.touchMove"
           @touchend="carousel.touchEnd"
+            @click.capture="carousel.clickCapture"
+
         >
           <template v-for="(img, i) in images" :key="i">
             <img loading="lazy" :src="img" :alt="alt"

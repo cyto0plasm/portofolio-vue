@@ -1,20 +1,30 @@
 import { ref } from 'vue'
 
 export function usePhoneReorder(images, active) {
-  const dragSrc  = ref(null)
-  const startX   = ref(null)
-  const moved    = ref(false)
+  const dragSrc = ref(null)
+  const startX  = ref(null)
+  const startY  = ref(null)   // ← add
+  const moved   = ref(false)
+  const didMove = ref(false)  // ← tracks any significant movement
 
   function pointerDown(e, i) {
     dragSrc.value = i
     startX.value  = e.clientX
+    startY.value  = e.clientY  // ← add
     moved.value   = false
-    // NO setPointerCapture — we need elementFromPoint to work freely
+    didMove.value = false       // ← add
   }
 
   function pointerMove(e) {
     if (dragSrc.value === null) return
-    if (Math.abs(e.clientX - startX.value) < 24) return
+
+    const dx = Math.abs(e.clientX - startX.value)
+    const dy = Math.abs(e.clientY - startY.value)
+
+    // Mark as moved if pointer went anywhere significant
+    if (dx > 6 || dy > 6) didMove.value = true  // ← add
+
+    if (dx < 24) return
 
     const el   = document.elementFromPoint(e.clientX, e.clientY)
     const card = el?.closest('[data-phone-idx]')
@@ -33,12 +43,13 @@ export function usePhoneReorder(images, active) {
   }
 
   function pointerUp(i, emit) {
-    if (!moved.value) {
+    if (!moved.value && !didMove.value) {  // ← guard with didMove
       active.value = i
       emit('open', i)
     }
     dragSrc.value = null
     moved.value   = false
+    didMove.value = false  // ← reset
   }
 
   return { dragSrc, pointerDown, pointerMove, pointerUp }
