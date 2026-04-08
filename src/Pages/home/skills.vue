@@ -69,11 +69,11 @@ watch(activeCategory, () => { currentPage.value = 1 })
     </div>
 
     <!-- GRID -->
-    <div class="flex flex-wrap gap-3 w-full">
+    <div class="flex flex-wrap gap-2.5  w-full">
       <div
         v-for="(tech, i) in paginatedTechnologies"
         :key="tech.id"
-        class="tech-card anim-card group flex flex-col items-center gap-3 p-2 w-24 shrink-0
+        class="tech-card anim-card group flex flex-col items-center gap-3 p-2 w-25 shrink-0 
                rounded-xl border border-zinc-400 hover:border-zinc-500 dark:border-zinc-500 dark:bg-[#2c2c2c]
                hover:dark:bg-[#353434] transition-colors duration-200 cursor-default"
         :class="{ visible: isVisible }"

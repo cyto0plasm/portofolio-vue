@@ -79,7 +79,7 @@
     "desc": "Technologies I use in my work."
   },
   "projects": {
-    "h1": "My Projects",
+    "h1": "Projects ",
     "h2": "I Worked On",
     "desc": "A collection of my latest work — click any project for more details.",
     "readme": "Read More",
@@ -98,7 +98,7 @@
     "email": "Your Email",
     "message": "Your Message",
     "namePlaceholder": "Ahmed...",
-    "emailPlaceholder": "you@example.com",
+    "emailPlaceholder": "you{'@'}example.com",
     "messagePlaceholder": "Hello Youssef, I have a job opportunity I'd like to share...",
     "submit": "Send Message",
     "submitting": "Sending...",
