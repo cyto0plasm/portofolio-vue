@@ -33,12 +33,28 @@ const VIEWS   = ['chat', 'dashboard']
 const current = ref(0)
 const hovered = ref(false)
 
-function go(i)  { current.value = i }
-function next() { go((current.value + 1) % VIEWS.length) }
+function go(i) {
+  hovered.value = true
+  current.value = ((i % VIEWS.length) + VIEWS.length) % VIEWS.length
+
+  // optional: resume autoplay after click
+  setTimeout(() => {
+    hovered.value = false
+  }, 1500)
+}
+
+function next() {
+  current.value = (current.value + 1) % VIEWS.length
+}
 const view = computed(() => VIEWS[current.value])
 
 let timer = null
-onMounted(()   => { timer = setInterval(() => { if (!hovered.value) next() }, 3000) })
+onMounted(() => {
+  timer = setInterval(() => {
+    if (hovered.value) return
+    current.value = (current.value + 1) % VIEWS.length
+  }, 3000)
+})
 onUnmounted(() => clearInterval(timer))
 
 // ── Dashboard data ────────────────────────────────────────────────────────────
@@ -88,10 +104,10 @@ const MESSAGES = computed(() => [
 
 <template>
   <div
-    :class="[
-      'relative flex flex-col w-44 h-52 md:w-52 md:h-64 lg:w-80 lg:h-96 overflow-hidden rounded-[18px] select-none cursor-pointer',
-      { dark: isDark }
-    ]"
+      :class="[
+    'relative flex flex-col w-44 h-52 md:w-52 md:h-64 lg:w-80 lg:h-100 overflow-hidden min-h-0 select-none cursor-pointer',
+    { dark: isDark }
+  ]"
     style="aspect-ratio: 5/6.5"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
@@ -160,8 +176,8 @@ const MESSAGES = computed(() => [
     <Transition name="fade" mode="out-in">
 
       <!-- ── CHAT ─────────────────────────────────────────────────────────── -->
-      <div v-if="view === 'chat'" key="chat"
-           class="relative z-10 flex flex-col flex-1 min-h-0 overflow-hidden">
+<div v-if="view === 'chat'" key="chat"
+     class="relative z-10 flex flex-col flex-1 min-h-0 overflow-hidden h-full">
 
         <div class="flex shrink-0 items-center justify-between px-3 py-2.5
                     border-b border-black/[.08] dark:border-white/[.08]
@@ -186,7 +202,7 @@ const MESSAGES = computed(() => [
           <span class="text-[9px] text-zinc-400">{{ t('hero.chat.role') }}</span>
         </div>
 
-        <div class="flex flex-1 flex-col justify-end gap-1.5 overflow-hidden px-3 py-3 min-h-0">
+       <div @wheel.stop class="flex flex-1 flex-col gap-1.5 overflow-y-auto px-3 py-3 min-h-0 h-full">
           <div
             v-for="m in MESSAGES" :key="m.text"
             class="flex flex-col gap-0.5"
@@ -409,8 +425,8 @@ const MESSAGES = computed(() => [
     </Transition>
 
     <!-- ── Navigation dots ──────────────────────────────────────────────────── -->
-    <div class="relative z-10 flex shrink-0 items-center justify-center gap-1 py-2">
-      <div
+    <div class="relative z-10 flex shrink-0 items-center justify-center gap-1 py-4">
+      <!-- <div
         v-for="(v, i) in VIEWS" :key="v"
         class="h-[5px] cursor-pointer rounded-full transition-all duration-[250ms]"
         :style="{
@@ -420,7 +436,7 @@ const MESSAGES = computed(() => [
             : isDark ? 'rgba(255,255,255,.2)' : 'rgba(0,0,0,.15)',
         }"
         @click.stop="go(i)"
-      />
+      /> -->
     </div>
 
   </div>

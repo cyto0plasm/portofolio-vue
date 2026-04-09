@@ -114,6 +114,9 @@ const wrapperVars = computed(() => {
         </PhotoCard>
       </div>
     </Transition>
+    <div class="flip-hint">
+  Tap to flip
+</div>
   </div>
 </template>
  
@@ -173,6 +176,21 @@ const wrapperVars = computed(() => {
   transform: translateX(0) rotateY(0deg) scale(1);
   opacity: 1;
   filter: blur(0) brightness(1);
+}
+.flip-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
+  opacity: 0;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+.flip-wrapper:hover .flip-hint {
+  opacity: 1;
 }
  
 /* ── Glint sweep ─────────────────────────────────────────────────────────── */
