@@ -58,17 +58,17 @@
       "php": "PHP"
     },
     "chat": {
-      "altDev": "developer",
-      "available": "Available for hire",
-      "online": "Online now",
-      "role": "Full-stack dev",
-      "msg1": "We need a dashboard + API. Any experience?",
-      "msg2": "Full-stack. Send the spec, I'll scope today.",
-      "msg3": "Can you handle both front & back? 🤔",
-      "msg4": "Vue + Laravel. I own the whole stack.",
-      "delivered": "Delivered ✓✓",
-      "inputPlaceholder": "Type a message…"
-    },
+  "altDev": "Developer",
+  "available": "Youssef",
+  "online": "Online now",
+  "role": "Full-stack developer",
+  "msg1": "Do you have experience building a dashboard for my project?",
+  "msg2": "Yes, tell me what kind of work you're doing.",
+  "msg3": "I work in the accounting department and I need a program that makes invoice entry easier. I heard you can build something custom for me.",
+  "msg4": "You can trust me, I'll show you an idea.",
+  "delivered": "Delivered ✓✓",
+  "inputPlaceholder": "Type a message…"
+},
     "dashboard": {
       "title": "Project overview",
       "subtitle": "Numbers, not promises",

@@ -59,17 +59,17 @@
     "php": "PHP"
   },
   "chat": {
-    "altDev": "Desarrollador",
-    "available": "Disponible para contratar",
-    "online": "En línea ahora",
-    "role": "Desarrollador full stack",
-    "msg1": "Necesitamos un panel + API. ¿Tienes experiencia?",
-    "msg2": "Desarrollador full stack. Envíame las especificaciones y lo estimaré hoy.",
-    "msg3": "¿Te encargas del frontend y backend? 🤔",
-    "msg4": "Vue + Laravel. Manejo todo el stack.",
-    "delivered": "Entregado ✓✓",
-    "inputPlaceholder": "Escribe un mensaje…"
-  },
+  "altDev": "Desarrollador",
+  "available": "Youssef",
+  "online": "En línea ahora",
+  "role": "Desarrollador full-stack",
+  "msg1": "¿Tienes experiencia creando un panel de control para mi proyecto?",
+  "msg2": "Sí, dime qué tipo de trabajo haces.",
+  "msg3": "Trabajo en el departamento de contabilidad y necesito un programa que facilite la entrada de facturas. He escuchado que puedes crear algo personalizado para mí.",
+  "msg4": "Puedes confiar en mí, te mostraré una idea.",
+  "delivered": "Entregado ✓✓",
+  "inputPlaceholder": "Escribe un mensaje…"
+},
   "dashboard": {
     "title": "Resumen de proyectos",
     "subtitle": "Números, no promesas",

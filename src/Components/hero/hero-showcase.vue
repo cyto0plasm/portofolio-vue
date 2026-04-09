@@ -58,26 +58,24 @@ const STATS = computed(() => [
   { label: t('hero.dashboard.stats.uptime.label'),   val: '99.9%', delta: t('hero.dashboard.stats.uptime.delta'),   accent: true  },
   { label: t('hero.dashboard.stats.apis.label'),     val: '30+',   delta: t('hero.dashboard.stats.apis.delta'),     accent: false },
 ])
-
-// ── Code snippet (static, intentionally not translated) ───────────────────────
-const CODE = `const stack = {
-  frontend: ["Vue 3", "Tailwind"],
-  backend:  ["Laravel", "PHP 8"],
-  api:      "REST / JSON",
-  deploy:   "prod-ready ✓"
-}`
-
-// ── PHP dummy snippet (static, unselectable) ──────────────────────────────────
-const PHP_CODE = `<?php
-
-function greet(string $name): string {
-    return "Hello, {$name}!";
+// ── Tech Stack (simple & human readable) ────────────────────────────────────
+const STACK = {
+  frontend: "Vue 3 + Tailwind",
+  backend: "Laravel + PHP",
+  api: "REST APIs",
+  focus: "Dashboards & Business Tools"
 }
 
-$result = greet("World");
-echo $result;`
+// ── What I build ─────────────────────────────────────────────────────────────
+const SERVICES = [
+  "Admin dashboards",
+  "Invoice systems",
+  "Custom business tools",
+  "APIs for web apps"
+]
 
-const PHP_OUTPUT = `Hello, World!`
+// ── Output feeling (what user gets) ──────────────────────────────────────────
+const RESULT = "Fast, simple, custom systems that fit your business"
 
 // ── Chat messages ─────────────────────────────────────────────────────────────
 const MESSAGES = computed(() => [
