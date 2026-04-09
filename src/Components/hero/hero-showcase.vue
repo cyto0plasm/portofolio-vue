@@ -29,7 +29,7 @@ const color  = computed(() => layout.preferedColor)
 const isDark = computed(() => layout.isDark)
 
 // ── Panel navigation ──────────────────────────────────────────────────────────
-const VIEWS   = ['chat', 'dashboard', 'code', 'php']
+const VIEWS   = ['chat', 'dashboard']
 const current = ref(0)
 const hovered = ref(false)
 
