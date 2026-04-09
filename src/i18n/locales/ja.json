@@ -50,7 +50,66 @@
     "laravel": "在庫管理",
     "vue": "Eコマース",
     "cta1": "詳細を見る",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+    "tabs": {
+    "chat": "チャット",
+    "dashboard": "ダッシュボード",
+    "code": "コード",
+    "php": "PHP"
+  },
+  "chat": {
+    "altDev": "開発者",
+    "available": "採用可能",
+    "online": "オンライン",
+    "role": "フルスタック開発者",
+    "msg1": "ダッシュボードとAPIが必要です。経験はありますか？",
+    "msg2": "フルスタック開発者です。仕様を送っていただければ本日見積もります。",
+    "msg3": "フロントエンドとバックエンドの両方を担当しますか？ 🤔",
+    "msg4": "Vue + Laravel。スタック全体を担当できます。",
+    "delivered": "配信済み ✓✓",
+    "inputPlaceholder": "メッセージを入力…"
+  },
+  "dashboard": {
+    "title": "プロジェクト概要",
+    "subtitle": "約束ではなく数値",
+    "days": {
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土",
+      "sun": "日"
+    },
+    "stats": {
+      "clients": {
+        "label": "クライアント",
+        "delta": "対応済み"
+      },
+      "projects": {
+        "label": "プロジェクト",
+        "delta": "納品済み"
+      },
+      "uptime": {
+        "label": "稼働時間",
+        "delta": "平均SLA"
+      },
+      "apis": {
+        "label": "API",
+        "delta": "構築済み"
+      }
+    },
+    "weeklyOutput": "週間生産量",
+    "shipped": "期限内に納品 · 最新プロジェクト"
+  },
+  "code": {
+    "buildOk": "ビルド成功 · エラー0件",
+    "prodReady": "本番環境対応の出力"
+  },
+  "php": {
+    "title": "PHPランナー",
+    "run": "実行"
+  }
   },
   "about": {
     "label": "私について",

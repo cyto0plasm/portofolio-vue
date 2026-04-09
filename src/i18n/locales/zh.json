@@ -50,7 +50,66 @@
     "laravel": "库存管理",
     "vue": "电商",
     "cta1": "了解更多",
-    "contact": "联系我"
+    "contact": "联系我",
+    "tabs": {
+    "chat": "聊天",
+    "dashboard": "仪表板",
+    "code": "代码",
+    "php": "PHP"
+  },
+  "chat": {
+    "altDev": "开发者",
+    "available": "可接单",
+    "online": "在线",
+    "role": "全栈开发者",
+    "msg1": "我们需要一个仪表板 + API。你有经验吗？",
+    "msg2": "我是全栈开发者。把需求发给我，我今天就能给出估算。",
+    "msg3": "你负责前端和后端吗？ 🤔",
+    "msg4": "Vue + Laravel。我可以处理整个技术栈。",
+    "delivered": "已送达 ✓✓",
+    "inputPlaceholder": "输入消息…"
+  },
+  "dashboard": {
+    "title": "项目概览",
+    "subtitle": "用数据说话",
+    "days": {
+      "mon": "一",
+      "tue": "二",
+      "wed": "三",
+      "thu": "四",
+      "fri": "五",
+      "sat": "六",
+      "sun": "日"
+    },
+    "stats": {
+      "clients": {
+        "label": "客户",
+        "delta": "已服务"
+      },
+      "projects": {
+        "label": "项目",
+        "delta": "已交付"
+      },
+      "uptime": {
+        "label": "运行时间",
+        "delta": "平均SLA"
+      },
+      "apis": {
+        "label": "API",
+        "delta": "已构建"
+      }
+    },
+    "weeklyOutput": "每周产出",
+    "shipped": "按时交付 · 最新项目"
+  },
+  "code": {
+    "buildOk": "构建成功 · 0 错误",
+    "prodReady": "已准备好用于生产环境"
+  },
+  "php": {
+    "title": "PHP运行器",
+    "run": "运行"
+  }
   },
   "about": {
     "label": "关于我",

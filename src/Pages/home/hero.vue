@@ -7,6 +7,8 @@ import Badges from '@/svg/badges.vue'
 import MainButton from '@/Components/main-button.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+// import HeroShowcase from '@/Components/hero-showcase.vue'
+import FlipCard from '@/Components/hero/flip-card.vue'
 
 const { t ,locale} = useI18n()
 
@@ -140,7 +142,7 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
  <!-- <FloatingWords :color="layout.preferedColor"></FloatingWords> -->
 <section
   id="hero" data-section ref="heroRef"
-  class="reveal-wrap section-wrap has-edge-glow relative min-h-svh flex items-center px-5 sm:px-8 lg:px-14 overflow-hidden"
+  class="reveal-wrap section-wrap has-edge-glow relative min-h-svh flex items-center px-5 sm:px-8 lg:px-14 overflow-hidden  md:mt-0"
   :class="{ visible: isVisible }"
   :data-dir="direction ?? 'down'"
   :style="{ '--glow-color': preferedColor, '--c': preferedColor }"
@@ -278,70 +280,21 @@ const shiftColor = (color, darken = 10, desaturate = 10) => {
             </div>
 
             <!-- PHOTO (md+) -->
-            <div class="reveal-item hidden md:flex md:items-center md:justify-center shrink-0" style="--i:3" aria-hidden="true">
-                <slot name="model">
-                    <div class="photo-scene relative flex items-center p-8 pl-8 cursor-crosshair"
-                        @mousemove="desktop.onMouseMove"
-                        @mouseenter="desktop.onMouseEnter"
-                        @mouseleave="desktop.onMouseLeave">
-
-                        <!-- dots -->
-                        <svg class="absolute top-8 left-0 pointer-events-none"
-                             width="52" height="182" xmlns="http://www.w3.org/2000/svg"
-                             :style="{ transform: `translate(${desktop.offset.value.x * 0.25}px,${desktop.offset.value.y * 0.50}px)`, willChange: 'transform' }">
-                            <circle v-for="(d, i) in dots" :key="i"
-                                :cx="d.cx" :cy="d.cy" r="1.6" :fill="preferedColor" opacity="0.10" />
-                        </svg>
-
-                        <!-- cycling code line -->
-                        <span class="code-line absolute top-1.5 left-12 font-mono text-xs pointer-events-none select-none"
-                            :class="lineVisible ? 'opacity-[0.65] blur-0' : 'opacity-0 blur-sm'"
-                            :style="{
-                                color: preferedColor,
-                                transform: `translate(${desktop.offset.value.x * 0.90}px,${desktop.offset.value.y * 0.30}px)`,
-                                transition: 'opacity .28s ease, filter .28s ease, transform .05s linear',
-                                willChange: 'transform, opacity, filter',
-                            }">
-                            {{ CODE_LINES[lineIdx] }}
-                        </span>
-
-                        <!-- photo card -->
-                        <div ref="desktopCard"
-                            class="photo-frame relative w-44 h-52 md:w-52 md:h-64 lg:w-80 lg:h-96 rounded-2xl overflow-hidden select-none cursor-crosshair">
-                            <div class="absolute inset-0 rounded-2xl rotate-3 opacity-30 pointer-events-none -z-10"
-                                 :style="{ background: preferedColor }" />
-                            <img :src="photoSrc" :alt="`${firstName} ${lastName}`"
-                                class="w-full h-full object-cover object-top block rounded-2xl ring-1 ring-gray-200 shadow-xl"
-                                :style="desktop.imgStyle.value" loading="eager" decoding="async" draggable="false" />
-                            <div class="absolute inset-0 rounded-2xl pointer-events-none z-10 transition-opacity duration-300"
-                                :class="desktop.isHovered.value ? 'opacity-100' : 'opacity-0'"
-                                :style="{ boxShadow: `inset 0 0 0 2px ${preferedColor}66` }" />
-                            <div class="absolute -top-5 -right-5 z-20"><slot name="toy" /></div>
-                        </div>
-
-                        <!-- status pill -->
-                        <!-- <div class="absolute bottom-1.5 left-5 flex items-center gap-2 font-mono text-[0.65rem]
-                                    px-3 py-1.5 rounded-full border backdrop-blur-sm pointer-events-none"
-                            :style="{
-                                '--c': preferedColor,
-                                borderColor: `color-mix(in srgb, ${preferedColor} 22%, transparent)`,
-                                background:  `color-mix(in srgb, ${preferedColor} 5%,  transparent)`,
-                                transform: `translate(${desktop.offset.value.x * 0.18}px,${desktop.offset.value.y * 0.18}px)`,
-                                willChange: 'transform',
-                                transition: 'transform .05s linear',
-                            }">
-                            <span class="relative flex h-[7px] w-[7px] shrink-0">
-                                <span class="ping absolute inset-0 rounded-full" :style="{ background: preferedColor }" />
-                                <span class="relative h-full w-full rounded-full block" :style="{ background: preferedColor }" />
-                            </span>
-                            <span class="text-gray-400">
-                                git commit -m <span :style="{ color: preferedColor }">"available"</span>
-                            </span>
-                        </div> -->
-
-                    </div>
-                </slot>
-            </div>
+            
+  <!-- <HeroShowcase :photo-src="photoSrc" :color="preferedColor" /> -->
+<div
+  class="reveal-item hidden md:flex md:items-center md:justify-center shrink-0"
+  style="--i:3"
+>
+  <FlipCard
+    :photoSrc="photoSrc"
+    :preferedColor="preferedColor"
+    :firstName="firstName"
+    :lastName="lastName"
+  >
+    <template #toy><slot name="toy" /></template>
+  </FlipCard>
+</div>
 
         </div>
     </section>

@@ -51,6 +51,67 @@
     "vue": "Comercio Electrónico",
     "cta1": "Saber Más",
     "contact": "Contáctame"
+    ,
+  "tabs": {
+    "chat": "Chat",
+    "dashboard": "Panel",
+    "code": "Código",
+    "php": "PHP"
+  },
+  "chat": {
+    "altDev": "Desarrollador",
+    "available": "Disponible para contratar",
+    "online": "En línea ahora",
+    "role": "Desarrollador full stack",
+    "msg1": "Necesitamos un panel + API. ¿Tienes experiencia?",
+    "msg2": "Desarrollador full stack. Envíame las especificaciones y lo estimaré hoy.",
+    "msg3": "¿Te encargas del frontend y backend? 🤔",
+    "msg4": "Vue + Laravel. Manejo todo el stack.",
+    "delivered": "Entregado ✓✓",
+    "inputPlaceholder": "Escribe un mensaje…"
+  },
+  "dashboard": {
+    "title": "Resumen de proyectos",
+    "subtitle": "Números, no promesas",
+    "days": {
+      "mon": "L",
+      "tue": "M",
+      "wed": "X",
+      "thu": "J",
+      "fri": "V",
+      "sat": "S",
+      "sun": "D"
+    },
+    "stats": {
+      "clients": {
+        "label": "Clientes",
+        "delta": "Atendidos"
+      },
+      "projects": {
+        "label": "Proyectos",
+        "delta": "Entregados"
+      },
+      "uptime": {
+        "label": "Tiempo activo",
+        "delta": "Promedio SLA"
+      },
+      "apis": {
+        "label": "APIs",
+        "delta": "Construidas"
+      }
+    },
+    "weeklyOutput": "Producción semanal",
+    "shipped": "Enviado a tiempo · Último proyecto"
+  },
+  "code": {
+    "buildOk": "Compilación exitosa · 0 errores",
+    "prodReady": "Salida lista para producción"
+  },
+  "php": {
+    "title": "Ejecutor de PHP",
+    "run": "Ejecutar"
+  }
+
   },
   "about": {
     "label": "Sobre Mí",

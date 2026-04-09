@@ -9,7 +9,7 @@
     "en-us": "English US",
     "en-gb": "English UK"
   },
-  "loading": "Remember God",
+  "loading": "Loading",
   "nav": {
     "logo1": "Youssef",
     "logo2": "Adel",
@@ -38,7 +38,7 @@
     "linkedin": "LinkedIn",
     "email": "Email"
   },
-  "hero": {
+    "hero": {
     "avil": "Available for new projects",
     "fname": "Youssef",
     "lname": "Zaki",
@@ -50,7 +50,66 @@
     "laravel": "Inventory Management",
     "vue": "E-commerce",
     "cta1": "Learn More",
-    "contact": "Contact Me"
+    "contact": "Contact Me",
+    "tabs": {
+      "chat": "Chat",
+      "dashboard": "Dash",
+      "code": "Code",
+      "php": "PHP"
+    },
+    "chat": {
+      "altDev": "developer",
+      "available": "Available for hire",
+      "online": "Online now",
+      "role": "Full-stack dev",
+      "msg1": "We need a dashboard + API. Any experience?",
+      "msg2": "Full-stack. Send the spec, I'll scope today.",
+      "msg3": "Can you handle both front & back? 🤔",
+      "msg4": "Vue + Laravel. I own the whole stack.",
+      "delivered": "Delivered ✓✓",
+      "inputPlaceholder": "Type a message…"
+    },
+    "dashboard": {
+      "title": "Project overview",
+      "subtitle": "Numbers, not promises",
+      "days": {
+        "mon": "M",
+        "tue": "T",
+        "wed": "W",
+        "thu": "T",
+        "fri": "F",
+        "sat": "S",
+        "sun": "S"
+      },
+      "stats": {
+        "clients": {
+          "label": "Clients",
+          "delta": "served"
+        },
+        "projects": {
+          "label": "Projects",
+          "delta": "delivered"
+        },
+        "uptime": {
+          "label": "Uptime",
+          "delta": "avg SLA"
+        },
+        "apis": {
+          "label": "APIs",
+          "delta": "built"
+        }
+      },
+      "weeklyOutput": "Weekly output",
+      "shipped": "Shipped on schedule · last project"
+    },
+    "code": {
+      "buildOk": "Build OK · 0 errors",
+      "prodReady": "Production-ready output"
+    },
+    "php": {
+      "title": "php runner",
+      "run": "Run"
+    }
   },
   "about": {
     "label": "About Me",

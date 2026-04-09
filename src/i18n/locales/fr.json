@@ -50,7 +50,66 @@
     "laravel": "Gestion des stocks",
     "vue": "E-commerce",
     "cta1": "En savoir plus",
-    "contact": "Contactez-moi"
+    "contact": "Contactez-moi",
+     "tabs": {
+    "chat": "Discussion",
+    "dashboard": "Tableau de bord",
+    "code": "Code",
+    "php": "PHP"
+  },
+  "chat": {
+    "altDev": "Développeur",
+    "available": "Disponible à l’embauche",
+    "online": "En ligne maintenant",
+    "role": "Développeur full stack",
+    "msg1": "Nous avons besoin d’un tableau de bord + API. As-tu de l’expérience ?",
+    "msg2": "Développeur full stack. Envoie-moi les spécifications et je ferai une estimation aujourd’hui.",
+    "msg3": "Tu gères le frontend et le backend ? 🤔",
+    "msg4": "Vue + Laravel. Je gère tout le stack.",
+    "delivered": "Livré ✓✓",
+    "inputPlaceholder": "Écris un message…"
+  },
+  "dashboard": {
+    "title": "Aperçu des projets",
+    "subtitle": "Des chiffres, pas des promesses",
+    "days": {
+      "mon": "L",
+      "tue": "M",
+      "wed": "M",
+      "thu": "J",
+      "fri": "V",
+      "sat": "S",
+      "sun": "D"
+    },
+    "stats": {
+      "clients": {
+        "label": "Clients",
+        "delta": "Servis"
+      },
+      "projects": {
+        "label": "Projets",
+        "delta": "Livrés"
+      },
+      "uptime": {
+        "label": "Disponibilité",
+        "delta": "SLA moyen"
+      },
+      "apis": {
+        "label": "APIs",
+        "delta": "Construites"
+      }
+    },
+    "weeklyOutput": "Production hebdomadaire",
+    "shipped": "Livré à temps · Dernier projet"
+  },
+  "code": {
+    "buildOk": "Build réussi · 0 erreur",
+    "prodReady": "Sortie prête pour la production"
+  },
+  "php": {
+    "title": "Exécuteur PHP",
+    "run": "Exécuter"
+  }
   },
   "about": {
     "label": "À propos de moi",
