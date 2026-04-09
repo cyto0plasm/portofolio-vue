@@ -32,6 +32,7 @@ watch(() => layout.terminalOpen, (open) => {
 <template>
   <Transition name="t-slide">
     <section
+    @wheel.stop
       v-show="layout.terminalOpen"
       class="fixed bottom-0 inset-x-0 z-[9999] flex flex-col
              bg-[rgba(9,11,14,0.97)] backdrop-blur-xl

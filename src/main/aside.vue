@@ -12,7 +12,7 @@ const route = useRoute()
 const { locale, t } = useI18n()
 const layout = useLayoutStore()
 const showModeCommandText = ref(true)
-const presetColors = ['#54debd', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6']
+const presetColors = ['#54debd', '#8ae68a', '#f59e0b', '#ef4444', '#8b5cf6']
 const langOpen = ref(false)
 
 const links = computed(() => [
