@@ -67,7 +67,7 @@ const typeLabel = computed(() => {
       </div>
 
       <template v-for="(project, i) in projects" :key="project.id">
-        <div :id="`project-${project.slug}`" data-section class="min-h-[60vh]">
+        <div :id="`project-${project.slug}`" data-section class="min-h-[60vh] my-2">
           <ProjectCard
             :project="project"
             :type-label="typeLabel"

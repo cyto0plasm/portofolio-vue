@@ -53,12 +53,13 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
     enter-from-class="-translate-y-full opacity-0"
     leave-to-class="-translate-y-full opacity-0"
   >
-    <nav
-      v-if="showNav"
-      class="fixed top-0 left-0 w-full flex items-center justify-between px-6 sm:px-10 lg:px-14 py-4 z-50
-             border-b border-gray-200/60 dark:border-white/10
-             bg-white/80 dark:bg-[#1e1e1e]/85 backdrop-blur-md shadow-sm"
-    >
+   <nav
+  class="fixed top-0 left-0 w-full flex items-center justify-between px-6 sm:px-10 lg:px-14 py-4 z-50
+         border-b border-gray-200/60 dark:border-white/10
+         bg-white/80 dark:bg-[#1e1e1e]/85 backdrop-blur-md shadow-sm
+         transition-transform duration-300"
+  :class="showNav ? 'translate-y-0' : '-translate-y-full'"
+>
       <!-- Logo -->
  <RouterLink  @click.prevent="glitchOn = !glitchOn"  to="/" class="group flex items-center gap-0 no-underline select-none text-nowrap mx-2">
   <span class="text-[1.1rem] font-semibold tracking-tight transition-colors duration-200" :style="{ color: layout.preferedColor }">{{ t('nav.logo1') }}&nbsp;</span>

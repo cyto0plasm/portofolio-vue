@@ -25,11 +25,14 @@ watch(() => props.sections, () => { current.value = 0 }, { flush: 'post' })
 const scrollTo = (idx) => {
   current.value = idx
   const el = document.getElementById(props.sections[idx])
+
   if (el) {
-    const navHeight = document.querySelector(props.navSelector)?.offsetHeight ?? 0
-    const top = el.getBoundingClientRect().top + window.scrollY - navHeight
-    window.scrollTo({ top, behavior: 'smooth' })
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
   }
+
   showTemporarily()
 }
 

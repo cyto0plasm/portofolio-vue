@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { useLayoutStore } from '../../Stores/layout-store'
 import { useScroll } from '../../composables/useScrollReveal.js'
 import GithubGraph from '@/Components/github-graph.vue'
+import HandCircle from '@/Components/hand-circle.vue'
 
 const { t, locale } = useI18n()
 const layout = useLayoutStore()
@@ -14,7 +15,7 @@ const { targetRef: aboutRef, isVisible, direction } = useScroll({ threshold: 0.2
     id="about"
     data-section
     ref="aboutRef"
-    class="reveal-wrap relative py-20 px-5 sm:px-8 lg:px-14"
+    class="reveal-wrap relative py-10 px-5 sm:px-8 lg:px-14"
     :class="{ visible: isVisible }"
     :data-dir="direction ?? 'down'"
     :style="`--c: ${layout.preferedColor}`"
@@ -52,6 +53,7 @@ const { targetRef: aboutRef, isVisible, direction } = useScroll({ threshold: 0.2
         <!-- Card 2 -->
         <div class="rounded-xl p-4 flex flex-col gap-2 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 transition-transform duration-200 hover:-translate-y-0.5">
           <span class="card-label">{{ t('about.card2_label') }}</span>
+          
           <p class="text-sm leading-relaxed m-0 text-gray-600 dark:text-gray-300">{{ t('about.card2') }}</p>
         </div>
 

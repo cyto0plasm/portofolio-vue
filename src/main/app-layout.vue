@@ -64,6 +64,14 @@ const route = useRoute()
 watch(() => route.fullPath, async () => {
   sections.value = []
   await nextTick()
+  const lenis = instance.appContext.config.globalProperties.$lenis
+
+  if (lenis) {
+    lenis.scrollTo(0, { immediate: true })
+  } else {
+    window.scrollTo(0, 0)
+  }
+
   setTimeout(detectSections, 300)
 })
 // const removeStart  = router.on('start', () => { layout.loading = true; sections.value = [] })

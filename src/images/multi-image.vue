@@ -80,8 +80,8 @@ function mobileStyle(idx) {
    transition: reorder.dragSrc.value === idx
   ? 'left 120ms cubic-bezier(0.25,1,0.5,1), transform 120ms cubic-bezier(0.25,1,0.5,1)'
   : 'left 420ms cubic-bezier(0.34,1.4,0.64,1), transform 420ms cubic-bezier(0.34,1.4,0.64,1)',
-    opacity: isActive ? 1 : 0.88,
-    touchAction: 'none',
+    opacity: isActive ? 1 : 0.95,
+    touchAction: 'pan-y',
   }
 }
 
@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
           style="height: 260px"
           @mousedown="carousel.mouseDown"
           @touchstart.passive="carousel.touchStart"
-          @touchmove.prevent="carousel.touchMove"
+          @touchmove="carousel.touchMove"
           @touchend="carousel.touchEnd"
             @click.capture="carousel.clickCapture"
 

@@ -70,7 +70,7 @@ function formatDate(date) {
   <div
     ref="targetRef"
     class="flex flex-col lg:flex-row justify-center max-w-6xl mx-auto p-1 
-           min-h-svh lg:min-h-0 
+            lg:min-h-0 
            hover:scale-[101.8%] transition-transform duration-700"
   >
     <!-- TEXT COL -->
