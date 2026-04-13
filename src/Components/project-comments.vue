@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useComments } from '@/composables/firebase/useProjectStats'
+import { useComments } from '@/composables/firebase/useComments'
 import { useLayoutStore } from '@/Stores/layout-store'
 import { storeToRefs } from 'pinia'
 import CommentItem from './comment-item.vue'

@@ -12,7 +12,7 @@ const {t, locale} = useI18n()
 const isAr = computed(() => locale.value === 'ar')
 
 useHead({
-  title: "Projects",
+  title: "Youssef's Projects",
   meta: [
     { name: 'description', content: "Youssef Zaki's Projects Page" },
   ],

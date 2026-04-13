@@ -9,7 +9,7 @@ import About from './home/about.vue'
 
 
 useHead({
-  title: "Home",
+  title: "Youssef's Home",
   meta: [
     { name: 'description', content: "Youssef Zaki's Home Page" },
   ],

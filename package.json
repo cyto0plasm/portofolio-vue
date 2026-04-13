@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@fontsource/ubuntu": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
     "@unhead/vue": "^2.1.12",

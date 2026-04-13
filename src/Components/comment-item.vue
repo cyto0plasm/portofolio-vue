@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useReplies } from '@/composables/firebase/useProjectStats'
+import { useReplies } from '@/composables/firebase/useReplies'
 import { useLayoutStore } from '@/Stores/layout-store'
 import { storeToRefs } from 'pinia'
 

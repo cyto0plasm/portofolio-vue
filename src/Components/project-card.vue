@@ -5,7 +5,7 @@ import { useScroll } from "@/composables/useScrollReveal.js";
 import MultiImage from "@/images/multi-image.vue";
 import Badges from "@/svg/badges.vue";
 import { useProjectStats } from "@/composables/firebase/useProjectStats";
-import { useComments } from "@/composables/firebase/useProjectStats";
+import { useComments } from "@/composables/firebase/useComments";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
