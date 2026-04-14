@@ -17,10 +17,10 @@ export function useComments(projectId) {
   const rateLimitError = ref('')
   let unsub = null
 
-  const { isAllowed, remainingSeconds } = useRateLimit(`comments_${projectId}`, {
-    max: 5,
-    windowMs: 60_000
-  })
+const { isAllowed, remainingSeconds } = useRateLimit('comments_global', {
+  max: 2,
+  windowMs: 60_000
+})
 
   const { isAllowed: likeAllowed, remainingSeconds: likeRemaining } =
     useRateLimit(`comment_likes_${projectId}`, { max: 20, windowMs: 60_000 })

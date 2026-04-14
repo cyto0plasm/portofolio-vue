@@ -23,6 +23,8 @@ export const useLayoutStore = defineStore('layout', {
       { type: 'system', text: '─────────────────────────────────────────' },
     ],
     terminalHistory: [],
+
+    
   }),
 
   // ------------------
