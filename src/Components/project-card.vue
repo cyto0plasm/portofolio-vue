@@ -74,7 +74,7 @@ function formatDate(date) {
            hover:scale-[101.8%] transition-transform duration-700"
   >
     <!-- TEXT COL -->
-    <div class="flex flex-col justify-start p-4 sm:p-6 flex-1 gap-2 sm:gap-3">
+    <div class="flex flex-col justify-start p-4 sm:p-6 flex-1 min gap-2 sm:gap-3">
       <!-- Slug -->
       <div
         class="font-mono text-[11px] sm:text-[14px] lg:text-[18px] tracking-widest uppercase text-zinc-600 w-fit transition-all duration-[650ms]"

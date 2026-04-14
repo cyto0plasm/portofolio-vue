@@ -31,89 +31,107 @@ const outerRef = ref(null)
 const innerRef = ref(null)
 
 let cardEls = []
-let ticking = false
+let ticking  = false
+let vh       = window.innerHeight
+let total    = 0
 
-// cached values (CRITICAL for performance)
-let vh = window.innerHeight
-let total = 0
+// Lerp — decouples scroll events from rendering, smooth on all devices
+let currentTy = []
+let targetTy  = []
+let rafId     = null
+const LERP    = 0.14  // tweak: higher = snappier, lower = more glide
 
 function cache() {
   if (!innerRef.value) return
-  cardEls = innerRef.value.querySelectorAll('.stack-card')
-  total = projects.value.length
+  cardEls   = Array.from(innerRef.value.querySelectorAll('.stack-card'))
+  total     = projects.value.length
+  currentTy = Array(total).fill(0)
+  targetTy  = Array(total).fill(0)
 
   cardEls.forEach((el, i) => {
-    el.style.transform = i === 0
-      ? 'translate3d(0,0%,0)'
-      : 'translate3d(0,100%,0)'
+    el.style.willChange = 'transform'
+    const ty = i === 0 ? 0 : 100
+    currentTy[i] = targetTy[i] = ty
+    el.style.transform = `translate3d(0,${ty}%,0)`
   })
 }
 
 const isPinned = ref(false)
-const isAfter = ref(false)
+const isAfter  = ref(false)
 
-function update() {
+function computeTargets() {
   if (!outerRef.value) return
 
-  const rectTop = outerRef.value.getBoundingClientRect().top
+  const rectTop  = outerRef.value.getBoundingClientRect().top
   const scrolled = -rectTop
-
   const pinRange = (total - 1) * vh
 
-  const newPinned = scrolled >= 0 && scrolled < pinRange
-  const newAfter  = scrolled >= pinRange
-
-  if (isPinned.value !== newPinned) isPinned.value = newPinned
-  if (isAfter.value !== newAfter) isAfter.value = newAfter
+  isPinned.value = scrolled >= 0 && scrolled < pinRange
+  isAfter.value  = scrolled >= pinRange
 
   if (scrolled < 0) return
 
-  // 🔥 only affect nearby cards (BIG performance win)
-  const activeIndex = Math.floor(scrolled / vh)
+  const active = Math.floor(scrolled / vh)
 
-  for (let i = 0; i < cardEls.length; i++) {
-    if (i < activeIndex - 1 || i > activeIndex + 2) continue
-
-    let ty = 0
+  for (let i = 0; i < total; i++) {
+    if (i < active - 1 || i > active + 2) continue
 
     if (i === 0) {
-      ty = 0
+      targetTy[i] = 0
     } else {
-      const start = (i - 1) * vh
-      let progress = (scrolled - start) / vh
-
-      // clamp (IMPORTANT)
+      const start    = (i - 1) * vh
+      let   progress = (scrolled - start) / vh
       if (progress < 0) progress = 0
       if (progress > 1) progress = 1
+      targetTy[i] = 100 - progress * 100
+    }
+  }
+}
 
-      ty = 100 - progress * 100
+function animateLoop() {
+  let stillMoving = false
+
+  for (let i = 0; i < cardEls.length; i++) {
+    const diff = targetTy[i] - currentTy[i]
+
+    if (Math.abs(diff) < 0.02) {
+      currentTy[i] = targetTy[i]
+    } else {
+      currentTy[i] += diff * LERP
+      stillMoving = true
     }
 
-    const el = cardEls[i]
-    el.style.transform = `translate3d(0,${ty}%,0)`
+    cardEls[i].style.transform = `translate3d(0,${currentTy[i]}%,0)`
   }
+
+  rafId = stillMoving ? requestAnimationFrame(animateLoop) : null
+}
+
+function kickAnimate() {
+  if (!rafId) rafId = requestAnimationFrame(animateLoop)
 }
 
 function onScroll() {
   if (ticking) return
   ticking = true
-
   requestAnimationFrame(() => {
-    update()
+    computeTargets()
+    kickAnimate()
     ticking = false
   })
 }
 
 function onResize() {
   vh = window.innerHeight
+  computeTargets()
 }
 
 onMounted(() => {
   nextTick(() => {
     cache()
-    update()
+    computeTargets()
+    kickAnimate()
   })
-
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onResize)
 })
@@ -121,8 +139,10 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('resize', onResize)
+  if (rafId) cancelAnimationFrame(rafId)
 })
 </script>
+
 <template>
   <section
     id="projects"
@@ -169,7 +189,6 @@ onUnmounted(() => {
             class="stack-card bg-[#f5f2f2] dark:bg-[#262626]"
             :style="{ zIndex: i + 1 }"
           >
-            <!-- transform is now set directly on the DOM element, NOT via :style binding -->
             <div class="card-scroll-inner">
               <ProjectCard
                 :project="project"
@@ -213,7 +232,11 @@ onUnmounted(() => {
 .inner-sticky.is-fixed { position: fixed; top: 0; left: 0; right: 0; height: 100vh; }
 .inner-sticky.is-after { position: absolute; top: auto; bottom: 0; }
 
-.stack-card { position: absolute; inset: 0; }
+.stack-card {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden; /* promotes to GPU layer */
+}
 
 .card-scroll-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; overflow-y: hidden; }
 </style>
