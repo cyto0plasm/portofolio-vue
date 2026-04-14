@@ -53,7 +53,7 @@ const imageSrcs = computed(() =>
 const isMobileView = window.innerWidth < 768
 const { targetRef, isVisible, direction } = useScroll({
   threshold: isMobileView ? 0.04 : 0.32,
-  rootMargin: isMobileView ? '0px 0px -20px 0px' : '0px 0px -80px 0px'
+  rootMargin: isMobileView ? '0px 0px -15px 0px' : '0px 0px -40px 0px'
 })
 
 
@@ -69,7 +69,7 @@ function formatDate(date) {
 <template>
   <div
     ref="targetRef"
-    class="flex flex-col lg:flex-row justify-center max-w-6xl mx-auto p-1 
+    class="flex flex-col lg:flex-row justify-center max-w-6xl mx-auto 
             lg:min-h-0 
            hover:scale-[101.8%] transition-transform duration-700"
   >

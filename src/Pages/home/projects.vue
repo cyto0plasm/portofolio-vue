@@ -11,96 +11,118 @@ import { useScroll } from '../../composables/useScrollReveal.js'
 
 const { targetRef: projectsIntroRef, isVisible: introVisible, direction: introDirection }
   = useScroll({ threshold: 0.02 })
+
 const { t, locale } = useI18n()
 const { projects } = storeToRefs(useHomeStore())
 const { preferedColor } = storeToRefs(useLayoutStore())
+
 const openCommentSlug = ref(null)
 
 const typeLabel = computed(() => {
   const isAr = locale.value === 'ar'
   return {
-    web:     isAr ? 'موقع ويب'            : 'Web Site',
-    desktop: isAr ? 'تطبيق سطح المكتب'   : 'Desktop Application',
-    mobile:  isAr ? 'تطبيق موبايل'        : 'Mobile Application',
+    web:     isAr ? 'موقع ويب' : 'Web Site',
+    desktop: isAr ? 'تطبيق سطح المكتب' : 'Desktop Application',
+    mobile:  isAr ? 'تطبيق موبايل' : 'Mobile Application',
   }
 })
 
-const outerRef   = ref(null)
-const innerRef   = ref(null)  // ref the inner div directly
-let   cardEls    = []         // raw DOM refs, no reactivity
-let   ticking    = false
+const outerRef = ref(null)
+const innerRef = ref(null)
 
-// Called once after mount to grab raw card elements
-function cacheCardEls() {
+let cardEls = []
+let ticking = false
+
+// cached values (CRITICAL for performance)
+let vh = window.innerHeight
+let total = 0
+
+function cache() {
   if (!innerRef.value) return
-  cardEls = Array.from(innerRef.value.querySelectorAll('.stack-card'))
-  // Set initial transforms directly
+  cardEls = innerRef.value.querySelectorAll('.stack-card')
+  total = projects.value.length
+
   cardEls.forEach((el, i) => {
-    el.style.transform = i === 0 ? 'translateY(0%)' : 'translateY(100%)'
+    el.style.transform = i === 0
+      ? 'translate3d(0,0%,0)'
+      : 'translate3d(0,100%,0)'
   })
 }
 
-// isPinned/isAfter still need to be reactive (they affect CSS classes)
 const isPinned = ref(false)
-const isAfter  = ref(false)
+const isAfter = ref(false)
+
+function update() {
+  if (!outerRef.value) return
+
+  const rectTop = outerRef.value.getBoundingClientRect().top
+  const scrolled = -rectTop
+
+  const pinRange = (total - 1) * vh
+
+  const newPinned = scrolled >= 0 && scrolled < pinRange
+  const newAfter  = scrolled >= pinRange
+
+  if (isPinned.value !== newPinned) isPinned.value = newPinned
+  if (isAfter.value !== newAfter) isAfter.value = newAfter
+
+  if (scrolled < 0) return
+
+  // 🔥 only affect nearby cards (BIG performance win)
+  const activeIndex = Math.floor(scrolled / vh)
+
+  for (let i = 0; i < cardEls.length; i++) {
+    if (i < activeIndex - 1 || i > activeIndex + 2) continue
+
+    let ty = 0
+
+    if (i === 0) {
+      ty = 0
+    } else {
+      const start = (i - 1) * vh
+      let progress = (scrolled - start) / vh
+
+      // clamp (IMPORTANT)
+      if (progress < 0) progress = 0
+      if (progress > 1) progress = 1
+
+      ty = 100 - progress * 100
+    }
+
+    const el = cardEls[i]
+    el.style.transform = `translate3d(0,${ty}%,0)`
+  }
+}
 
 function onScroll() {
   if (ticking) return
   ticking = true
+
   requestAnimationFrame(() => {
-    if (!outerRef.value) { ticking = false; return }
-
-    const rect     = outerRef.value.getBoundingClientRect()
-    const scrolled = -rect.top
-    const vh       = window.innerHeight
-    const pinRange = (projects.value.length - 1) * vh
-
-    // Only update reactive refs when the value actually changes
-    const newPinned = scrolled >= 0 && scrolled < pinRange
-    const newAfter  = scrolled >= pinRange
-    if (isPinned.value !== newPinned) isPinned.value = newPinned
-    if (isAfter.value  !== newAfter)  isAfter.value  = newAfter
-
-    if (scrolled < 0) {
-      cardEls.forEach((el, i) => {
-        el.style.transform = i === 0 ? 'translateY(0%)' : 'translateY(100%)'
-        el.style.willChange = 'auto'
-      })
-      ticking = false
-      return
-    }
-
-    cardEls.forEach((el, i) => {
-      let ty
-      if (i === 0) {
-        ty = 0
-      } else {
-        const start    = (i - 1) * vh
-        const progress = (scrolled - start) / vh
-        if      (progress <= 0) ty = 100
-        else if (progress >= 1) ty = 0
-        else                    ty = 100 - progress * 100
-      }
-
-      el.style.transform  = `translateY(${ty}%)`
-      // Only hint GPU for the card actually moving
-      el.style.willChange = (ty > 0 && ty < 100) ? 'transform' : 'auto'
-    })
-
+    update()
     ticking = false
   })
 }
 
+function onResize() {
+  vh = window.innerHeight
+}
+
 onMounted(() => {
-  nextTick(cacheCardEls)
+  nextTick(() => {
+    cache()
+    update()
+  })
+
   window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onResize)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onResize)
 })
 </script>
-
 <template>
   <section
     id="projects"
@@ -193,5 +215,5 @@ onUnmounted(() => {
 
 .stack-card { position: absolute; inset: 0; }
 
-.card-scroll-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+.card-scroll-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; overflow-y: hidden; }
 </style>
