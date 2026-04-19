@@ -1,38 +1,50 @@
-# PortofolioVue
+# Youssef Zaki — Portfolio
 
-This template should help get you started developing with Vue 3 in Vite.
+My personal portfolio website. Built with Vue 3 and Vite, deployed on Vercel.
 
-## Recommended IDE Setup
+🌐 [cytoplasm.vercel.app](https://cytoplasm.vercel.app)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+### Home
+- Hero section with intro, stack tags, and quick links
+- Project showcase — Taskly, TechLink, Bills, PMS, LMS
+- About section with GitHub contributions graph
+- Skills — technologies and tools I work with
 
-## Customize configuration
+### Projects page
+- Fetches live README content from GitHub for each project
+- Project cards with views, likes, and comment interactions
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Contact
+- Contact form (name, email, message) — delivers directly to my Gmail in real time
+- Social links — GitHub, LinkedIn, X
 
-## Project Setup
+### Extras
+- **Terminal** — press `Ctrl+K` to open. Navigate the site, toggle preferences, and more from the command line
+- **Chatbot** — ask it anything about me
+- **i18n** — Arabic / English with full RTL support
+- **Smooth scroll** — powered by Lenis
 
-```sh
+---
+
+## Built with
+
+- Vue 3 + Vite
+- Tailwind CSS
+- Pinia
+- Firebase (views, likes, comments)
+- Lenis (smooth scroll)
+- vue-i18n
+- Unhead (SEO)
+
+---
+
+## Run locally
+
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
 ```
