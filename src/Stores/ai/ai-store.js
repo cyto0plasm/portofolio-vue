@@ -81,62 +81,77 @@ const projectsMap = computed(() => {
     });
   }
 
-  async function processQueue() {
-    if (isProcessingQueue) return;
-    isProcessingQueue = true;
+async function processQueue() {
+  if (isProcessingQueue) return;
+  isProcessingQueue = true;
 
-    while (requestQueue.length > 0) {
-      const { question, onToken, intent, isArabic, botIdx, resolve, reject } = requestQueue[0];
-      streaming.value = true;
+  while (requestQueue.length > 0) {
+    const {
+      question,
+      intent,
+      isArabic,
+      botIdx,
+      resolve,
+      reject,
+    } = requestQueue[0];
 
-      try {
-        if (responseCache.canCache(intent) && intent !== "HIRING") {
-          const cached = responseCache.get(intent);
-          if (cached) {
-            messages.value[botIdx].text = cached;
-            resolve(); requestQueue.shift(); continue;
-          }
+    streaming.value = true;
+
+    try {
+      // cache
+      if (responseCache.canCache(intent) && intent !== "HIRING") {
+        const cached = responseCache.get(intent);
+        if (cached) {
+          messages.value[botIdx].text = cached;
+          resolve();
+          requestQueue.shift();
+          continue;
         }
+      }
 
-        let text = "";
-        for (let attempt = 0; attempt <= 2; attempt++) {
-          try {
-            text = await streamGroq({
-              question, intent, isArabic,
-              systemPrompt: buildSystemPrompt(intent, isArabic, projectsContext.value, userState.value),
-              history: getHistory(8),
-              onToken: (token) => { messages.value[botIdx].text += token; onToken?.(); },
-            });
-            break;
-          } catch (err) {
-            if (err.message.includes("429") && attempt < 2) {
-              const delay = 15000 * (attempt + 1);
-              messages.value[botIdx].text = `⏳ Rate limited, retrying in ${delay / 1000}s...`;
-              await new Promise((r) => setTimeout(r, delay));
-              messages.value[botIdx].text = "";
-            } else throw err;
-          }
-        }
+      let text = await streamGroq({
+        question,
+        systemPrompt: buildSystemPrompt(
+          intent,
+          isArabic,
+          projectsContext.value,
+          userState.value
+        ),
+        history: getHistory(8),
+      });
 
-        if (responseCache.canCache(intent)) responseCache.set(intent, text);
-        resolve();
-      } catch (err) {
-        messages.value[botIdx].text = err.message.includes("429")
-          ? "⚠️ Still rate limited. Wait a minute."
+      // typing effect (UI streaming simulation)
+      messages.value[botIdx].text = "";
+
+      for (const char of text) {
+        messages.value[botIdx].text += char;
+        await new Promise(r => setTimeout(r, 5)); // typing speed
+      }
+
+      if (responseCache.canCache(intent)) {
+        responseCache.set(intent, text);
+      }
+
+      resolve();
+    } catch (err) {
+      messages.value[botIdx].text =
+        err.message.includes("429")
+          ? "⚠️ Rate limited"
           : `⚠️ ${err.message}`;
-        reject(err);
-      } finally {
-        streaming.value = false;
-        lastRequest = Date.now();
-        requestQueue.shift();
-        if (requestQueue.length > 0)
-          await new Promise((r) => setTimeout(r, RATE_LIMIT_MS));
+
+      reject(err);
+    } finally {
+      streaming.value = false;
+      requestQueue.shift();
+
+      if (requestQueue.length > 0) {
+        await new Promise(r => setTimeout(r, RATE_LIMIT_MS));
       }
     }
-
-    isProcessingQueue = false;
   }
 
+  isProcessingQueue = false;
+}
   function reset() { messages.value = []; streaming.value = false; }
 
   initStore();

@@ -116,15 +116,18 @@ function fmt(text) {
 
 // ── Actions ───────────────────────────────────────────────────────
 async function ask(q) {
-  const question = (q ?? input.value).trim()
-  if (!question || streaming.value) return
-  input.value = ''
-  await robo.ask(question, scroll)
-  bounce.value = true
-  setTimeout(() => bounce.value = false, 600)
-  scroll()
-}
+  const question = (q ?? input.value).trim();
+  if (!question || streaming.value) return;
 
+  input.value = "";
+
+  await robo.ask(question, scroll);
+
+  bounce.value = true;
+  setTimeout(() => (bounce.value = false), 600);
+
+  await scroll();
+}
 async function scroll() {
   await nextTick()
   chatEl.value?.scrollTo({ top: chatEl.value.scrollHeight, behavior: 'smooth' })
