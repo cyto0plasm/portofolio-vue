@@ -2,7 +2,8 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
+console.log("METHOD:", req.method);
+console.log("BODY:", req.body);
   const { question, systemPrompt, history } = req.body;
 
   const response = await fetch(
